@@ -7070,6 +7070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grass: {fileID: 1943996455298776, guid: b2199aadf1bb8c4449f3edfc84a39f78, type: 3}
   grassProgress: {fileID: 838622829}
+  eagle: {fileID: 6459360332574389098, guid: 8e29d572649a54879a3a379051807953, type: 3}
   plane: {fileID: 1664459182}
 --- !u!4 &1640929324
 Transform:

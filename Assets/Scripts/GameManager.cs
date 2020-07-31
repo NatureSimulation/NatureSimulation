@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     /* For singleton pattern */
     public static GameManager instance;
 
-    /* About Grass */
+    /* Grass */
     public GameObject grass;
     private float grassTimer;
     private int grassCount;
@@ -17,7 +17,11 @@ public class GameManager : MonoBehaviour
     private Text grassProgressText;
     private Image grassProgressImage;
 
-    /* About map */
+    /* Eagle */
+    public GameObject eagle;
+    private int eagleCount;
+
+    /* Map */
     public GameObject plane;
     private float planeMinX;
     private float planeMinZ;
@@ -49,6 +53,23 @@ public class GameManager : MonoBehaviour
         planeMaxX = bounds.max.x;
         planeMaxZ = bounds.max.z;
         planeMaxY = bounds.max.y;
+
+        /* Create eagle */
+        eagleCount = 0;
+
+        for (int i = 0; i < 1; ++i) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y = 10f;
+            // try {
+            //     y = getHeight(x, z) + 10f;
+            // } catch (System.Exception) {
+            //     continue;
+            // }
+
+            eagleCount += 1;
+            Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
+        }
     }
 
     // Update is called once per frame
@@ -69,13 +90,12 @@ public class GameManager : MonoBehaviour
 
             grassCount += 1;
             setGrassProgress();
-            GameObject debug = Instantiate (grass, new Vector3(x, y, z), Quaternion.identity);
-
+            Instantiate (grass, new Vector3(x, y, z), Quaternion.identity);
         }
     }
 
     /* Return height of map */
-    float getHeight(float x, float z) {
+    public float getHeight(float x, float z) {
         RaycastHit hit;
         Ray ray = new Ray(new Vector3(x, planeMaxY, z), Vector3.down);
         if (plane.GetComponent<Collider>().Raycast(ray, out hit, 2.0f * planeMaxY)) {
@@ -88,7 +108,6 @@ public class GameManager : MonoBehaviour
 
     void setGrassProgress() {
         grassProgressText.text = grassCount.ToString();
-        Debug.Log(1.0f / grassMax);
         grassProgressImage.fillAmount += 1.0f / grassMax;
     }
 }
