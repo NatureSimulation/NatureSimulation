@@ -68,7 +68,7 @@ public class EagelScripts : MonoBehaviour
 
             /* Look near */
             Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, 20.0f)
-                .Where(collider => collider.tag == "Grass").ToArray();
+                .Where(collider => collider.tag == "Rabbit").ToArray();
             if (rabbitColliders.Length != 0) {
                 currentState = EagleState.Targeting;
                 transform.rotation = Quaternion.LookRotation(rabbitColliders[0].transform.position - transform.position, Vector3.up);

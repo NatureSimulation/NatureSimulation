@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 5814194738171883281}
   m_Layer: 0
   m_Name: Rabbit 1
-  m_TagString: Untagged
+  m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -802,7 +802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d53ca9db90195449d9022ec216ee86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
   currentHealth: 1000
   healthbar: {fileID: 328095977611671448}
 --- !u!1 &1593323770353162
