@@ -8,7 +8,7 @@ public class RabbitScript : MonoBehaviour {
     private Rigidbody rb;
     private float wanderTime;
 
-    private Vector3 target;
+    private GameObject target;
 
     private enum RabbitState {
         Dead,
@@ -28,6 +28,12 @@ public class RabbitScript : MonoBehaviour {
         currentState = RabbitState.Wandering;
     }
 
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Grass") {
+            Destroy(other.gameObject);
+        }
+    }
+
     // Update is called once per frame
     void Update() {
         if (currentState == RabbitState.Wandering) {
@@ -44,13 +50,18 @@ public class RabbitScript : MonoBehaviour {
             if (grassColliders.Length > 0) {
                 currentState = RabbitState.Targeting;
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
-                target = grassColliders[0].transform.position;
+                target = grassColliders[0].gameObject;
                 Debug.Log("Targeting");
             }
         } else if (currentState == RabbitState.Targeting) {
-            Debug.DrawLine(transform.position, target, Color.white);
+            if (target == null) {
+                currentState = RabbitState.Wandering;
+                return;
+            }
+
+            Debug.DrawLine(transform.position, target.transform.position, Color.white);
             Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
-            transform.rotation = Quaternion.LookRotation(target - transform.position, Vector3.up);
+            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
         }
     }
