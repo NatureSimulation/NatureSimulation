@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{
-    /* External variables */
-    public GameObject grass;
-    public GameObject plane;
+{   
     /* For singleton pattern */
     public static GameManager instance;
 
     /* About Grass */
-    private float GrassTimer;
+    public GameObject grass;
+    private float grassTimer;
+    private int grassCount;
+    private int grassMax;
+    public GameObject grassProgress;
+    private Text grassProgressText;
+    private Image grassProgressImage;
+
     /* About map */
+    public GameObject plane;
     private float planeMinX;
     private float planeMinZ;
     private float planeMaxX;
@@ -26,8 +32,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        /* Init grass timer */
-        GrassTimer = 0;
+        /* Init grass */
+        grassTimer = 0;
+        grassCount = 0;
+        grassMax = 100;
+        grassProgressText = grassProgress.transform.GetChild(1).GetComponent<Text>();
+        grassProgressImage = grassProgress.transform.GetChild(0).GetComponent<Image>();
+        grassProgressText.text = "0";
+        grassProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -43,13 +55,22 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         /* Create grass */
-        GrassTimer += Time.deltaTime;
-        if (GrassTimer > 1) {
-            GrassTimer = 0;
+        grassTimer += Time.deltaTime;
+        if (grassTimer > 1) {
+            grassTimer = 0;
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
-            float y = getHeight(x, z);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            grassCount += 1;
+            setGrassProgress();
             GameObject debug = Instantiate (grass, new Vector3(x, y, z), Quaternion.identity);
+
         }
     }
 
@@ -62,6 +83,12 @@ public class GameManager : MonoBehaviour
             return hit.point.y;
         }
         Debug.Log("grass generated error");
-        return -5f;
+        throw new System.Exception("Invalid coordinate");
     } 
+
+    void setGrassProgress() {
+        grassProgressText.text = grassCount.ToString();
+        Debug.Log(1.0f / grassMax);
+        grassProgressImage.fillAmount += 1.0f / grassMax;
+    }
 }
