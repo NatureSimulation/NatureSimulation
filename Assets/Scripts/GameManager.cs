@@ -61,15 +61,15 @@ public class GameManager : MonoBehaviour
         /* Create eagle */
         eagleCount = 0;
 
-        for (int i = 0; i < 1; ++i) {
+        for (int i = 0; i < 10; ++i) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
-            float y = 10f;
-            // try {
-            //     y = getHeight(x, z) + 10f;
-            // } catch (System.Exception) {
-            //     continue;
-            // }
+            float y;
+            try {
+                y = getHeight(x, z) + 10f;
+            } catch (System.Exception) {
+                continue;
+            }
 
             eagleCount += 1;
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         /* Create grass */
         grassTimer += Time.deltaTime;
-        if (grassTimer > 1) {
+        if (grassTimer > 3) {
             grassTimer = 0;
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
@@ -125,5 +125,13 @@ public class GameManager : MonoBehaviour
     void setGrassProgress() {
         grassProgressText.text = grassCount.ToString();
         grassProgressImage.fillAmount += 1.0f / grassMax;
+    }
+
+    public void delete(GameObject item, string tag) {
+        if (tag == "Grass") {
+            grassCount -= 1;
+            setGrassProgress();
+            Destroy(item);
+        }
     }
 }
