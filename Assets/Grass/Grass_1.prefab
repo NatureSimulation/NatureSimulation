@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33321009862995994}
   - component: {fileID: 23866827820060464}
   - component: {fileID: -2023088069048481835}
+  - component: {fileID: -918941551279711518}
   m_Layer: 0
   m_Name: Grass_1
   m_TagString: Grass
@@ -81,6 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!65 &-2023088069048481835
+--- !u!65 &-918941551279711518
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
