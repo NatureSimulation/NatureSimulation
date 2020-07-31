@@ -18,12 +18,21 @@ public class GameManager : MonoBehaviour
     private Text grassProgressText;
     private Image grassProgressImage;
 
+    /* Rabbit */
+    public GameObject rabbit;
+    private int rabbitCount;
+    private int rabbitMax;
+    public GameObject rabbitProgress;
+    private Text rabbitProgressText;
+    private Image rabbitProgressImage;
+
     /* Eagle */
     public GameObject eagle;
     private int eagleCount;
-
-    /* Rabbit */
-    public GameObject rabbit;
+    private int eagleMax;
+    public GameObject eagleProgress;
+    private Text eagleProgressText;
+    private Image eagleProgressImage;
 
     /* Map */
     public GameObject plane;
@@ -49,6 +58,20 @@ public class GameManager : MonoBehaviour
         grassProgressText.text = "0";
         grassProgressImage.fillAmount = 0f;
 
+        /* Init rabbit */
+        rabbitCount = 0;
+        rabbitMax = 10;
+        rabbitProgressText = rabbitProgress.transform.GetChild(1).GetComponent<Text>();
+        rabbitProgressImage = rabbitProgress.transform.GetChild(0).GetComponent<Image>();
+        rabbitProgressText.text = "0";
+        rabbitProgressImage.fillAmount = 0f;
+
+        /* Init eagle */
+        eagleCount = 0;
+        eagleMax = 10;
+        eagleProgressText = eagleProgress.transform.GetChild(1).GetComponent<Text>();
+        eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
+
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
         Bounds bounds = mesh.bounds;
@@ -58,9 +81,23 @@ public class GameManager : MonoBehaviour
         planeMaxZ = bounds.max.z;
         planeMaxY = bounds.max.y;
 
-        /* Create eagle */
-        eagleCount = 0;
+        /* Create rabbit */
+        for (int i = 0; i < 10; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+            
+            rabbitCount += 1;
+            setRabbitProgress(true);
+            Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
+        }
 
+        /* Create eagle */
         for (int i = 0; i < 10; ++i) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
@@ -72,19 +109,8 @@ public class GameManager : MonoBehaviour
             }
 
             eagleCount += 1;
+            setEagleProgress(true);
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
-            Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
         }
     }
 
@@ -105,7 +131,7 @@ public class GameManager : MonoBehaviour
             }
 
             grassCount += 1;
-            setGrassProgress();
+            setGrassProgress(true);
             Instantiate (grass, new Vector3(x, y, z), Quaternion.identity);
         }
     }
@@ -122,15 +148,46 @@ public class GameManager : MonoBehaviour
         throw new System.Exception("Invalid coordinate");
     } 
 
-    void setGrassProgress() {
+    void setGrassProgress(bool isIncrease) {
         grassProgressText.text = grassCount.ToString();
-        grassProgressImage.fillAmount += 1.0f / grassMax;
+        if (isIncrease) {
+            grassProgressImage.fillAmount += 1.0f / grassMax;
+        } else {
+            grassProgressImage.fillAmount -= 1.0f / grassMax;
+        }
+        
+    }
+
+    void setRabbitProgress(bool isIncrease) {
+        rabbitProgressText.text = rabbitCount.ToString();
+        if (isIncrease) {
+            rabbitProgressImage.fillAmount += 1.0f / rabbitMax;
+        } else {
+            rabbitProgressImage.fillAmount -= 1.0f / rabbitMax;
+        }
+    }
+
+    void setEagleProgress(bool isIncrease) {
+        eagleProgressText.text = eagleCount.ToString();
+        if (isIncrease) {
+            eagleProgressImage.fillAmount += 1.0f / eagleMax;
+        } else {
+            eagleProgressImage.fillAmount -= 1.0f / eagleMax;
+        }
     }
 
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
-            setGrassProgress();
+            setGrassProgress(false);
+            Destroy(item);
+        } else if (tag == "Rabbit") {
+            rabbitCount -= 1;
+            setRabbitProgress(false);
+            Destroy(item);
+        } else if (tag == "Eagle") {
+            eagleCount -= 1;
+            setEagleProgress(false);
             Destroy(item);
         }
     }

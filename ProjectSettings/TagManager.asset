@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grass
   - Terrain
+  - Rabbit
   layers:
   - Default
   - TransparentFX
