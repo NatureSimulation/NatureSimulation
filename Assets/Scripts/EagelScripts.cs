@@ -16,6 +16,7 @@ public class EagelScripts : MonoBehaviour
     public GameObject target;
     public float minAttackDistance;
     private EagleState currentState;
+    private Health health;
 
     enum EagleState {
         Wandering,
@@ -29,11 +30,17 @@ public class EagelScripts : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         wonderTime = Random.Range(1.0f, 2.0f);
         currentState = EagleState.Wandering;
+        health = GetComponent<Health>();
     }
 
     void Update()
     {
-        
+        if (health.currentHealth <= 0) {
+            currentState = EagleState.Dead;
+            animator.SetFloat("Speed", 0);
+            animator.SetTrigger("isDead");
+            StartCoroutine(stopDead(1));
+        }
     }
 
     void FixedUpdate()
@@ -85,15 +92,23 @@ public class EagelScripts : MonoBehaviour
 
             tryDamageTarget();
 		}
+
+        if (health != null)
+            health.TakeDamage(1f);
 	}
 
     void tryDamageTarget() {
+        if (target == null) {
+            currentState = EagleState.Wandering;
+            return;
+        }
         float targetDistance = (target.transform.position - transform.position).magnitude;
         if (targetDistance < minAttackDistance) {
             animator.SetFloat("Speed", 0);
             transform.LookAt(target.transform);
             currentState = EagleState.Attacking;
             animator.SetTrigger("Attack");
+            health.currentHealth = 1000.0f;
             StartCoroutine(stopAttack(1));
         }
     }
@@ -103,6 +118,10 @@ public class EagelScripts : MonoBehaviour
 		yield return new WaitForSeconds(length); 
         GameManager.instance.delete(target, target.tag);
         currentState = EagleState.Wandering;
-		
 	}
+
+    IEnumerator stopDead(float length) {
+        yield return new WaitForSeconds(length);
+        GameManager.instance.delete(this.gameObject, this.tag);
+    }
 }
