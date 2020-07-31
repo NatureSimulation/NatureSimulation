@@ -78,7 +78,12 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 10; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
-            float y = getHeight(x, z);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
             Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
         }
     }
