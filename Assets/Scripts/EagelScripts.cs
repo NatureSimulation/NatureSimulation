@@ -41,6 +41,8 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("isDead");
             StartCoroutine(stopDead(1));
         }
+        if (health != null)
+            health.TakeDamage(1f);
     }
 
     void FixedUpdate()
@@ -92,9 +94,6 @@ public class EagelScripts : MonoBehaviour
 
             tryDamageTarget();
 		}
-
-        if (health != null)
-            health.TakeDamage(1f);
 	}
 
     void tryDamageTarget() {
