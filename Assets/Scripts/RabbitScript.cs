@@ -6,6 +6,7 @@ using UnityEngine;
 public class RabbitScript : MonoBehaviour {
     private Animator animator;
     private Rigidbody rb;
+    private Health health;
     private float wanderTime;
 
     private GameObject target;
@@ -23,6 +24,7 @@ public class RabbitScript : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        health = GetComponent<Health>();
         animator.speed = 3;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = RabbitState.Wandering;
@@ -30,13 +32,22 @@ public class RabbitScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
+            health.currentHealth = 1000.0f;
             Destroy(other.gameObject);
         }
     }
 
     // Update is called once per frame
     void Update() {
-        if (currentState == RabbitState.Wandering) {
+        if (health.currentHealth <= 0) {
+            currentState = RabbitState.Dead;
+            animator.SetBool("dead", true);
+            StartCoroutine(Dissolve(5.0f));
+        }
+
+        if (currentState == RabbitState.Dead)
+            return;
+        else if (currentState == RabbitState.Wandering) {
             if (wanderTime > 0) {
                 animator.SetTrigger("moving");
                 wanderTime -= Time.deltaTime;
@@ -64,5 +75,14 @@ public class RabbitScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
         }
+
+        if (health != null)
+            health.TakeDamage(1f);
+    }
+
+    IEnumerator Dissolve(float time) {
+        yield return new WaitForSeconds(time);
+
+        Destroy(gameObject);
     }
 }
