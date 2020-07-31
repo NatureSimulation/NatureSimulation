@@ -1861,7 +1861,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -100}
-  m_SizeDelta: {x: 162.59998, y: 26.100006}
+  m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417041173
 MonoBehaviour:
@@ -3526,7 +3526,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -40}
-  m_SizeDelta: {x: 162.59998, y: 26.100006}
+  m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838622831
 MonoBehaviour:
@@ -3781,7 +3781,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -160}
-  m_SizeDelta: {x: 162.59998, y: 26.100006}
+  m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &891069178
 MonoBehaviour:
@@ -7382,7 +7382,7 @@ MonoBehaviour:
   grassProgress: {fileID: 838622829}
   rabbit: {fileID: 1588090451174212, guid: c737dd230724d61469e1c672cf47ed9e, type: 3}
   rabbitProgress: {fileID: 417041171}
-  eagle: {fileID: 2115814770129227742, guid: 7089938691eb04c90b7de51b9de5a3a5, type: 3}
+  eagle: {fileID: 6368709116697677957, guid: f1685c8de0a264e9b9acad3080b329c2, type: 3}
   eagleProgress: {fileID: 891069176}
   plane: {fileID: 1664459182}
 --- !u!4 &1640929324
@@ -9200,7 +9200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
+  m_Color: {r: 0.6, g: 0.6156863, b: 0.627451, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -9369,7 +9369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23921569, g: 0.14117648, b: 0.050980393, a: 1}
+  m_Color: {r: 0.6, g: 0.4745098, b: 0.3137255, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
