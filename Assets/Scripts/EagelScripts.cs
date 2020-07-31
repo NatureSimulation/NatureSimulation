@@ -13,7 +13,7 @@ public class EagelScripts : MonoBehaviour
 	private bool isAttacking = false;
     private bool dead;
 
-    public Vector3 target;
+    public GameObject target;
     public float minAttackDistance;
     private EagleState currentState;
 
@@ -49,45 +49,60 @@ public class EagelScripts : MonoBehaviour
             }
 
             /* Forward */
-            float planeY = 0f;
+            float planeY;
             try {
                 planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.z);
             } catch {
                 planeY = 0;
             }
-
-            float velocityY = 0f;
+            Quaternion rotation;
             if (planeY + 10 > this.transform.position.y) {
-                velocityY = 1f;
+                rotation = Quaternion.Euler(new Vector3 (-10, transform.rotation.y, transform.rotation.z));
             } else {
-                velocityY = -1f;
+                rotation = Quaternion.Euler(new Vector3 (10, transform.rotation.y, transform.rotation.z));
             }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
             
-			GetComponent<Rigidbody>().velocity = transform.forward * speedOut * walkspeed + new Vector3(0, velocityY, 0);
+			transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
 
             /* Look near */
-            Collider rabbitCollider = Physics.OverlapSphere(transform.position, 20.0f).SingleOrDefault(collider => collider.tag == "Grass");
-            if (rabbitCollider != null) {
+            Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, 20.0f)
+                .Where(collider => collider.tag == "Grass").ToArray();
+            if (rabbitColliders.Length != 0) {
                 currentState = EagleState.Targeting;
-                transform.rotation = Quaternion.LookRotation(rabbitCollider.transform.position - transform.position, Vector3.up);
-                target = rabbitCollider.transform.position;
+                transform.rotation = Quaternion.LookRotation(rabbitColliders[0].transform.position - transform.position, Vector3.up);
+                target = rabbitColliders[0].gameObject;
             }
 
         } else if (currentState == EagleState.Targeting ) {
-            Debug.DrawLine(transform.position, target, Color.white);
-            transform.rotation = Quaternion.LookRotation(target - transform.position, Vector3.up);
+            animator.SetTrigger("Attack");
+            Debug.DrawLine(transform.position, target.transform.position, Color.white);
+            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             
-            /* Forward */
-            float velocityY = 0f;
-            if (target.y > this.transform.position.y) {
-                velocityY = 1f;
-            } else {
-                velocityY = -1f;
-            }
-
-            GetComponent<Rigidbody>().velocity = transform.forward * speedOut * walkspeed + new Vector3(0, velocityY, 0);
+            transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
+
+            tryDamageTarget();
 		}
+	}
+
+    void tryDamageTarget() {
+        float targetDistance = (target.transform.position - transform.position).magnitude;
+        if (targetDistance < minAttackDistance) {
+            animator.SetFloat("Speed", 0);
+            transform.LookAt(target.transform);
+            currentState = EagleState.Attacking;
+            animator.SetTrigger("Attack");
+            StartCoroutine(stopAttack(1));
+        }
+    }
+
+    IEnumerator stopAttack(float length)
+	{
+		yield return new WaitForSeconds(length); 
+        GameManager.instance.delete(target, target.tag);
+        currentState = EagleState.Wandering;
+		
 	}
 }
