@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {   
+    /* External variables */
     /* For singleton pattern */
     public static GameManager instance;
 
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
     /* Eagle */
     public GameObject eagle;
     private int eagleCount;
+
+    /* Rabbit */
+    public GameObject rabbit;
 
     /* Map */
     public GameObject plane;
@@ -69,6 +73,13 @@ public class GameManager : MonoBehaviour
 
             eagleCount += 1;
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y = getHeight(x, z);
+            Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
         }
     }
 
