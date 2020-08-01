@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 7535132183826235791}
   m_Layer: 0
   m_Name: Iguana
-  m_TagString: Untagged
+  m_TagString: Iguana
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

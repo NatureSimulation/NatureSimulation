@@ -334,6 +334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Butterfly
       objectReference: {fileID: 0}
+    - target: {fileID: 1556525557937860, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
+      propertyPath: m_TagString
+      value: Butterfly
+      objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalPosition.x
       value: -49.55853
