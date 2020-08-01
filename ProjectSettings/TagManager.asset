@@ -11,6 +11,7 @@ TagManager:
   - Deer
   - Squirrel
   - Tiger
+  - Bird
   layers:
   - Default
   - TransparentFX

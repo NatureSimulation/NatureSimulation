@@ -75,6 +75,14 @@ public class GameManager : MonoBehaviour
     private Text iguanaProgressText;
     private Image iguanaProgressImage;
 
+    /* Bird */
+    public GameObject bird;
+    private int birdCount;
+    private int birdMax;
+    public GameObject birdProgress;
+    private Text birdProgressText;
+    private Image birdProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -156,6 +164,14 @@ public class GameManager : MonoBehaviour
         iguanaProgressImage = iguanaProgress.transform.GetChild(0).GetComponent<Image>();
         iguanaProgressText.text = "0";
         iguanaProgressImage.fillAmount = 0f;
+
+        /* Init bird */
+        birdCount = 0;
+        birdMax = 10;
+        birdProgressText = birdProgress.transform.GetChild(1).GetComponent<Text>();
+        birdProgressImage = birdProgress.transform.GetChild(0).GetComponent<Image>();
+        birdProgressText.text = "0";
+        birdProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -347,7 +363,16 @@ public class GameManager : MonoBehaviour
         } else {
             iguanaProgressImage.fillAmount -= 1.0f / iguanaMax;
         }
-    } 
+    }
+
+    void setBirdProgress(bool isIncrease) {
+        birdProgressText.text = birdCount.ToString();
+        if (isIncrease) {
+            birdProgressImage.fillAmount += 1.0f / birdMax;
+        } else {
+            birdProgressImage.fillAmount -= 1.0f / birdMax;
+        }
+    }
 
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
@@ -371,6 +396,9 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Iguana") {
             iguanaCount -= 1;
             setIguanaProgress(false);
+        } else if (tag == "Brid") {
+            birdCount -= 1;
+            setBirdProgress(false);
         }
 
         Destroy(item);
