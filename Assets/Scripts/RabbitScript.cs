@@ -69,7 +69,6 @@ public class RabbitScript : MonoBehaviour {
                 currentState = RabbitState.Targeting;
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
                 target = grassColliders[0].gameObject;
-                Debug.Log("Targeting");
             }
         } else if (currentState == RabbitState.Targeting) {
             if (target == null) {

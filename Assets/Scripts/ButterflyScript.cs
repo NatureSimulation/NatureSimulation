@@ -87,7 +87,6 @@ public class ButterflyScript : MonoBehaviour
                 currentState = ButterflyState.Targeting;
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
                 target = grassColliders[0].gameObject;
-                Debug.Log("Targeting");
             }
         } else if (currentState == ButterflyState.Targeting) {
             if (target == null) {

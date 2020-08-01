@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
     private float planeMaxX;
     private float planeMaxZ;
     private float planeMaxY;
+    private float planeOffset = 5;
 
     public GameObject panel;
 
@@ -191,10 +192,10 @@ public class GameManager : MonoBehaviour
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
         Bounds bounds = mesh.bounds;
-        planeMinX = bounds.min.x;
-        planeMinZ = bounds.min.z;
-        planeMaxX = bounds.max.x;
-        planeMaxZ = bounds.max.z;
+        planeMinX = bounds.min.x + planeOffset;
+        planeMinZ = bounds.min.z + planeOffset;
+        planeMaxX = bounds.max.x - planeOffset;
+        planeMaxZ = bounds.max.z - planeOffset;
         planeMaxY = bounds.max.y;
 
         /* Create squirrel */
@@ -368,14 +369,16 @@ public class GameManager : MonoBehaviour
         grassTimer += Time.deltaTime;
         if (grassTimer > 3) {
             grassTimer = 0;
-            float x = Random.Range(planeMinX, planeMaxX) / 10;
-            float z = Random.Range(planeMinZ, planeMaxZ) / 10;
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
             float y;
             try {
                 y = getHeight(x, z);
             } catch (System.Exception) {
+                Debug.Log("grass generated error");
                 return;
             }
+            Debug.Log("grass generated");
 
             grassCount += 1;
             setGrassProgress(true);
@@ -391,7 +394,6 @@ public class GameManager : MonoBehaviour
             // Debug.Log("grass generated at: " + hit.point);
             return hit.point.y;
         }
-        Debug.Log("grass generated error");
         throw new System.Exception("Invalid coordinate");
     }
 

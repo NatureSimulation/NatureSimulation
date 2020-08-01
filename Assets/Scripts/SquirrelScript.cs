@@ -72,7 +72,6 @@ public class SquirrelScript : MonoBehaviour {
                 currentState = SquirrelState.Targeting;
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
                 target = grassColliders[0].gameObject;
-                Debug.Log("Targeting");
             }
         } else if (currentState == SquirrelState.Targeting) {
             if (target == null) {

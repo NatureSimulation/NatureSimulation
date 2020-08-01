@@ -73,7 +73,6 @@ public class FrogScript : MonoBehaviour {
                 currentState = FrogState.Targeting;
                 transform.rotation = Quaternion.LookRotation(preyColliders[0].transform.position - transform.position, Vector3.up);
                 target = preyColliders[0].gameObject;
-                Debug.Log("Targeting");
             }
         } else if (currentState == FrogState.Targeting) {
             if (target == null) {
