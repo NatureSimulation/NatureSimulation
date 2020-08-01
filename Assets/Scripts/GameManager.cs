@@ -67,6 +67,14 @@ public class GameManager : MonoBehaviour
     private Text tigerProgressText;
     private Image tigerProgressImage;
 
+    /* Iguana */
+    public GameObject iguana;
+    private int iguanaCount;
+    private int iguanaMax;
+    public GameObject iguanaProgress;
+    private Text iguanaProgressText;
+    private Image iguanaProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -140,6 +148,14 @@ public class GameManager : MonoBehaviour
         tigerProgressImage = tigerProgress.transform.GetChild(0).GetComponent<Image>();
         tigerProgressText.text = "0";
         tigerProgressImage.fillAmount = 0f;
+
+        /* Init iguana */
+        iguanaCount = 0;
+        iguanaMax = 10;
+        iguanaProgressText = iguanaProgress.transform.GetChild(1).GetComponent<Text>();
+        iguanaProgressImage = iguanaProgress.transform.GetChild(0).GetComponent<Image>();
+        iguanaProgressText.text = "0";
+        iguanaProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -324,6 +340,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void setIguanaProgress(bool isIncrease) {
+        iguanaProgressText.text = iguanaCount.ToString();
+        if (isIncrease) {
+            iguanaProgressImage.fillAmount += 1.0f / iguanaMax;
+        } else {
+            iguanaProgressImage.fillAmount -= 1.0f / iguanaMax;
+        }
+    } 
+
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
@@ -343,6 +368,9 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Tiger") {
             tigerCount -= 1;
             setTigerProgress(false);
+        } else if (tag == "Iguana") {
+            iguanaCount -= 1;
+            setIguanaProgress(false);
         }
 
         Destroy(item);

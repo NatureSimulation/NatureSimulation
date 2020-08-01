@@ -51,7 +51,7 @@ public class DeerScript : MonoBehaviour
                 wanderTime -= Time.deltaTime;
             } else {
                 wanderTime = Random.Range(1.0f, 2.0f);
-                transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);;
+                transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
             Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f)
