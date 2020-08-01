@@ -120,7 +120,7 @@ public class EagelScripts : MonoBehaviour
             currentState = EagleState.Wandering;
         } else {
             GameManager.instance.delete(target, target.tag);
-            health.currentHealth += recoverSpeed;
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = EagleState.Wandering;
         }
 	}

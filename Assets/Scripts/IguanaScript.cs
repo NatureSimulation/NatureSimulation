@@ -87,7 +87,7 @@ public class IguanaScript : MonoBehaviour
         yield return new WaitForSeconds(length);
         GameManager.instance.delete(target, target.tag);
         currentState = IguanaState.Wandering;
-        health.currentHealth += recoverSpeed;
+        health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
     }
 
     IEnumerator stopDead(float length) {

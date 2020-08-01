@@ -36,7 +36,7 @@ public class SquirrelScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
-            health.currentHealth += recoverSpeed;
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }

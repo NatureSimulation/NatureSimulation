@@ -12,6 +12,8 @@ TagManager:
   - Squirrel
   - Tiger
   - Bird
+  - Butterfly
+  - Iguana
   layers:
   - Default
   - TransparentFX

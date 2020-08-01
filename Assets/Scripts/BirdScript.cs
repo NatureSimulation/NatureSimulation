@@ -28,7 +28,7 @@ public class BirdScript : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Squirrel") {
-            health.currentHealth += recoverSpeed;
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }

@@ -93,7 +93,7 @@ public class TigerScript : MonoBehaviour
             currentState = TigerState.Wandering;
         } else {
             GameManager.instance.delete(target, target.tag);
-            health.currentHealth += recoverSpeed;
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = TigerState.Wandering;
         }
     }
