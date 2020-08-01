@@ -1899,7 +1899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -400}
+  m_AnchoredPosition: {x: 200, y: -220}
   m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &370814713
@@ -3550,7 +3550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &791445315
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3566,8 +3566,9 @@ RectTransform:
   - {fileID: 417041172}
   - {fileID: 891069177}
   - {fileID: 226271593}
-  - {fileID: 1361177639}
+  - {fileID: 1490335350}
   - {fileID: 370814712}
+  - {fileID: 1361177639}
   m_Father: {fileID: 105611277}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4059,7 +4060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -220}
+  m_AnchoredPosition: {x: 200, y: -400}
   m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &891069178
@@ -6390,7 +6391,7 @@ RectTransform:
   - {fileID: 2113273115}
   - {fileID: 2030951281}
   m_Father: {fileID: 791445315}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -7291,7 +7292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -440}
+  m_AnchoredPosition: {x: 200, y: -460}
   m_SizeDelta: {x: 162, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1490335351
@@ -8119,6 +8120,8 @@ MonoBehaviour:
   butterfly: {fileID: 6544061036624831497, guid: bb6ffb6845fb34341918e59323ff7e8f,
     type: 3}
   butterflyProgress: {fileID: 370814711}
+  tiger: {fileID: 4738995793068480728, guid: c89cbd3ddb6314718a7e6e361279c9a9, type: 3}
+  tigerProgress: {fileID: 1490335349}
   plane: {fileID: 1664459182}
   panel: {fileID: 791445314}
 --- !u!4 &1640929324
