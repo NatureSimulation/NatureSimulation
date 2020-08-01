@@ -43,6 +43,14 @@ public class GameManager : MonoBehaviour
     private Text eagleProgressText;
     private Image eagleProgressImage;
 
+    /* Deer */
+    public GameObject deer;
+    private int deerCount;
+    private int deerMax;
+    public GameObject deerProgress;
+    private Text deerProgressText;
+    private Image deerProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -82,6 +90,16 @@ public class GameManager : MonoBehaviour
         eagleMax = 10;
         eagleProgressText = eagleProgress.transform.GetChild(1).GetComponent<Text>();
         eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
+        eagleProgressText.text = "0";
+        eagleProgressImage.fillAmount = 0f;
+        
+        /* Init deer */
+        deerCount = 0;
+        deerMax = 10;
+        deerProgressText = deerProgress.transform.GetChild(1).GetComponent<Text>();
+        deerProgressImage = deerProgress.transform.GetChild(0).GetComponent<Image>();
+        deerProgressText.text = "0";
+        deerProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -137,6 +155,7 @@ public class GameManager : MonoBehaviour
             setEagleProgress(true);
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
         }
+
     }
 
     // Update is called once per frame
@@ -212,19 +231,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void setDeerProgress(bool isIncrease) {
+        deerProgressText.text = deerCount.ToString();
+        if (isIncrease) {
+            deerProgressImage.fillAmount += 1.0f / deerMax;
+        } else {
+            deerProgressImage.fillAmount -= 1.0f / deerMax;
+        }
+    }
+
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
             setGrassProgress(false);
-            Destroy(item);
+            
         } else if (tag == "Rabbit") {
             rabbitCount -= 1;
             setRabbitProgress(false);
-            Destroy(item);
         } else if (tag == "Eagle") {
             eagleCount -= 1;
             setEagleProgress(false);
-            Destroy(item);
+        } else if (tag == "Deer") {
+            deerCount -= 1;
+            setDeerProgress(false);
         }
+        Destroy(item);
     }
 }
