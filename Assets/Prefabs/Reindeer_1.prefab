@@ -226,7 +226,7 @@ RectTransform:
   m_GameObject: {fileID: 2034632741010264207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children:
   - {fileID: 89850894262140087}
   m_Father: {fileID: 2888449066056077195}
@@ -972,7 +972,7 @@ Transform:
   m_GameObject: {fileID: 6219636104399483927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 60, y: 2, z: -60}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4260821923941290411}
   - {fileID: 5607256898761220492}
@@ -1038,6 +1038,7 @@ MonoBehaviour:
   walkspeed: 5
   damageSpeed: 0.3
   recoverSpeed: 1000
+  sight: 20
 --- !u!1 &6606836473534761651
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class DeerScript : MonoBehaviour
     public float walkspeed = 5;
     public float damageSpeed;
     public float recoverSpeed;
+    public float sight = 10f;
     private Health health;
     private float wanderTime;
 
@@ -54,7 +55,7 @@ public class DeerScript : MonoBehaviour
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f)
+            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(coll => coll.tag == "Grass").ToArray();
 
             if (grassColliders.Length > 0) {

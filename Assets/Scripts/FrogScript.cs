@@ -8,6 +8,9 @@ public class FrogScript : MonoBehaviour {
     private Animator animator;
     private Rigidbody rb;
     private Health health;
+    public float damageSpeed;
+    public float recoverSpeed;
+    public float sight = 10f;
     private float wanderTime;
 
     public float speed = 10f;
@@ -35,7 +38,7 @@ public class FrogScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Butterfly") {
-            health.currentHealth = 1000.0f;
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -50,8 +53,6 @@ public class FrogScript : MonoBehaviour {
         if (currentState == FrogState.Dead)
             return;
 
-        if (health != null)
-            health.TakeDamage(1f);
     }
 
     void FixedUpdate() {
@@ -66,7 +67,7 @@ public class FrogScript : MonoBehaviour {
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
 
-            Collider[] preyColliders = Physics.OverlapSphere(transform.position, 10.0f).Where(coll => coll.tag == "Butterfly").ToArray();
+            Collider[] preyColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Butterfly").ToArray();
 
             if (preyColliders.Length > 0) {
                 currentState = FrogState.Targeting;
@@ -80,7 +81,7 @@ public class FrogScript : MonoBehaviour {
                 return;
             }
 
-            if ((target.transform.position - transform.position).magnitude < 8) {
+            if ((target.transform.position - transform.position).magnitude < 10) {
                 animator.SetTrigger("tongue");
                 GameManager.instance.delete(target, target.tag);
                 return;
@@ -93,6 +94,9 @@ public class FrogScript : MonoBehaviour {
             Debug.DrawLine(transform.position, transform.position + chaseVec, Color.white);
             transform.rotation = Quaternion.LookRotation(chaseVec, Vector3.up);
         }
+
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     IEnumerator Dissolve(float time) {

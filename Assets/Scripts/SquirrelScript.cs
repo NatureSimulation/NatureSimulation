@@ -12,6 +12,7 @@ public class SquirrelScript : MonoBehaviour {
     public float speed = 3f;
     public float damageSpeed;
     public float recoverSpeed;
+    public float sight = 10f;
 
     private GameObject target;
 
@@ -65,7 +66,7 @@ public class SquirrelScript : MonoBehaviour {
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f).Where(coll => coll.tag == "Grass").ToArray();
+            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
 
             if (grassColliders.Length > 0) {
                 currentState = SquirrelState.Targeting;

@@ -9,6 +9,7 @@ public class ButterflyScript : MonoBehaviour
     private Rigidbody rb;
     private Health health;
     public float recoverSpeed;
+    public float sight = 10f;
     private float wanderTime;
 
     public float speed = 3f;
@@ -80,7 +81,7 @@ public class ButterflyScript : MonoBehaviour
 
             transform.position += (transform.forward * speed * Time.deltaTime);
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f).Where(coll => coll.tag == "Grass").ToArray();
+            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
 
             if (grassColliders.Length > 0) {
                 currentState = ButterflyState.Targeting;

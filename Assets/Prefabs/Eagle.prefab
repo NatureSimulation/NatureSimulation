@@ -1170,7 +1170,7 @@ Transform:
   m_GameObject: {fileID: 6368709116697677957}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 60, y: 10, z: -60}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 1833955534167102602}
   - {fileID: 4989655648530780420}
@@ -1222,6 +1222,7 @@ MonoBehaviour:
   walkspeed: 5
   damageSpeed: 1
   recoverSpeed: 300
+  sight: 20
   target: {fileID: 0}
   minAttackDistance: 2.4
 --- !u!114 &2843803128164805385

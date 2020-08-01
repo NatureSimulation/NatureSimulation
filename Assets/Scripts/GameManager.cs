@@ -93,8 +93,9 @@ public class GameManager : MonoBehaviour
 
     /* Frog */
     public GameObject frog;
+    public int frogInitNum;
     private int frogCount;
-    private int frogMax;
+    public int frogMax;
     public GameObject frogProgress;
     private Text frogProgressText;
     private Image frogProgressImage;
@@ -182,10 +183,9 @@ public class GameManager : MonoBehaviour
 
         /* Init frog */
         frogCount = 0;
-        frogMax = 10;
         frogProgressText = frogProgress.transform.GetChild(1).GetComponent<Text>();
         frogProgressImage = frogProgress.transform.GetChild(0).GetComponent<Image>();
-        frogProgressText.text = "0";
+        frogProgressText.text = "Frog: " + "0";
         frogProgressImage.fillAmount = 0f;
 
         /* Init map setting */
@@ -325,6 +325,22 @@ public class GameManager : MonoBehaviour
             Instantiate(bird, new Vector3(x, y, z), Quaternion.identity);
         }
 
+        /* Create frog */
+        for (int i = 0; i < frogInitNum; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            frogCount += 1;
+            setFrogProgress(true);
+            Instantiate(frog, new Vector3(x, y, z), Quaternion.identity);
+        }
+
     }
 
     // Update is called once per frame
@@ -337,7 +353,16 @@ public class GameManager : MonoBehaviour
             } else {
                 panel.SetActive(true);
             }
+        }
 
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
+            Time.timeScale = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2)) {
+            Time.timeScale = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3)) {
+            Time.timeScale = 3;
         }
         /* Create grass */
         grassTimer += Time.deltaTime;
@@ -453,7 +478,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setFrogProgress(bool isIncrease) {
-        frogProgressText.text = frogCount.ToString();
+        frogProgressText.text = "Frog: " + frogCount.ToString();
         if (isIncrease) {
             frogProgressImage.fillAmount += 1.0f / frogMax;
         } else {
@@ -483,12 +508,15 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Iguana") {
             iguanaCount -= 1;
             setIguanaProgress(false);
-        } else if (tag == "Brid") {
+        } else if (tag == "Bird") {
             birdCount -= 1;
             setBirdProgress(false);
         } else if (tag == "Frog") {
             frogCount -= 1;
-            setIguanaProgress(false);
+            setFrogProgress(false);
+        } else if (tag == "Butterfly") {
+            butterflyCount -= 1;
+            setButterflyProgress(false);
         }
 
         Destroy(item);

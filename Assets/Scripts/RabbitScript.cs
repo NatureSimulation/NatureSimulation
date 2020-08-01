@@ -9,6 +9,7 @@ public class RabbitScript : MonoBehaviour {
     private Health health;
     public float damageSpeed;
     public float recoverSpeed;
+    public float sight = 10f;
     private float wanderTime;
 
     private GameObject target;
@@ -62,7 +63,7 @@ public class RabbitScript : MonoBehaviour {
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f).Where(coll => coll.tag == "Grass").ToArray();
+            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
 
             if (grassColliders.Length > 0) {
                 currentState = RabbitState.Targeting;

@@ -9,6 +9,7 @@ public class EagelScripts : MonoBehaviour
     public float walkspeed = 5;
     public float damageSpeed;
     public float recoverSpeed;
+    public float sight = 10f;
     float speedOut = 1;
     private float wonderTime;
 	private float rotationDegreePerSecond = 1000;
@@ -76,7 +77,7 @@ public class EagelScripts : MonoBehaviour
 			animator.SetFloat("Speed", speedOut);
 
             /* Look near */
-            Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, 20.0f)
+            Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(collider => collider.tag == "Rabbit" || collider.tag == "Frog" || collider.tag == "Iguana").ToArray();
             if (rabbitColliders.Length != 0) {
                 currentState = EagleState.Targeting;
