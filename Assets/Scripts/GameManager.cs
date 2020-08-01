@@ -91,6 +91,14 @@ public class GameManager : MonoBehaviour
     private Text birdProgressText;
     private Image birdProgressImage;
 
+    /* Frog */
+    public GameObject frog;
+    private int frogCount;
+    private int frogMax;
+    public GameObject frogProgress;
+    private Text frogProgressText;
+    private Image frogProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -171,6 +179,14 @@ public class GameManager : MonoBehaviour
         birdProgressImage = birdProgress.transform.GetChild(0).GetComponent<Image>();
         birdProgressText.text = "Bird: " + "0";
         birdProgressImage.fillAmount = 0f;
+
+        /* Init frog */
+        frogCount = 0;
+        frogMax = 10;
+        frogProgressText = frogProgress.transform.GetChild(1).GetComponent<Text>();
+        frogProgressImage = frogProgress.transform.GetChild(0).GetComponent<Image>();
+        frogProgressText.text = "0";
+        frogProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -327,8 +343,8 @@ public class GameManager : MonoBehaviour
         grassTimer += Time.deltaTime;
         if (grassTimer > 3) {
             grassTimer = 0;
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
+            float x = Random.Range(planeMinX, planeMaxX) / 10;
+            float z = Random.Range(planeMinZ, planeMaxZ) / 10;
             float y;
             try {
                 y = getHeight(x, z);
@@ -347,7 +363,7 @@ public class GameManager : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(new Vector3(x, planeMaxY, z), Vector3.down);
         if (plane.GetComponent<Collider>().Raycast(ray, out hit, 2.0f * planeMaxY)) {
-            Debug.Log("grass generated at: " + hit.point);
+            // Debug.Log("grass generated at: " + hit.point);
             return hit.point.y;
         }
         Debug.Log("grass generated error");
@@ -436,6 +452,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void setFrogProgress(bool isIncrease) {
+        frogProgressText.text = frogCount.ToString();
+        if (isIncrease) {
+            frogProgressImage.fillAmount += 1.0f / frogMax;
+        } else {
+            frogProgressImage.fillAmount -= 1.0f / frogMax;
+        }
+    }
+
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
@@ -461,6 +486,9 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Brid") {
             birdCount -= 1;
             setBirdProgress(false);
+        } else if (tag == "Frog") {
+            frogCount -= 1;
+            setIguanaProgress(false);
         }
 
         Destroy(item);
