@@ -8,6 +8,7 @@ public class EagelScripts : MonoBehaviour
     private Animator animator;
     public float walkspeed = 5;
     public float damageSpeed;
+    public float recoverSpeed;
     float speedOut = 1;
     private float wonderTime;
 	private float rotationDegreePerSecond = 1000;
@@ -42,8 +43,6 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("isDead");
             StartCoroutine(stopDead(1));
         }
-        if (health != null)
-            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate()
@@ -99,6 +98,8 @@ public class EagelScripts : MonoBehaviour
 
             tryDamageTarget();
 		}
+        if (health != null)
+            health.TakeDamage(damageSpeed);
 	}
 
     void tryDamageTarget() {
@@ -108,7 +109,6 @@ public class EagelScripts : MonoBehaviour
             transform.LookAt(target.transform);
             currentState = EagleState.Attacking;
             animator.SetTrigger("Attack");
-            health.currentHealth = 1000.0f;
             StartCoroutine(stopAttack(1));
         }
     }
@@ -120,7 +120,7 @@ public class EagelScripts : MonoBehaviour
             currentState = EagleState.Wandering;
         } else {
             GameManager.instance.delete(target, target.tag);
-            health.currentHealth = Health.maxHealth;
+            health.currentHealth += recoverSpeed;
             currentState = EagleState.Wandering;
         }
 	}

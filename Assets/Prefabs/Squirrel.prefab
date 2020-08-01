@@ -1551,6 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   damageSpeed: 0.3
+  recoverSpeed: 1000
 --- !u!114 &449449582
 MonoBehaviour:
   m_ObjectHideFlags: 0

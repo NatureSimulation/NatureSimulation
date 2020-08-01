@@ -8,6 +8,7 @@ public class IguanaScript : MonoBehaviour
     public float walkspeed = 5;
     public float sight = 20.0f;
     public float damageSpeed;
+    public float recoverSpeed;
     public float minAttackDistance;
     private Animator animator;
     private Health health;
@@ -37,8 +38,6 @@ public class IguanaScript : MonoBehaviour
             animator.SetTrigger("Death");
             StartCoroutine(stopDead(1));
         }
-        if (health != null)
-            health.TakeDamage(damageSpeed);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
             .Where(coll => coll.tag == "Rabbit" || coll.tag == "Squirrel" || coll.tag == "Frog").ToArray();
@@ -70,6 +69,8 @@ public class IguanaScript : MonoBehaviour
             animator.SetFloat("Forward", walkspeed * 2);
             tryDamageTarget();
         }
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     void tryDamageTarget() {
@@ -86,7 +87,7 @@ public class IguanaScript : MonoBehaviour
         yield return new WaitForSeconds(length);
         GameManager.instance.delete(target, target.tag);
         currentState = IguanaState.Wandering;
-        health.currentHealth = Health.maxHealth;
+        health.currentHealth += recoverSpeed;
     }
 
     IEnumerator stopDead(float length) {

@@ -11,6 +11,7 @@ public class BirdScript : MonoBehaviour
     private float wanderTime;
     private GameObject target;
     public float damageSpeed;
+    public float recoverSpeed;
     private enum BirdState {
         Dead,
         Targeting,
@@ -27,7 +28,7 @@ public class BirdScript : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Squirrel") {
-            health.currentHealth = Health.maxHealth;
+            health.currentHealth += recoverSpeed;
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -37,9 +38,6 @@ public class BirdScript : MonoBehaviour
             currentState = BirdState.Dead;
             StartCoroutine(Dissolve(1.0f));
         }
-
-        if (health != null)
-            health.TakeDamage(damageSpeed);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
             .Where(coll => coll.tag == "Squirrel").ToArray();
@@ -87,6 +85,9 @@ public class BirdScript : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime);
         }
+
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     IEnumerator Dissolve(float time) {

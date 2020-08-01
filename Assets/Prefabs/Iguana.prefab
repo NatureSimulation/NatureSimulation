@@ -1365,7 +1365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkspeed: 5
   sight: 20
-  damageSpeed: 0.3
+  damageSpeed: 1
+  recoverSpeed: 300
   minAttackDistance: 10
 --- !u!114 &7535132183826235791
 MonoBehaviour:

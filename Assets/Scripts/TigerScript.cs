@@ -9,6 +9,7 @@ public class TigerScript : MonoBehaviour
     public float minAttackDistance;
     public float sight = 20.0f;
     public float damageSpeed;
+    public float recoverSpeed;
     private Animator animator;
     private Health health;
     private float wanderTime;
@@ -36,8 +37,6 @@ public class TigerScript : MonoBehaviour
             currentState = TigerState.Dead;
             GameManager.instance.delete(this.gameObject, this.tag);
         }
-        if (health != null)
-            health.TakeDamage(damageSpeed);
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(coll => coll.tag == "Rabbit" || coll.tag == "Deer").ToArray();
 
@@ -73,6 +72,8 @@ public class TigerScript : MonoBehaviour
 
             tryDamageTarget();
         }
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     void tryDamageTarget() {
@@ -82,7 +83,6 @@ public class TigerScript : MonoBehaviour
             transform.LookAt(target.transform);
             currentState = TigerState.Attacking;
             animator.SetTrigger("attack");
-            health.currentHealth = Health.maxHealth;
             StartCoroutine(stopAttack(1));
         }
     }
@@ -93,7 +93,7 @@ public class TigerScript : MonoBehaviour
             currentState = TigerState.Wandering;
         } else {
             GameManager.instance.delete(target, target.tag);
-            health.currentHealth = Health.maxHealth;
+            health.currentHealth += recoverSpeed;
             currentState = TigerState.Wandering;
         }
     }

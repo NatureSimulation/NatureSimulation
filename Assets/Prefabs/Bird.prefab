@@ -754,7 +754,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkspeed: 5
   sight: 10
-  damageSpeed: 0.3
+  damageSpeed: 1
+  recoverSpeed: 300
 --- !u!114 &3057971505709651096
 MonoBehaviour:
   m_ObjectHideFlags: 0

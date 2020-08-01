@@ -8,6 +8,7 @@ public class RabbitScript : MonoBehaviour {
     private Rigidbody rb;
     private Health health;
     public float damageSpeed;
+    public float recoverSpeed;
     private float wanderTime;
 
     private GameObject target;
@@ -33,7 +34,7 @@ public class RabbitScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
-            health.currentHealth = 1000.0f;
+            health.currentHealth += recoverSpeed;
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -49,8 +50,6 @@ public class RabbitScript : MonoBehaviour {
         if (currentState == RabbitState.Dead)
             return;
 
-        if (health != null)
-            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {
@@ -80,6 +79,8 @@ public class RabbitScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
         }
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     IEnumerator Dissolve(float time) {

@@ -11,6 +11,7 @@ public class SquirrelScript : MonoBehaviour {
 
     public float speed = 3f;
     public float damageSpeed;
+    public float recoverSpeed;
 
     private GameObject target;
 
@@ -35,7 +36,7 @@ public class SquirrelScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
-            health.currentHealth = 1000.0f;
+            health.currentHealth += recoverSpeed;
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -50,8 +51,6 @@ public class SquirrelScript : MonoBehaviour {
         if (currentState == SquirrelState.Dead)
             return;
 
-        if (health != null)
-            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {
@@ -84,6 +83,8 @@ public class SquirrelScript : MonoBehaviour {
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
         }
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     IEnumerator Dissolve(float time) {

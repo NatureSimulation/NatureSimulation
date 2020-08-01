@@ -8,6 +8,7 @@ public class ButterflyScript : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private Health health;
+    public float recoverSpeed;
     private float wanderTime;
 
     public float speed = 3f;
@@ -36,7 +37,7 @@ public class ButterflyScript : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
-            health.currentHealth = 1000.0f;
+            health.currentHealth += recoverSpeed;
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -51,8 +52,6 @@ public class ButterflyScript : MonoBehaviour
         if (currentState == ButterflyState.Dead)
             return;
 
-        if (health != null)
-            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {
@@ -98,6 +97,9 @@ public class ButterflyScript : MonoBehaviour
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
         }
+
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 
     IEnumerator Dissolve(float time) {

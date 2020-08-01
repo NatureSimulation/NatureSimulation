@@ -8,6 +8,7 @@ public class DeerScript : MonoBehaviour
     private Rigidbody rb;
     public float walkspeed = 5;
     public float damageSpeed;
+    public float recoverSpeed;
     private Health health;
     private float wanderTime;
 
@@ -30,7 +31,7 @@ public class DeerScript : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
-            health.currentHealth = Health.maxHealth;
+            health.currentHealth += recoverSpeed;
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
@@ -41,8 +42,6 @@ public class DeerScript : MonoBehaviour
             currentState = DeerState.Dead;
             GameManager.instance.delete(this.gameObject, this.tag);
         }
-        if (health != null)
-            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {
@@ -74,5 +73,8 @@ public class DeerScript : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime);
         }
+
+        if (health != null)
+            health.TakeDamage(damageSpeed);
     }
 }
