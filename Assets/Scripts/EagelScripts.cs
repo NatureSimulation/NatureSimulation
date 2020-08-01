@@ -115,8 +115,13 @@ public class EagelScripts : MonoBehaviour
     IEnumerator stopAttack(float length)
 	{
 		yield return new WaitForSeconds(length);
-        GameManager.instance.delete(target, target.tag);
-        currentState = EagleState.Wandering;
+        if (target == null) {
+            currentState = EagleState.Wandering;
+        } else {
+            GameManager.instance.delete(target, target.tag);
+            health.currentHealth = Health.maxHealth;
+            currentState = EagleState.Wandering;
+        }
 	}
 
     IEnumerator stopDead(float length) {
