@@ -468,7 +468,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1833955534167102602}
   - component: {fileID: 7744893118590182593}
-  - component: {fileID: 980369022175398675}
   m_Layer: 0
   m_Name: Eagle_Normal
   m_TagString: Untagged
@@ -511,19 +510,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &980369022175398675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2610988573014553667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdf4a8e54cc06249ae87aacebbe862d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitFX: {fileID: 1486350219787176, guid: 87b722261969f194ea7e30f358a7b1e6, type: 3}
 --- !u!1 &2870940646545920635
 GameObject:
   m_ObjectHideFlags: 0

@@ -85,6 +85,10 @@ public class EagelScripts : MonoBehaviour
             }
 
         } else if (currentState == EagleState.Targeting ) {
+            if (target == null) {
+                currentState = EagleState.Wandering;
+                return;
+            }
             animator.SetTrigger("Attack");
             // Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
@@ -97,10 +101,6 @@ public class EagelScripts : MonoBehaviour
 	}
 
     void tryDamageTarget() {
-        if (target == null) {
-            currentState = EagleState.Wandering;
-            return;
-        }
         float targetDistance = (target.transform.position - transform.position).magnitude;
         if (targetDistance < minAttackDistance) {
             animator.SetFloat("Speed", 0);

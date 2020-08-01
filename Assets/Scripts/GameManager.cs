@@ -59,6 +59,14 @@ public class GameManager : MonoBehaviour
     private Text butterflyProgressText;
     private Image butterflyProgressImage;
 
+    /* Tiger */
+    public GameObject tiger;
+    private int tigerCount;
+    private int tigerMax;
+    public GameObject tigerProgress;
+    private Text tigerProgressText;
+    private Image tigerProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -124,6 +132,14 @@ public class GameManager : MonoBehaviour
         butterflyProgressImage = butterflyProgress.transform.GetChild(0).GetComponent<Image>();
         butterflyProgressText.text = "0";
         butterflyProgressImage.fillAmount = 0f;
+
+        /* Init tiger */
+        tigerCount = 0;
+        tigerMax = 10;
+        tigerProgressText = tigerProgress.transform.GetChild(1).GetComponent<Text>();
+        tigerProgressImage = tigerProgress.transform.GetChild(0).GetComponent<Image>();
+        tigerProgressText.text = "0";
+        tigerProgressImage.fillAmount = 0f;
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -299,6 +315,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void setTigerProgress(bool isIncrease) {
+        tigerProgressText.text = tigerCount.ToString();
+        if (isIncrease) {
+            tigerProgressImage.fillAmount += 1.0f / tigerMax;
+        } else {
+            tigerProgressImage.fillAmount -= 1.0f / tigerMax;
+        }
+    }
+
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
@@ -315,6 +340,9 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Squirrel") {
             squirrelCount -= 1;
             setSquirrelProgress(false);
+        } else if (tag == "Tiger") {
+            tigerCount -= 1;
+            setTigerProgress(false);
         }
 
         Destroy(item);
