@@ -71,7 +71,7 @@ public class EagelScripts : MonoBehaviour
                 rotation = Quaternion.Euler(new Vector3 (10, transform.rotation.y, transform.rotation.z));
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
-            
+
 			transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
 
@@ -92,7 +92,7 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("Attack");
             // Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-            
+
             transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
 
@@ -114,7 +114,7 @@ public class EagelScripts : MonoBehaviour
 
     IEnumerator stopAttack(float length)
 	{
-		yield return new WaitForSeconds(length); 
+		yield return new WaitForSeconds(length);
         GameManager.instance.delete(target, target.tag);
         currentState = EagleState.Wandering;
 	}

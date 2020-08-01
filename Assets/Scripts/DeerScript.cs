@@ -9,7 +9,7 @@ public class DeerScript : MonoBehaviour
     public float walkspeed = 5;
     private Health health;
     private float wanderTime;
- 
+
     private GameObject target;
     private enum DeerState {
         Dead,
@@ -22,9 +22,9 @@ public class DeerScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        health = GetComponent<Health>();      
+        health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
-        currentState = DeerState.Wandering;  
+        currentState = DeerState.Wandering;
     }
 
     void OnCollisionEnter(Collision other) {
