@@ -10,6 +10,7 @@ public class BirdScript : MonoBehaviour
     private Health health;
     private float wanderTime;
     private GameObject target;
+    public float damageSpeed;
     private enum BirdState {
         Dead,
         Targeting,
@@ -38,7 +39,7 @@ public class BirdScript : MonoBehaviour
         }
 
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
             .Where(coll => coll.tag == "Squirrel").ToArray();

@@ -1220,6 +1220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
+  damageSpeed: 0.3
   target: {fileID: 0}
   minAttackDistance: 2.4
 --- !u!114 &2843803128164805385

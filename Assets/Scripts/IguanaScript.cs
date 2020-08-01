@@ -7,6 +7,7 @@ public class IguanaScript : MonoBehaviour
 {
     public float walkspeed = 5;
     public float sight = 20.0f;
+    public float damageSpeed;
     public float minAttackDistance;
     private Animator animator;
     private Health health;
@@ -37,7 +38,7 @@ public class IguanaScript : MonoBehaviour
             StartCoroutine(stopDead(1));
         }
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
             .Where(coll => coll.tag == "Rabbit" || coll.tag == "Squirrel" || coll.tag == "Frog").ToArray();

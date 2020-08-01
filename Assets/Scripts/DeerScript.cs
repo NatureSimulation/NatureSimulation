@@ -7,6 +7,7 @@ public class DeerScript : MonoBehaviour
 {
     private Rigidbody rb;
     public float walkspeed = 5;
+    public float damageSpeed;
     private Health health;
     private float wanderTime;
 
@@ -41,7 +42,7 @@ public class DeerScript : MonoBehaviour
             GameManager.instance.delete(this.gameObject, this.tag);
         }
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {

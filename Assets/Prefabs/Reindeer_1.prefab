@@ -1036,6 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
+  damageSpeed: 0.3
 --- !u!1 &6606836473534761651
 GameObject:
   m_ObjectHideFlags: 0

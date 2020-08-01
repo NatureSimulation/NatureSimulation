@@ -7,6 +7,7 @@ public class EagelScripts : MonoBehaviour
 {
     private Animator animator;
     public float walkspeed = 5;
+    public float damageSpeed;
     float speedOut = 1;
     private float wonderTime;
 	private float rotationDegreePerSecond = 1000;
@@ -42,7 +43,7 @@ public class EagelScripts : MonoBehaviour
             StartCoroutine(stopDead(1));
         }
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate()

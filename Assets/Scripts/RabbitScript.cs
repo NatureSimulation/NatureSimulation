@@ -7,6 +7,7 @@ public class RabbitScript : MonoBehaviour {
     private Animator animator;
     private Rigidbody rb;
     private Health health;
+    public float damageSpeed;
     private float wanderTime;
 
     private GameObject target;
@@ -49,7 +50,7 @@ public class RabbitScript : MonoBehaviour {
             return;
 
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {

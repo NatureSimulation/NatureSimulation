@@ -8,6 +8,7 @@ public class TigerScript : MonoBehaviour
     public float walkSpeed = 5f;
     public float minAttackDistance;
     public float sight = 20.0f;
+    public float damageSpeed;
     private Animator animator;
     private Health health;
     private float wanderTime;
@@ -36,7 +37,7 @@ public class TigerScript : MonoBehaviour
             GameManager.instance.delete(this.gameObject, this.tag);
         }
         if (health != null)
-            health.TakeDamage(0.2f);
+            health.TakeDamage(damageSpeed);
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(coll => coll.tag == "Rabbit" || coll.tag == "Deer").ToArray();
 

@@ -11,6 +11,7 @@ public class ButterflyScript : MonoBehaviour
     private float wanderTime;
 
     public float speed = 3f;
+    public float damageSpeed;
 
     private GameObject target;
 
@@ -51,7 +52,7 @@ public class ButterflyScript : MonoBehaviour
             return;
 
         if (health != null)
-            health.TakeDamage(1f);
+            health.TakeDamage(damageSpeed);
     }
 
     void FixedUpdate() {

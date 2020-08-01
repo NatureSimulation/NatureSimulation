@@ -13,15 +13,16 @@ public class GameManager : MonoBehaviour
     public GameObject grass;
     private float grassTimer;
     private int grassCount;
-    private int grassMax;
+    public int grassMax;
     public GameObject grassProgress;
     private Text grassProgressText;
     private Image grassProgressImage;
 
     /* Squirrel */
     public GameObject squirrel;
+    public int squirrelInitNum;
     private int squirrelCount;
-    private int squirrelMax;
+    public int squirrelMax;
     public GameObject squirrelProgress;
     private Text squirrelProgressText;
     private Image squirrelProgressImage;
@@ -29,56 +30,63 @@ public class GameManager : MonoBehaviour
 
     /* Rabbit */
     public GameObject rabbit;
+    public int rabbitInitNum;
     private int rabbitCount;
-    private int rabbitMax;
+    public int rabbitMax;
     public GameObject rabbitProgress;
     private Text rabbitProgressText;
     private Image rabbitProgressImage;
 
     /* Eagle */
     public GameObject eagle;
+    public int eagleInitNum;
     private int eagleCount;
-    private int eagleMax;
+    public int eagleMax;
     public GameObject eagleProgress;
     private Text eagleProgressText;
     private Image eagleProgressImage;
 
     /* Deer */
     public GameObject deer;
+    public int deerInitNum;
     private int deerCount;
-    private int deerMax;
+    public int deerMax;
     public GameObject deerProgress;
     private Text deerProgressText;
     private Image deerProgressImage;
 
     /* Butterfly */
     public GameObject butterfly;
+    public int butterflyInitNum;
     private int butterflyCount;
-    private int butterflyMax;
+    public int butterflyMax;
     public GameObject butterflyProgress;
     private Text butterflyProgressText;
     private Image butterflyProgressImage;
 
     /* Tiger */
     public GameObject tiger;
+    public int tigerInitNum;
     private int tigerCount;
-    private int tigerMax;
+    public int tigerMax;
     public GameObject tigerProgress;
     private Text tigerProgressText;
     private Image tigerProgressImage;
 
     /* Iguana */
     public GameObject iguana;
+    public int iguanaInitNum;
     private int iguanaCount;
-    private int iguanaMax;
+    public int iguanaMax;
     public GameObject iguanaProgress;
     private Text iguanaProgressText;
     private Image iguanaProgressImage;
 
     /* Bird */
     public GameObject bird;
+    public int birdInitNum;
     private int birdCount;
-    private int birdMax;
+    public int birdMax;
     public GameObject birdProgress;
     private Text birdProgressText;
     private Image birdProgressImage;
@@ -103,74 +111,65 @@ public class GameManager : MonoBehaviour
         /* Init grass */
         grassTimer = 0;
         grassCount = 0;
-        grassMax = 100;
         grassProgressText = grassProgress.transform.GetChild(1).GetComponent<Text>();
         grassProgressImage = grassProgress.transform.GetChild(0).GetComponent<Image>();
-        grassProgressText.text = "0";
+        grassProgressText.text = "Grass: " + "0";
         grassProgressImage.fillAmount = 0f;
 
         /* Init squirrel */
         squirrelCount = 0;
-        squirrelMax = 10;
         squirrelProgressText = squirrelProgress.transform.GetChild(1).GetComponent<Text>();
         squirrelProgressImage = squirrelProgress.transform.GetChild(0).GetComponent<Image>();
-        squirrelProgressText.text = "0";
+        squirrelProgressText.text = "Squirrel: " + "0";
         squirrelProgressImage.fillAmount = 0f;
 
         /* Init rabbit */
         rabbitCount = 0;
-        rabbitMax = 10;
         rabbitProgressText = rabbitProgress.transform.GetChild(1).GetComponent<Text>();
         rabbitProgressImage = rabbitProgress.transform.GetChild(0).GetComponent<Image>();
-        rabbitProgressText.text = "0";
+        rabbitProgressText.text = "Rabbit: " + "0";
         rabbitProgressImage.fillAmount = 0f;
 
         /* Init eagle */
         eagleCount = 0;
-        eagleMax = 10;
         eagleProgressText = eagleProgress.transform.GetChild(1).GetComponent<Text>();
         eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
-        eagleProgressText.text = "0";
+        eagleProgressText.text = "Eagle: " + "0";
         eagleProgressImage.fillAmount = 0f;
 
         /* Init deer */
         deerCount = 0;
-        deerMax = 10;
         deerProgressText = deerProgress.transform.GetChild(1).GetComponent<Text>();
         deerProgressImage = deerProgress.transform.GetChild(0).GetComponent<Image>();
-        deerProgressText.text = "0";
+        deerProgressText.text = "Deer: " + "0";
         deerProgressImage.fillAmount = 0f;
 
         /* Init butterfly */
         butterflyCount = 0;
-        butterflyMax = 10;
         butterflyProgressText = butterflyProgress.transform.GetChild(1).GetComponent<Text>();
         butterflyProgressImage = butterflyProgress.transform.GetChild(0).GetComponent<Image>();
-        butterflyProgressText.text = "0";
+        butterflyProgressText.text = "Butterfly: " + "0";
         butterflyProgressImage.fillAmount = 0f;
 
         /* Init tiger */
         tigerCount = 0;
-        tigerMax = 10;
         tigerProgressText = tigerProgress.transform.GetChild(1).GetComponent<Text>();
         tigerProgressImage = tigerProgress.transform.GetChild(0).GetComponent<Image>();
-        tigerProgressText.text = "0";
+        tigerProgressText.text = "Tiger: " + "0";
         tigerProgressImage.fillAmount = 0f;
 
         /* Init iguana */
         iguanaCount = 0;
-        iguanaMax = 10;
         iguanaProgressText = iguanaProgress.transform.GetChild(1).GetComponent<Text>();
         iguanaProgressImage = iguanaProgress.transform.GetChild(0).GetComponent<Image>();
-        iguanaProgressText.text = "0";
+        iguanaProgressText.text = "Iguana: " + "0";
         iguanaProgressImage.fillAmount = 0f;
 
         /* Init bird */
         birdCount = 0;
-        birdMax = 10;
         birdProgressText = birdProgress.transform.GetChild(1).GetComponent<Text>();
         birdProgressImage = birdProgress.transform.GetChild(0).GetComponent<Image>();
-        birdProgressText.text = "0";
+        birdProgressText.text = "Bird: " + "0";
         birdProgressImage.fillAmount = 0f;
 
         /* Init map setting */
@@ -182,6 +181,7 @@ public class GameManager : MonoBehaviour
         planeMaxZ = bounds.max.z;
         planeMaxY = bounds.max.y;
 
+        /* Create squirrel */
         for (int i = 0; i < 10; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
         }
 
         /* Create rabbit */
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < rabbitInitNum; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
             float y;
@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
         }
 
         /* Create eagle */
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < eagleInitNum; ++i) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
             float y;
@@ -229,8 +229,24 @@ public class GameManager : MonoBehaviour
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
         }
 
+        /* Create deer */
+        for (int i = 0; i < deerInitNum; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            deerCount += 1;
+            setDeerProgress(true);
+            Instantiate(deer, new Vector3(x, y, z), Quaternion.identity);
+        }
+
         /* Create butterfly */
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < butterflyInitNum; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
             float y;
@@ -245,6 +261,54 @@ public class GameManager : MonoBehaviour
             Instantiate(butterfly, new Vector3(x, y, z), Quaternion.identity);
         }
 
+        /* Create tiger */
+        for (int i = 0; i < tigerInitNum; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            tigerCount += 1;
+            setTigerProgress(true);
+            Instantiate(tiger, new Vector3(x, y, z), Quaternion.identity);
+        }
+
+        /* Create iguana */
+        for (int i = 0; i < iguanaInitNum; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            iguanaCount += 1;
+            setIguanaProgress(true);
+            Instantiate(iguana, new Vector3(x, y, z), Quaternion.identity);
+        }
+
+        /* Create bird */
+        for (int i = 0; i < birdInitNum; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            birdCount += 1;
+            setBirdProgress(true);
+            Instantiate(bird, new Vector3(x, y, z), Quaternion.identity);
+        }
+
     }
 
     // Update is called once per frame
@@ -253,10 +317,8 @@ public class GameManager : MonoBehaviour
         /* Pause */
         if (Input.GetKeyDown(KeyCode.P)) {
             if (panel.activeSelf) {
-                Time.timeScale = 1;
                 panel.SetActive(false);
             } else {
-                Time.timeScale = 0;
                 panel.SetActive(true);
             }
 
@@ -293,7 +355,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setGrassProgress(bool isIncrease) {
-        grassProgressText.text = grassCount.ToString();
+        grassProgressText.text = "Grass:" + grassCount.ToString();
         if (isIncrease) {
             grassProgressImage.fillAmount += 1.0f / grassMax;
         } else {
@@ -303,7 +365,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setSquirrelProgress(bool isIncrease) {
-        squirrelProgressText.text = squirrelCount.ToString();
+        squirrelProgressText.text = "Squirrel: " + squirrelCount.ToString();
         if (isIncrease) {
             squirrelProgressImage.fillAmount += 1.0f / squirrelMax;
         } else {
@@ -312,7 +374,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setRabbitProgress(bool isIncrease) {
-        rabbitProgressText.text = rabbitCount.ToString();
+        rabbitProgressText.text = "Rabbit: " + rabbitCount.ToString();
         if (isIncrease) {
             rabbitProgressImage.fillAmount += 1.0f / rabbitMax;
         } else {
@@ -321,7 +383,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setButterflyProgress(bool isIncrease) {
-        butterflyProgressText.text = butterflyCount.ToString();
+        butterflyProgressText.text = "Butterfly: " + butterflyCount.ToString();
         if (isIncrease) {
             butterflyProgressImage.fillAmount += 1.0f / butterflyMax;
         } else {
@@ -330,7 +392,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setEagleProgress(bool isIncrease) {
-        eagleProgressText.text = eagleCount.ToString();
+        eagleProgressText.text = "Eagle: " + eagleCount.ToString();
         if (isIncrease) {
             eagleProgressImage.fillAmount += 1.0f / eagleMax;
         } else {
@@ -339,7 +401,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setDeerProgress(bool isIncrease) {
-        deerProgressText.text = deerCount.ToString();
+        deerProgressText.text = "Deer: " + deerCount.ToString();
         if (isIncrease) {
             deerProgressImage.fillAmount += 1.0f / deerMax;
         } else {
@@ -348,7 +410,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setTigerProgress(bool isIncrease) {
-        tigerProgressText.text = tigerCount.ToString();
+        tigerProgressText.text = "Tiger: " + tigerCount.ToString();
         if (isIncrease) {
             tigerProgressImage.fillAmount += 1.0f / tigerMax;
         } else {
@@ -357,7 +419,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setIguanaProgress(bool isIncrease) {
-        iguanaProgressText.text = iguanaCount.ToString();
+        iguanaProgressText.text = "Iguana: " + iguanaCount.ToString();
         if (isIncrease) {
             iguanaProgressImage.fillAmount += 1.0f / iguanaMax;
         } else {
@@ -366,7 +428,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setBirdProgress(bool isIncrease) {
-        birdProgressText.text = birdCount.ToString();
+        birdProgressText.text = "Bird: " + birdCount.ToString();
         if (isIncrease) {
             birdProgressImage.fillAmount += 1.0f / birdMax;
         } else {
