@@ -14,6 +14,7 @@ TagManager:
   - Bird
   - Butterfly
   - Iguana
+  - Frog
   layers:
   - Default
   - TransparentFX

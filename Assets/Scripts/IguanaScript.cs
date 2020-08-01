@@ -85,9 +85,12 @@ public class IguanaScript : MonoBehaviour
 
     IEnumerator stopAttack(float length) {
         yield return new WaitForSeconds(length);
-        GameManager.instance.delete(target, target.tag);
+
         currentState = IguanaState.Wandering;
-        health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+        if (target != null) {
+            GameManager.instance.delete(target, target.tag);
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+        }
     }
 
     IEnumerator stopDead(float length) {
