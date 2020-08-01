@@ -50,7 +50,12 @@ public class ButterflyScript : MonoBehaviour
         if (currentState == ButterflyState.Dead)
             return;
 
-        else if (currentState == ButterflyState.Wandering) {
+        if (health != null)
+            health.TakeDamage(1f);
+    }
+
+    void FixedUpdate() {
+        if (currentState == ButterflyState.Wandering) {
             if (wanderTime > 0) {
                 wanderTime -= Time.deltaTime;
             } else {
@@ -90,13 +95,8 @@ public class ButterflyScript : MonoBehaviour
             }
 
             transform.position += (transform.forward * speed * Time.deltaTime);
-            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            // Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
         }
-
-        if (health != null)
-            health.TakeDamage(1f);
     }
 
     IEnumerator Dissolve(float time) {

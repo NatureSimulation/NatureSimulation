@@ -47,7 +47,13 @@ public class RabbitScript : MonoBehaviour {
 
         if (currentState == RabbitState.Dead)
             return;
-        else if (currentState == RabbitState.Wandering) {
+
+        if (health != null)
+            health.TakeDamage(1f);
+    }
+
+    void FixedUpdate() {
+        if (currentState == RabbitState.Wandering) {
             if (wanderTime > 0) {
                 animator.SetTrigger("moving");
                 wanderTime -= Time.deltaTime;
@@ -70,14 +76,9 @@ public class RabbitScript : MonoBehaviour {
                 return;
             }
 
-            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            // Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
         }
-
-        if (health != null)
-            health.TakeDamage(1f);
     }
 
     IEnumerator Dissolve(float time) {
