@@ -8,6 +8,7 @@ TagManager:
   - Terrain
   - Rabbit
   - Eagle
+  - Deer
   layers:
   - Default
   - TransparentFX
