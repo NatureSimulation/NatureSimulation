@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
     private Text grassProgressText;
     private Image grassProgressImage;
 
+    /* Squirrel */
+    public GameObject squirrel;
+    private int squirrelCount;
+    private int squirrelMax;
+    public GameObject squirrelProgress;
+    private Text squirrelProgressText;
+    private Image squirrelProgressImage;
+
+
     /* Rabbit */
     public GameObject rabbit;
     private int rabbitCount;
@@ -80,6 +89,20 @@ public class GameManager : MonoBehaviour
         planeMaxX = bounds.max.x;
         planeMaxZ = bounds.max.z;
         planeMaxY = bounds.max.y;
+
+        for (int i = 0; i < 10; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+
+            squirrelCount += 1;
+            Instantiate (squirrel, new Vector3(x, y, z), Quaternion.identity);
+        }
 
         /* Create rabbit */
         for (int i = 0; i < 10; i++) {
