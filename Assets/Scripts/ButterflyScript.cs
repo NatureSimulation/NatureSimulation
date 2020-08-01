@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RabbitScript : MonoBehaviour {
+public class ButterflyScript : MonoBehaviour
+{
     private Animator animator;
     private Rigidbody rb;
     private Health health;
     private float wanderTime;
 
+    public float speed = 3f;
+
     private GameObject target;
 
-    private enum RabbitState {
+    private enum ButterflyState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private RabbitState currentState;
+    private ButterflyState currentState;
 
     // Start is called before the first frame update
     void Start() {
@@ -27,7 +30,7 @@ public class RabbitScript : MonoBehaviour {
         health = GetComponent<Health>();
         animator.speed = 3;
         wanderTime = Random.Range(1.0f, 2.0f);
-        currentState = RabbitState.Wandering;
+        currentState = ButterflyState.Wandering;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -40,12 +43,11 @@ public class RabbitScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (health.currentHealth <= 0) {
-            currentState = RabbitState.Dead;
-            animator.SetBool("dead", true);
-            StartCoroutine(Dissolve(5.0f));
+            currentState = ButterflyState.Dead;
+            StartCoroutine(Dissolve(1.0f));
         }
 
-        if (currentState == RabbitState.Dead)
+        if (currentState == ButterflyState.Dead)
             return;
 
         if (health != null)
@@ -53,31 +55,47 @@ public class RabbitScript : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (currentState == RabbitState.Wandering) {
+        if (currentState == ButterflyState.Wandering) {
             if (wanderTime > 0) {
-                animator.SetTrigger("moving");
                 wanderTime -= Time.deltaTime;
             } else {
                 wanderTime = Random.Range(1.0f, 2.0f);
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
+            /* Forward */
+            float planeY;
+            try {
+                planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.z);
+            } catch {
+                planeY = 0;
+            }
+            Quaternion rotation;
+            if (planeY + 1 > this.transform.position.y) {
+                rotation = Quaternion.Euler(new Vector3 (-1, transform.rotation.y, transform.rotation.z));
+            } else {
+                rotation = Quaternion.Euler(new Vector3 (1, transform.rotation.y, transform.rotation.z));
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
+
+            transform.position += (transform.forward * speed * Time.deltaTime);
+
             Collider[] grassColliders = Physics.OverlapSphere(transform.position, 10.0f).Where(coll => coll.tag == "Grass").ToArray();
 
             if (grassColliders.Length > 0) {
-                currentState = RabbitState.Targeting;
+                currentState = ButterflyState.Targeting;
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
                 target = grassColliders[0].gameObject;
                 Debug.Log("Targeting");
             }
-        } else if (currentState == RabbitState.Targeting) {
+        } else if (currentState == ButterflyState.Targeting) {
             if (target == null) {
-                currentState = RabbitState.Wandering;
+                currentState = ButterflyState.Wandering;
                 return;
             }
 
+            transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-            animator.SetTrigger("moving");
         }
     }
 

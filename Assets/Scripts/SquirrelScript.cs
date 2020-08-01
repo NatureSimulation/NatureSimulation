@@ -49,7 +49,12 @@ public class SquirrelScript : MonoBehaviour {
         if (currentState == SquirrelState.Dead)
             return;
 
-        else if (currentState == SquirrelState.Wandering) {
+        if (health != null)
+            health.TakeDamage(1f);
+    }
+
+    void FixedUpdate() {
+        if (currentState == SquirrelState.Wandering) {
             if (wanderTime > 0) {
                 wanderTime -= Time.deltaTime;
             } else {
@@ -76,13 +81,8 @@ public class SquirrelScript : MonoBehaviour {
 
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
-            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            // Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
         }
-
-        if (health != null)
-            health.TakeDamage(1f);
     }
 
     IEnumerator Dissolve(float time) {
