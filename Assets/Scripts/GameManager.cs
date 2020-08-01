@@ -51,6 +51,14 @@ public class GameManager : MonoBehaviour
     private Text deerProgressText;
     private Image deerProgressImage;
 
+    /* Butterfly */
+    public GameObject butterfly;
+    private int butterflyCount;
+    private int butterflyMax;
+    public GameObject butterflyProgress;
+    private Text butterflyProgressText;
+    private Image butterflyProgressImage;
+
     /* Map */
     public GameObject plane;
     private float planeMinX;
@@ -109,6 +117,14 @@ public class GameManager : MonoBehaviour
         deerProgressText.text = "0";
         deerProgressImage.fillAmount = 0f;
 
+        /* Init butterfly */
+        butterflyCount = 0;
+        butterflyMax = 10;
+        butterflyProgressText = butterflyProgress.transform.GetChild(1).GetComponent<Text>();
+        butterflyProgressImage = butterflyProgress.transform.GetChild(0).GetComponent<Image>();
+        butterflyProgressText.text = "0";
+        butterflyProgressImage.fillAmount = 0f;
+
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
         Bounds bounds = mesh.bounds;
@@ -163,6 +179,22 @@ public class GameManager : MonoBehaviour
             eagleCount += 1;
             setEagleProgress(true);
             Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
+        }
+
+        /* Create butterfly */
+        for (int i = 0; i < 10; i++) {
+            float x = Random.Range(planeMinX, planeMaxX);
+            float z = Random.Range(planeMinZ, planeMaxZ);
+            float y;
+            try {
+                y = getHeight(x, z);
+            } catch (System.Exception) {
+                continue;
+            }
+            
+            butterflyCount += 1;
+            setButterflyProgress(true);
+            Instantiate(butterfly, new Vector3(x, y, z), Quaternion.identity);
         }
 
     }
@@ -237,6 +269,15 @@ public class GameManager : MonoBehaviour
             rabbitProgressImage.fillAmount += 1.0f / rabbitMax;
         } else {
             rabbitProgressImage.fillAmount -= 1.0f / rabbitMax;
+        }
+    }
+
+    void setButterflyProgress(bool isIncrease) {
+        butterflyProgressText.text = butterflyCount.ToString();
+        if (isIncrease) {
+            butterflyProgressImage.fillAmount += 1.0f / butterflyMax;
+        } else {
+            butterflyProgressImage.fillAmount -= 1.0f / butterflyMax;
         }
     }
 
