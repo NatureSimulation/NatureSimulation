@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     private float planeMaxZ;
     private float planeMaxY;
 
+    public GameObject panel;
+
     
     void Awake() {
         instance = this;
@@ -117,6 +119,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P)) {
+            if (panel.activeSelf) {
+                Time.timeScale = 1;
+                panel.SetActive(false);
+            } else {
+                Time.timeScale = 0;
+                panel.SetActive(true);
+            }
+            
+        }
         /* Create grass */
         grassTimer += Time.deltaTime;
         if (grassTimer > 3) {

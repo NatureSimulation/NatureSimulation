@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DeerScript : MonoBehaviour
 {
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
     public float walkspeed = 5;
     private Health health;
     private float wanderTime;
@@ -21,7 +21,7 @@ public class DeerScript : MonoBehaviour
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         health = GetComponent<Health>();      
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = DeerState.Wandering;  
