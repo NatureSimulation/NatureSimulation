@@ -33,7 +33,7 @@ public class RabbitScript : MonoBehaviour {
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
             health.currentHealth = 1000.0f;
-            Destroy(other.gameObject);
+            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
 
@@ -70,8 +70,8 @@ public class RabbitScript : MonoBehaviour {
                 return;
             }
 
-            Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
+            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
+            // Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
         }
@@ -83,6 +83,6 @@ public class RabbitScript : MonoBehaviour {
     IEnumerator Dissolve(float time) {
         yield return new WaitForSeconds(time);
 
-        Destroy(gameObject);
+        GameManager.instance.delete(this.gameObject, this.tag);
     }
 }

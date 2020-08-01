@@ -77,6 +77,14 @@ public class GameManager : MonoBehaviour
         grassProgressText.text = "0";
         grassProgressImage.fillAmount = 0f;
 
+        /* Init squirrel */
+        squirrelCount = 0;
+        squirrelMax = 10;
+        squirrelProgressText = squirrelProgress.transform.GetChild(1).GetComponent<Text>();
+        squirrelProgressImage = squirrelProgress.transform.GetChild(0).GetComponent<Image>();
+        squirrelProgressText.text = "0";
+        squirrelProgressImage.fillAmount = 0f;
+
         /* Init rabbit */
         rabbitCount = 0;
         rabbitMax = 10;
@@ -121,6 +129,7 @@ public class GameManager : MonoBehaviour
             }
 
             squirrelCount += 1;
+            setSquirrelProgress(true);
             Instantiate (squirrel, new Vector3(x, y, z), Quaternion.identity);
         }
 
@@ -213,6 +222,15 @@ public class GameManager : MonoBehaviour
         
     }
 
+    void setSquirrelProgress(bool isIncrease) {
+        squirrelProgressText.text = squirrelCount.ToString();
+        if (isIncrease) {
+            squirrelProgressImage.fillAmount += 1.0f / squirrelMax;
+        } else {
+            squirrelProgressImage.fillAmount -= 1.0f / squirrelMax;
+        }
+    }
+
     void setRabbitProgress(bool isIncrease) {
         rabbitProgressText.text = rabbitCount.ToString();
         if (isIncrease) {
@@ -244,7 +262,6 @@ public class GameManager : MonoBehaviour
         if (tag == "Grass") {
             grassCount -= 1;
             setGrassProgress(false);
-            
         } else if (tag == "Rabbit") {
             rabbitCount -= 1;
             setRabbitProgress(false);
@@ -254,7 +271,11 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Deer") {
             deerCount -= 1;
             setDeerProgress(false);
+        } else if (tag == "Squirrel") {
+            squirrelCount -= 1;
+            setSquirrelProgress(false);
         }
+
         Destroy(item);
     }
 }

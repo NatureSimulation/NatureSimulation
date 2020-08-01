@@ -103,7 +103,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431351716}
   m_LocalRotation: {x: 0, y: -0.81206685, z: -0, w: -0.58356446}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 0.039999995, y: 0.04, z: 0.039999995}
   m_Children:
   - {fileID: 93095981}
@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.5}
+  m_AnchoredPosition: {x: 0.04, y: 1.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &431351721
@@ -1466,8 +1466,8 @@ GameObject:
   - component: {fileID: 449449581}
   - component: {fileID: 449449582}
   m_Layer: 0
-  m_Name: SCharacter_Squirrel
-  m_TagString: Untagged
+  m_Name: Squirrel
+  m_TagString: Squirrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -86,7 +86,7 @@ public class EagelScripts : MonoBehaviour
 
         } else if (currentState == EagleState.Targeting ) {
             animator.SetTrigger("Attack");
-            Debug.DrawLine(transform.position, target.transform.position, Color.white);
+            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             
             transform.position += (transform.forward * walkspeed * Time.deltaTime);
