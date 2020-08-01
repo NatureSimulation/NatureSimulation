@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{   
+{
     /* External variables */
     /* For singleton pattern */
     public static GameManager instance;
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject panel;
 
-    
+
     void Awake() {
         instance = this;
     }
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
         eagleProgressText.text = "0";
         eagleProgressImage.fillAmount = 0f;
-        
+
         /* Init deer */
         deerCount = 0;
         deerMax = 10;
@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
             } catch (System.Exception) {
                 continue;
             }
-            
+
             rabbitCount += 1;
             setRabbitProgress(true);
             Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour
             } catch (System.Exception) {
                 continue;
             }
-            
+
             butterflyCount += 1;
             setButterflyProgress(true);
             Instantiate(butterfly, new Vector3(x, y, z), Quaternion.identity);
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 panel.SetActive(true);
             }
-            
+
         }
         /* Create grass */
         grassTimer += Time.deltaTime;
@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("grass generated error");
         throw new System.Exception("Invalid coordinate");
-    } 
+    }
 
     void setGrassProgress(bool isIncrease) {
         grassProgressText.text = grassCount.ToString();
@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
         } else {
             grassProgressImage.fillAmount -= 1.0f / grassMax;
         }
-        
+
     }
 
     void setSquirrelProgress(bool isIncrease) {
