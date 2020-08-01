@@ -11,7 +11,7 @@ public class TigerScript : MonoBehaviour
     private Animator animator;
     private Health health;
     private float wanderTime;
-    
+
     private GameObject target;
     private enum TigerState {
         Dead,
@@ -88,7 +88,12 @@ public class TigerScript : MonoBehaviour
 
     IEnumerator stopAttack(float length) {
         yield return new WaitForSeconds(length);
-        GameManager.instance.delete(target, target.tag);
-        currentState = TigerState.Wandering;
+        if (target == null) {
+            currentState = TigerState.Wandering;
+        } else {
+            GameManager.instance.delete(target, target.tag);
+            health.currentHealth = Health.maxHealth;
+            currentState = TigerState.Wandering;
+        }
     }
 }
