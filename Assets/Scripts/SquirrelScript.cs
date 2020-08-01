@@ -35,7 +35,7 @@ public class SquirrelScript : MonoBehaviour {
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Grass") {
             health.currentHealth = 1000.0f;
-            Destroy(other.gameObject);
+            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
     }
 
@@ -76,8 +76,8 @@ public class SquirrelScript : MonoBehaviour {
 
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
-            Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
+            // Debug.DrawLine(transform.position, target.transform.position, Color.white);
+            // Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
         }
 
@@ -88,6 +88,6 @@ public class SquirrelScript : MonoBehaviour {
     IEnumerator Dissolve(float time) {
         yield return new WaitForSeconds(time);
 
-        Destroy(gameObject);
+        GameManager.instance.delete(this.gameObject, this.tag);
     }
 }
