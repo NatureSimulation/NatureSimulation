@@ -16,10 +16,11 @@ public class BirdScript : MonoBehaviour
     public float coolTimeBreeding;
     private float leftTimeForBreeding;
     public GameObject childPrefab;
-    private enum BirdState {
+    public enum BirdState {
         Dead,
         Targeting,
-        Wandering
+        Wandering,
+        Escaping
     };
     public BirdState currentState;
 

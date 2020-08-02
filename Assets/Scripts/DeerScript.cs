@@ -18,7 +18,7 @@ public class DeerScript : MonoBehaviour
     private float wanderTime;
 
     private GameObject target;
-    public static enum DeerState {
+    public enum DeerState {
         Dead,
         Escaping,
         Targeting,

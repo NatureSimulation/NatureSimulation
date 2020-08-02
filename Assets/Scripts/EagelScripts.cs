@@ -25,7 +25,7 @@ public class EagelScripts : MonoBehaviour
     public EagleState currentState;
     private Health health;
 
-    public static enum EagleState {
+    public enum EagleState {
         Wandering,
         Targeting,
         Dead,

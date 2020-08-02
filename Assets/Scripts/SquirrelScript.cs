@@ -20,7 +20,7 @@ public class SquirrelScript : MonoBehaviour {
 
     private GameObject target;
 
-    public static enum SquirrelState {
+    public enum SquirrelState {
         Dead,
         Escaping,
         Targeting,

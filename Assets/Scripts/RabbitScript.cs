@@ -19,7 +19,7 @@ public class RabbitScript : MonoBehaviour {
 
     private GameObject target;
 
-    public static enum RabbitState {
+    public enum RabbitState {
         Dead,
         Escaping,
         Targeting,

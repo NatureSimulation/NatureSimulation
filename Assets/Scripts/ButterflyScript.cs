@@ -21,7 +21,7 @@ public class ButterflyScript : MonoBehaviour
 
     private GameObject target;
 
-    public static enum ButterflyState {
+    public enum ButterflyState {
         Dead,
         Escaping,
         Targeting,

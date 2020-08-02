@@ -18,7 +18,7 @@ public class IguanaScript : MonoBehaviour
     private Health health;
     private float wanderTime;
     private GameObject target;
-    public static enum IguanaState {
+    public enum IguanaState {
         Dead,
         Escaping,
         Targeting,

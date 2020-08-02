@@ -20,7 +20,7 @@ public class FrogScript : MonoBehaviour {
 
     private GameObject target;
 
-    public static enum FrogState {
+    public enum FrogState {
         Dead,
         Escaping,
         Targeting,
