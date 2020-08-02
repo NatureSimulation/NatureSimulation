@@ -20,14 +20,14 @@ public class FrogScript : MonoBehaviour {
 
     private GameObject target;
 
-    private enum FrogState {
+    public static enum FrogState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private FrogState currentState;
+    public FrogState currentState;
 
     // Start is called before the first frame update
     void Start() {

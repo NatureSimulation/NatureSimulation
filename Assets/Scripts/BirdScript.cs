@@ -21,7 +21,7 @@ public class BirdScript : MonoBehaviour
         Targeting,
         Wandering
     };
-    private BirdState currentState;
+    public BirdState currentState;
 
     void Start()
     {

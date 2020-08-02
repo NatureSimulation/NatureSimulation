@@ -20,14 +20,14 @@ public class SquirrelScript : MonoBehaviour {
 
     private GameObject target;
 
-    private enum SquirrelState {
+    public static enum SquirrelState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private SquirrelState currentState;
+    public SquirrelState currentState;
 
     // Start is called before the first frame update
     void Start() {

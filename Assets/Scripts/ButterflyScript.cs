@@ -21,14 +21,14 @@ public class ButterflyScript : MonoBehaviour
 
     private GameObject target;
 
-    private enum ButterflyState {
+    public static enum ButterflyState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private ButterflyState currentState;
+    public ButterflyState currentState;
 
     // Start is called before the first frame update
     void Start() {

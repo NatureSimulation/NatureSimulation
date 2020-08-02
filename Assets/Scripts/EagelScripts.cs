@@ -22,10 +22,10 @@ public class EagelScripts : MonoBehaviour
 
     public GameObject target;
     public float minAttackDistance;
-    private EagleState currentState;
+    public EagleState currentState;
     private Health health;
 
-    enum EagleState {
+    public static enum EagleState {
         Wandering,
         Targeting,
         Dead,

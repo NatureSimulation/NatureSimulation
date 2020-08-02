@@ -19,13 +19,13 @@ public class TigerScript : MonoBehaviour
     private float wanderTime;
 
     private GameObject target;
-    private enum TigerState {
+    public static enum TigerState {
         Dead,
         Attacking,
         Targeting,
         Wandering
     };
-    private TigerState currentState;
+    public TigerState currentState;
 
     void Start()
     {

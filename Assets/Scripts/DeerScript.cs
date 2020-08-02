@@ -18,13 +18,13 @@ public class DeerScript : MonoBehaviour
     private float wanderTime;
 
     private GameObject target;
-    private enum DeerState {
+    public static enum DeerState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
-    private DeerState currentState;
+    public DeerState currentState;
 
     void Start()
     {

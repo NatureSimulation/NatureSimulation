@@ -19,14 +19,14 @@ public class RabbitScript : MonoBehaviour {
 
     private GameObject target;
 
-    private enum RabbitState {
+    public static enum RabbitState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private RabbitState currentState;
+    public RabbitState currentState;
 
     // Start is called before the first frame update
     void Start() {
