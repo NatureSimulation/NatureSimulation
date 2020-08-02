@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class IguanaScript : MonoBehaviour
 {
-    public float walkspeed = 5;
+    public float walkspeed;
+    public float wanderSpeed;
+    public float escapeSpeed;
     public float sight = 20.0f;
     public float damageSpeed;
     public float recoverSpeed;
@@ -26,10 +28,14 @@ public class IguanaScript : MonoBehaviour
         Wandering
     };
     public IguanaState currentState;
-
+    public static string[] predators = {"Eagle"};
+    private GameObject predator;
     void Start()
     {
         health = GetComponent<Health>();
+        wanderSpeed = 1f;
+        escapeSpeed = 5f;
+        walkspeed = wanderSpeed;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = IguanaState.Wandering;
         animator = GetComponent<Animator>();
@@ -83,20 +89,41 @@ public class IguanaScript : MonoBehaviour
             }
         }
         leftTimeForBreeding -= Time.deltaTime;
+
+        Collider[] colls = Physics.OverlapSphere(transform.position, sight).ToArray();
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+
+        if (predatorColliders.Length > 0) {
+            animator.SetFloat("Forward", escapeSpeed);
+            animator.speed = escapeSpeed;
+            currentState = IguanaState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+            transform.rotation = Quaternion.LookRotation(transform.position - closest.transform.position, Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == IguanaState.Escaping) {
+            animator.SetFloat("Forward", wanderSpeed);
+            animator.speed = wanderSpeed;
+            currentState = IguanaState.Wandering;
+        }
     }
 
     void FixedUpdate() {
         if (currentState == IguanaState.Wandering) {
             if (wanderTime > 0) {
-                animator.SetFloat("Forward", walkspeed);
+                animator.SetFloat("Forward", wanderSpeed);
                 wanderTime -= Time.deltaTime;
             } else {
+                animator.speed = wanderSpeed;
                 wanderTime = Random.Range(1.0f, 2.0f);
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
         } else if (currentState == IguanaState.Targeting) {
             if (target == null) {
                 currentState = IguanaState.Wandering;
+                animator.speed = wanderSpeed;
                 return;
             }
 
@@ -108,6 +135,23 @@ public class IguanaScript : MonoBehaviour
             } else {
                 tryBreeding();
             }
+
+            animator.SetFloat("Forward", wanderSpeed * 2);
+            animator.speed = wanderSpeed * 2;
+            tryDamageTarget();
+        } else if (currentState == IguanaState.Escaping) {
+            if (predator == null) {
+                currentState = IguanaState.Wandering;
+                animator.SetFloat("Forward", wanderSpeed);
+                animator.speed = wanderSpeed;
+                return;
+            }
+
+            animator.SetFloat("Forward", escapeSpeed);
+            animator.speed = escapeSpeed;
+            Debug.DrawLine(transform.position, predator.transform.position, Color.white);
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
         if (health != null)
             health.TakeDamage(damageSpeed);
@@ -127,6 +171,7 @@ public class IguanaScript : MonoBehaviour
         yield return new WaitForSeconds(length);
 
         currentState = IguanaState.Wandering;
+        animator.speed = wanderSpeed;
         if (target != null) {
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);

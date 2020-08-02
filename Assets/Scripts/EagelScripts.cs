@@ -120,7 +120,7 @@ public class EagelScripts : MonoBehaviour
 			transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
 
-        } else if (currentState == EagleState.Targeting ) {
+        } else if (currentState == EagleState.Targeting) {
             if (target == null) {
                 currentState = EagleState.Wandering;
                 return;
@@ -128,6 +128,7 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("Attack");
             // Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
+            Debug.Log("Eagle: " + transform.position);
 
             transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
