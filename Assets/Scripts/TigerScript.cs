@@ -37,9 +37,27 @@ public class TigerScript : MonoBehaviour
             currentState = TigerState.Dead;
             GameManager.instance.delete(this.gameObject, this.tag);
         }
+
+        /* Search wall */
+        Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Wall").ToArray();
+        if (wallColliders.Length > 0) {
+            Quaternion rotation;
+            if (wallColliders[0].name == "NorthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+            } else if (wallColliders[0].name == "SouthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+            } else if (wallColliders[0].name == "EastWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
+            } else {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
+        }
+
+        /* Search prey */
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(coll => coll.tag == "Rabbit" || coll.tag == "Deer").ToArray();
-
         if (colliders.Length > 0) {
             currentState = TigerState.Targeting;
             transform.rotation = Quaternion.LookRotation(

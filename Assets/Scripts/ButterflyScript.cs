@@ -53,6 +53,30 @@ public class ButterflyScript : MonoBehaviour
         if (currentState == ButterflyState.Dead)
             return;
 
+        /* Search wall */
+        Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Wall").ToArray();
+        if (wallColliders.Length > 0) {
+            Quaternion rotation;
+            if (wallColliders[0].name == "NorthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+            } else if (wallColliders[0].name == "SouthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+            } else if (wallColliders[0].name == "EastWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
+            } else {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+        }
+
+        /* Search prey */
+        Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
+            if (grassColliders.Length > 0) {
+                currentState = ButterflyState.Targeting;
+                transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
+                target = grassColliders[0].gameObject;
+            }
     }
 
     void FixedUpdate() {
@@ -81,13 +105,6 @@ public class ButterflyScript : MonoBehaviour
 
             transform.position += (transform.forward * speed * Time.deltaTime);
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
-
-            if (grassColliders.Length > 0) {
-                currentState = ButterflyState.Targeting;
-                transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
-                target = grassColliders[0].gameObject;
-            }
         } else if (currentState == ButterflyState.Targeting) {
             if (target == null) {
                 currentState = ButterflyState.Wandering;

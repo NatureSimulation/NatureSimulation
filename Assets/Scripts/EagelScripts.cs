@@ -44,6 +44,32 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("isDead");
             StartCoroutine(stopDead(1));
         }
+
+        /* Search wall */
+        Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Wall").ToArray();
+        if (wallColliders.Length > 0) {
+            Quaternion rotation;
+            if (wallColliders[0].name == "NorthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+            } else if (wallColliders[0].name == "SouthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+            } else if (wallColliders[0].name == "EastWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
+            } else {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
+        }
+
+        /* Search prey */
+        Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(collider => collider.tag == "Rabbit" || collider.tag == "Frog" || collider.tag == "Iguana").ToArray();
+        if (rabbitColliders.Length != 0) {
+            currentState = EagleState.Targeting;
+            transform.rotation = Quaternion.LookRotation(rabbitColliders[0].transform.position - transform.position, Vector3.up);
+            target = rabbitColliders[0].gameObject;
+        }
     }
 
     void FixedUpdate()
@@ -75,15 +101,6 @@ public class EagelScripts : MonoBehaviour
 
 			transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
-
-            /* Look near */
-            Collider[] rabbitColliders = Physics.OverlapSphere(transform.position, sight)
-                .Where(collider => collider.tag == "Rabbit" || collider.tag == "Frog" || collider.tag == "Iguana").ToArray();
-            if (rabbitColliders.Length != 0) {
-                currentState = EagleState.Targeting;
-                transform.rotation = Quaternion.LookRotation(rabbitColliders[0].transform.position - transform.position, Vector3.up);
-                target = rabbitColliders[0].gameObject;
-            }
 
         } else if (currentState == EagleState.Targeting ) {
             if (target == null) {

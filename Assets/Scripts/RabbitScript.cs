@@ -51,6 +51,30 @@ public class RabbitScript : MonoBehaviour {
         if (currentState == RabbitState.Dead)
             return;
 
+        /* Search wall */
+        Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Wall").ToArray();
+        if (wallColliders.Length > 0) {
+            Quaternion rotation;
+            if (wallColliders[0].name == "NorthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+            } else if (wallColliders[0].name == "SouthWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+            } else if (wallColliders[0].name == "EastWall") {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
+            } else {
+                rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
+        }
+
+        /* Search prey */
+        Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
+        if (grassColliders.Length > 0) {
+            currentState = RabbitState.Targeting;
+            transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
+            target = grassColliders[0].gameObject;
+        }
     }
 
     void FixedUpdate() {
@@ -63,13 +87,6 @@ public class RabbitScript : MonoBehaviour {
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
-            Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
-
-            if (grassColliders.Length > 0) {
-                currentState = RabbitState.Targeting;
-                transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
-                target = grassColliders[0].gameObject;
-            }
         } else if (currentState == RabbitState.Targeting) {
             if (target == null) {
                 currentState = RabbitState.Wandering;

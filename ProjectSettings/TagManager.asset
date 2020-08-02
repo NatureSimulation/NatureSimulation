@@ -15,6 +15,12 @@ TagManager:
   - Butterfly
   - Iguana
   - Frog
+  - Guts
+  - Wall
+  - NorthWall
+  - EastWall
+  - SouthWall
+  - WestWall
   layers:
   - Default
   - TransparentFX

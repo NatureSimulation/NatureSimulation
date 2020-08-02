@@ -52,5 +52,11 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
-    }
+    },
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["y"],
+            "after": ["\"", "+", "y"]
+        }
+    ]
 }
