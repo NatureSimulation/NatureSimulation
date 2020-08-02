@@ -103,18 +103,18 @@ public class TigerScript : MonoBehaviour
             transform.LookAt(target.transform);
             currentState = TigerState.Attacking;
             animator.SetTrigger("attack");
-            StartCoroutine(stopAttack(1));
+            StartCoroutine(stopAttack(0.5f));
         }
     }
 
     IEnumerator stopAttack(float length) {
         yield return new WaitForSeconds(length);
-        if (target == null) {
-            currentState = TigerState.Wandering;
-        } else {
+        if (target != null) {
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            currentState = TigerState.Wandering;
+        }
+        currentState = TigerState.Wandering;
+    }
 
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag != "Terrain") {
