@@ -69,7 +69,6 @@ public class TigerScript : MonoBehaviour
     void FixedUpdate() {
         if (currentState == TigerState.Wandering) {
             if (wanderTime > 0) {
-                transform.Translate(transform.forward * walkSpeed * Time.deltaTime, Space.World);
                 animator.SetFloat("moving", walkSpeed);
                 wanderTime -= Time.deltaTime;
             } else {
@@ -77,6 +76,8 @@ public class TigerScript : MonoBehaviour
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
+            transform.Translate(transform.forward * walkSpeed * Time.deltaTime, Space.World);
+            Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
         } else if (currentState == TigerState.Targeting) {
             if (target == null) {
                 currentState = TigerState.Wandering;
@@ -85,8 +86,9 @@ public class TigerScript : MonoBehaviour
 
             animator.SetFloat("moving", walkSpeed * 2);
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
-            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position);
-            transform.Translate(transform.forward * walkSpeed * 2 * Time.deltaTime);
+            Vector3 diff = target.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            transform.Translate(transform.forward * walkSpeed * 2 * Time.deltaTime, Space.World);
 
             tryDamageTarget();
         }
@@ -101,18 +103,22 @@ public class TigerScript : MonoBehaviour
             transform.LookAt(target.transform);
             currentState = TigerState.Attacking;
             animator.SetTrigger("attack");
-            StartCoroutine(stopAttack(1));
+            StartCoroutine(stopAttack(0.5f));
         }
     }
 
     IEnumerator stopAttack(float length) {
         yield return new WaitForSeconds(length);
-        if (target == null) {
-            currentState = TigerState.Wandering;
-        } else {
+        if (target != null) {
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            currentState = TigerState.Wandering;
+        }
+        currentState = TigerState.Wandering;
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag != "Terrain") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 }
