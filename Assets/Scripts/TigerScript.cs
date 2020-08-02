@@ -113,6 +113,10 @@ public class TigerScript : MonoBehaviour
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = TigerState.Wandering;
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag != "Terrain") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 }
