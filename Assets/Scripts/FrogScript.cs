@@ -174,6 +174,8 @@ public class FrogScript : MonoBehaviour {
     }
 
     void tryBreeding() {
+        if (target.tag != this.tag)
+            return;
         float distance = (target.transform.position - transform.position).magnitude;
         if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
             float x = this.transform.position.x + Random.Range(-20, 20);
