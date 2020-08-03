@@ -23,7 +23,7 @@ public class Frog : Animal {
     public override void UpdateOnTargeting() {
         base.UpdateOnTargeting();
 
-        if (target != null && (target.transform.position - transform.position).magnitude < 10) {
+        if (target != null && target.tag != this.tag && (target.transform.position - transform.position).magnitude < 10) {
             animator.SetTrigger("tongue");
             GameManager.instance.delete(target, target.tag);
             target = null;
