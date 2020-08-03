@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EagelScripts : MonoBehaviour
+public class EagleScript : MonoBehaviour
 {
     private Animator animator;
     public float walkspeed = 5;
@@ -22,15 +22,21 @@ public class EagelScripts : MonoBehaviour
 
     public GameObject target;
     public float minAttackDistance;
-    private EagleState currentState;
+    public EagleState currentState;
     private Health health;
 
-    enum EagleState {
+    public enum EagleState {
         Wandering,
         Targeting,
         Dead,
         Attacking
     };
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
 
     void Start()
     {
@@ -120,7 +126,7 @@ public class EagelScripts : MonoBehaviour
 			transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);
 
-        } else if (currentState == EagleState.Targeting ) {
+        } else if (currentState == EagleState.Targeting) {
             if (target == null) {
                 currentState = EagleState.Wandering;
                 return;
@@ -128,6 +134,7 @@ public class EagelScripts : MonoBehaviour
             animator.SetTrigger("Attack");
             // Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
+            Debug.Log("Eagle: " + transform.position);
 
             transform.position += (transform.forward * walkspeed * Time.deltaTime);
 			animator.SetFloat("Speed", speedOut);

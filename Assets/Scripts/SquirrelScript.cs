@@ -10,6 +10,8 @@ public class SquirrelScript : MonoBehaviour {
     private float wanderTime;
 
     public float speed = 3f;
+    public float wanderSpeed = 3f;
+    public float escapeSpeed = 10f;
     public float damageSpeed;
     public float recoverSpeed;
     public float minBreedDistance;
@@ -20,21 +22,22 @@ public class SquirrelScript : MonoBehaviour {
 
     private GameObject target;
 
-    private enum SquirrelState {
+    public enum SquirrelState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private SquirrelState currentState;
-
+    public SquirrelState currentState;
+    public static string[] predators = {"Bird", "Iguana"};
+    private GameObject predator;
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
-        animator.speed = 3;
+        animator.speed = 3f;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = SquirrelState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;
@@ -44,6 +47,10 @@ public class SquirrelScript : MonoBehaviour {
         if (other.gameObject.tag == "Grass" || other.gameObject.tag == "Butterfly") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+            animator.speed = wanderSpeed;
+            speed = wanderSpeed;
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 
@@ -75,11 +82,30 @@ public class SquirrelScript : MonoBehaviour {
         }
 
         /* Search prey */
-        Collider[] grassColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Grass").ToArray();
-        if (grassColliders.Length > 0) {
+        Collider[] preyColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Butterfly" || coll.tag == "Grass").ToArray();
+        if (preyColliders.Length > 0) {
             currentState = SquirrelState.Targeting;
-            transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
-            target = grassColliders[0].gameObject;
+            speed += 1f;
+            transform.rotation = Quaternion.LookRotation(preyColliders[0].transform.position - transform.position, Vector3.up);
+            target = preyColliders[0].gameObject;
+        }
+
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+        if (predatorColliders.Length > 0) {
+            speed = escapeSpeed;
+            animator.speed = escapeSpeed;
+            currentState = SquirrelState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == SquirrelState.Escaping) {
+            currentState = SquirrelState.Wandering;
+            speed = wanderSpeed;
+            animator.speed = wanderSpeed;
         }
 
         /* Search friend */
@@ -117,8 +143,19 @@ public class SquirrelScript : MonoBehaviour {
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-
             tryBreeding();
+        } else if (currentState == SquirrelState.Escaping) {
+            if (predator == null) {
+                currentState = SquirrelState.Wandering;
+                speed = wanderSpeed;
+                animator.speed = wanderSpeed;
+                return;
+            }
+
+            animator.SetTrigger("move");
+            transform.position += (transform.forward * speed * Time.deltaTime);
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
         if (health != null)
             health.TakeDamage(damageSpeed);

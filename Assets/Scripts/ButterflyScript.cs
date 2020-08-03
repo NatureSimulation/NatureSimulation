@@ -17,25 +17,29 @@ public class ButterflyScript : MonoBehaviour
     private float wanderTime;
 
     public float speed = 3f;
+    public float wanderSpeed = 3;
+    public float escapeSpeed = 10;
     public float damageSpeed;
 
     private GameObject target;
 
-    private enum ButterflyState {
+    public enum ButterflyState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private ButterflyState currentState;
+    public ButterflyState currentState;
+    public string[] predators = {"Frog"};
+    private GameObject predator;
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
-        animator.speed = 3;
+        animator.speed = 3f;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = ButterflyState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;
@@ -45,6 +49,8 @@ public class ButterflyScript : MonoBehaviour
         if (other.gameObject.tag == "Grass") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 
@@ -95,6 +101,22 @@ public class ButterflyScript : MonoBehaviour
             }
         }
         leftTimeForBreeding -= Time.deltaTime;
+
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+        if (predatorColliders.Length > 0) {
+            speed = escapeSpeed;
+            currentState = ButterflyState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == ButterflyState.Escaping) {
+            currentState = ButterflyState.Wandering;
+            speed = wanderSpeed;
+        }
     }
 
     void FixedUpdate() {
@@ -131,9 +153,18 @@ public class ButterflyScript : MonoBehaviour
 
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-
             if (target.tag == this.tag)
                 tryBreeding();
+        } else if (currentState == ButterflyState.Escaping) {
+            if (predator == null) {
+                currentState = ButterflyState.Wandering;
+                speed = wanderSpeed;
+                return;
+            }
+
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            transform.position += (transform.forward * speed * Time.deltaTime);
         }
 
         if (health != null)

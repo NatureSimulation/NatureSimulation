@@ -16,12 +16,13 @@ public class BirdScript : MonoBehaviour
     public float coolTimeBreeding;
     private float leftTimeForBreeding;
     public GameObject childPrefab;
-    private enum BirdState {
+    public enum BirdState {
         Dead,
         Targeting,
-        Wandering
+        Wandering,
+        Escaping
     };
-    private BirdState currentState;
+    public BirdState currentState;
 
     void Start()
     {
@@ -35,6 +36,8 @@ public class BirdScript : MonoBehaviour
         if (other.gameObject.tag == "Squirrel") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
     void Update()

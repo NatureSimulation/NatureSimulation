@@ -7,6 +7,9 @@ public class DeerScript : MonoBehaviour
 {
     private Rigidbody rb;
     public float walkspeed = 5;
+    public float wanderingSpeed = 5;
+    public float escapingSpeed = 20;
+
     public float damageSpeed;
     public float recoverSpeed;
     public float minBreedDistance;
@@ -18,13 +21,16 @@ public class DeerScript : MonoBehaviour
     private float wanderTime;
 
     private GameObject target;
-    private enum DeerState {
+    public enum DeerState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
-    private DeerState currentState;
+    public DeerState currentState;
+    public string[] predators = {"Tiger"};
+    private GameObject predator;
+
 
     void Start()
     {
@@ -39,7 +45,10 @@ public class DeerScript : MonoBehaviour
         if (other.gameObject.tag == "Grass") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
+
     }
 
     void Update()
@@ -72,8 +81,8 @@ public class DeerScript : MonoBehaviour
 
         if (grassColliders.Length > 0) {
             currentState = DeerState.Targeting;
-            transform.rotation = Quaternion.LookRotation(
-                grassColliders[0].transform.position - transform.position, Vector3.up);
+            Vector3 diff = grassColliders[0].transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             target = grassColliders[0].gameObject;
         }
 
@@ -89,6 +98,22 @@ public class DeerScript : MonoBehaviour
             }
         }
         leftTimeForBreeding -= Time.deltaTime;
+
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+        if (predatorColliders.Length > 0) {
+            walkspeed = escapingSpeed;
+            currentState = DeerState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == DeerState.Escaping) {
+            currentState = DeerState.Wandering;
+            walkspeed = wanderingSpeed;
+        }
     }
 
     void FixedUpdate() {
@@ -111,10 +136,20 @@ public class DeerScript : MonoBehaviour
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime);
-
             if (target.tag == this.tag)
                 tryBreeding();
+        } else if (currentState == DeerState.Escaping) {
+            if (predator == null) {
+                currentState = DeerState.Wandering;
+                walkspeed = wanderingSpeed;
+                return;
+            }
+
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
         }
+
 
         if (health != null)
             health.TakeDamage(damageSpeed);

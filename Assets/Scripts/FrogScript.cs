@@ -17,24 +17,28 @@ public class FrogScript : MonoBehaviour {
     private float wanderTime;
 
     public float speed = 10f;
+    public float wanderSpeed = 10f;
+    public float escapeSpeed = 20f;
 
     private GameObject target;
 
-    private enum FrogState {
+    public enum FrogState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private FrogState currentState;
+    public FrogState currentState;
+    public static string[] predators = {"Eagle"};
+    private GameObject predator;
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
-        animator.speed = 3;
+        animator.speed = 3f;
         wanderTime = UnityEngine.Random.Range(1.0f, 2.0f);
         currentState = FrogState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;
@@ -44,6 +48,8 @@ public class FrogScript : MonoBehaviour {
         if (other.gameObject.tag == "Butterfly") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 
@@ -96,6 +102,21 @@ public class FrogScript : MonoBehaviour {
         }
         leftTimeForBreeding -= Time.deltaTime;
 
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+        if (predatorColliders.Length > 0) {
+            speed = escapeSpeed;
+            currentState = FrogState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == FrogState.Escaping) {
+            currentState = FrogState.Wandering;
+            speed = wanderSpeed;
+        }
     }
 
     void FixedUpdate() {
@@ -128,8 +149,18 @@ public class FrogScript : MonoBehaviour {
             Vector3 chaseVec = new Vector3(diff.x, 0, diff.z);
             Debug.DrawLine(transform.position, transform.position + chaseVec, Color.white);
             transform.rotation = Quaternion.LookRotation(chaseVec, Vector3.up);
-
             tryBreeding();
+        } else if (currentState == FrogState.Escaping) {
+            if (predator == null) {
+                currentState = FrogState.Wandering;
+                speed = wanderSpeed;
+                return;
+            }
+
+            animator.SetTrigger("move");
+            transform.position += (transform.forward * speed * Time.deltaTime);
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
 
         if (health != null)

@@ -7,7 +7,9 @@ public class RabbitScript : MonoBehaviour {
     private Animator animator;
     private Rigidbody rb;
     private Health health;
-    public float speed;
+    public float speed = 3;
+    public float wanderSpeed = 3;
+    public float escapeSpeed = 10;
     public float damageSpeed;
     public float recoverSpeed;
     public float minBreedDistance;
@@ -19,14 +21,17 @@ public class RabbitScript : MonoBehaviour {
 
     private GameObject target;
 
-    private enum RabbitState {
+    public enum RabbitState {
         Dead,
         Escaping,
         Targeting,
         Wandering
     }
 
-    private RabbitState currentState;
+    public RabbitState currentState;
+
+    public static string[] predators = {"Tiger", "Eagle", "Iguana"};
+    private GameObject predator;
 
     // Start is called before the first frame update
     void Start() {
@@ -43,6 +48,8 @@ public class RabbitScript : MonoBehaviour {
         if (other.gameObject.tag == "Grass") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 
@@ -94,6 +101,23 @@ public class RabbitScript : MonoBehaviour {
             }
         }
         leftTimeForBreeding -= Time.deltaTime;
+
+        Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
+        if (predatorColliders.Length > 0) {
+            animator.speed = escapeSpeed;
+            currentState = RabbitState.Escaping;
+
+            Collider closest = predatorColliders.Aggregate(
+                (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+            );
+
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            predator = closest.gameObject;
+        } else if (currentState == RabbitState.Escaping) {
+            currentState = RabbitState.Wandering;
+            animator.speed = wanderSpeed;
+        }
     }
 
     void FixedUpdate() {
@@ -115,7 +139,18 @@ public class RabbitScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
             tryBreeding();
+        } else if (currentState == RabbitState.Escaping) {
+            if (predator == null) {
+                currentState = RabbitState.Wandering;
+                animator.speed = wanderSpeed;
+                return;
+            }
+
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+            animator.SetTrigger("moving");
         }
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 10);
         if (health != null)
             health.TakeDamage(damageSpeed);
     }
