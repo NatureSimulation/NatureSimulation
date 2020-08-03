@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 
 public class Iguana : Animal {
-    public float minAttackDistance;
     public override void Start() {
         base.Start();
     }

@@ -20,7 +20,7 @@ public abstract class Animal : MonoBehaviour {
         Attacking
     }
     public AnimalState currentState;
-    public float sight = 10f;
+    public float sight = 20f;
     protected float wanderTime;
     public GameObject childPrefab;
     public float minAttackDistance;
@@ -205,7 +205,7 @@ public abstract class Animal : MonoBehaviour {
         }
     }
 
-    void TryAttacking() {
+    protected void TryAttacking() {
         if (!preys.Contains(target.gameObject.tag))
             return;
 

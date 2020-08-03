@@ -304,28 +304,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   healthbar: {fileID: 408650047}
---- !u!114 &9036427502525331595
+--- !u!114 &8654718644915106414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6544061036624831497}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7496fa9293a3b4eb0b777eab700761, type: 3}
+  m_Script: {fileID: 11500000, guid: 6259b6f7b79b7414998009a3e072385d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoverSpeed: 1000
-  minBreedDistance: 5
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 6544061036624831497}
-  sight: 20
+  player: {fileID: 0}
   speed: 3
   wanderSpeed: 3
   escapeSpeed: 10
   damageSpeed: 0.3
+  recoverSpeed: 1000
   currentState: 0
+  sight: 20
+  childPrefab: {fileID: 6544061036624831497}
+  minAttackDistance: 10
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  preys:
+  - Grass
   predators:
   - Frog
   - Squirrel
@@ -350,11 +354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.96
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.17
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalPosition.z

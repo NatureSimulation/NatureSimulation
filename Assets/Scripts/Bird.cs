@@ -29,9 +29,9 @@ public class Bird : Animal {
 
         Quaternion rotation;
         if (planeY + 5 > this.transform.position.y) {
-            rotation = Quaternion.Euler(new Vector3(-5, transform.rotation.y, transform.rotation.z));
+            rotation = Quaternion.Euler(new Vector3(-5, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         } else {
-            rotation = Quaternion.Euler(new Vector3(5, transform.rotation.y, transform.rotation.z));
+            rotation = Quaternion.Euler(new Vector3(5, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
     }
@@ -41,7 +41,7 @@ public class Bird : Animal {
     }
 
     public override void UpdatePosition() {
-        transform.position += (transform.forward * speed * Time.deltaTime);
+        transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
     }
 
     public override void UpdateSpeed(float speed) {

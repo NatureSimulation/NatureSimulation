@@ -16,6 +16,7 @@ public class Rabbit : Animal {
         speed = 3f;
         wanderSpeed = 3f;
         escapeSpeed = 10f;
+        animator.speed = wanderSpeed;
         predators = new string[]{ "Tiger", "Eagle", "Iguana" };
         preys = new string[]{ "Grass" };
     }
