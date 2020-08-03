@@ -54,6 +54,7 @@ public class Iguana : Animal {
         UpdateSpeed(wanderSpeed);
         if (target != null) {
             GameManager.instance.delete(target, target.tag);
+            target = null;
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
         }
     }

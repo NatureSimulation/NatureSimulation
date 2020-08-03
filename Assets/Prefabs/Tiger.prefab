@@ -6659,7 +6659,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4738995793068639416}
   - component: {fileID: 4738995793061194620}
-  - component: {fileID: 578468672542392821}
   - component: {fileID: 5045366694575362858}
   - component: {fileID: 1595872711}
   - component: {fileID: 454438205538551166}
@@ -6707,28 +6706,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &578468672542392821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4738995793068480728}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c168937932d74332b31597dc197bbc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 454438205538551166}
-  walkspeed: 5
-  minAttackDistance: 8
-  sight: 20
-  damageSpeed: 1.5
-  recoverSpeed: 300
-  minBreedDistance: 5
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 4738995793068480728}
-  currentState: 0
 --- !u!114 &5045366694575362858
 MonoBehaviour:
   m_ObjectHideFlags: 0

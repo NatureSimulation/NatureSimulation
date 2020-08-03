@@ -26,6 +26,7 @@ public class Frog : Animal {
         if (target != null && (target.transform.position - transform.position).magnitude < 10) {
             animator.SetTrigger("tongue");
             GameManager.instance.delete(target, target.tag);
+            target = null;
             return;
         }
     }

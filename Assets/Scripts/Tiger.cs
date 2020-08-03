@@ -52,6 +52,7 @@ public class Tiger : Animal {
         yield return new WaitForSeconds(length);
         if (target != null) {
             GameManager.instance.delete(target, target.tag);
+            target = null;
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = AnimalState.Wandering;
         }

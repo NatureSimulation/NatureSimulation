@@ -68,6 +68,7 @@ public class Eagle : Animal {
             currentState = AnimalState.Wandering;
         } else {
             GameManager.instance.delete(target, target.tag);
+            target = null;
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = AnimalState.Wandering;
         }

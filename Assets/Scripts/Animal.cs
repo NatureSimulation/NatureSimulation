@@ -213,27 +213,28 @@ public abstract class Animal : MonoBehaviour {
         if (targetDistance < minAttackDistance) {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(target.gameObject, target.gameObject.tag);
+            target = null;
             UpdateSpeed(wanderSpeed);
         }
     }
 
     protected void TryBreeding() {
-        if (target.tag != this.tag)
-            return;
-        float distance = (target.transform.position - transform.position).magnitude;
-        if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
-            float x = this.transform.position.x + Random.Range(-20, 20);
-            float z = this.transform.position.z + Random.Range(-20, 20);
-            float y;
-            try {
-                y = GameManager.instance.getHeight(x, z);
-            } catch (System.Exception) {
-                return;
-            }
+        // if (target.tag != this.tag)
+        //     return;
+        // float distance = (target.transform.position - transform.position).magnitude;
+        // if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+        //     float x = this.transform.position.x + Random.Range(-20, 20);
+        //     float z = this.transform.position.z + Random.Range(-20, 20);
+        //     float y;
+        //     try {
+        //         y = GameManager.instance.getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         return;
+        //     }
 
-            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
-            GameManager.instance.breed(child.tag);
-            leftTimeForBreeding = coolTimeBreeding;
-        }
+        //     GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+        //     GameManager.instance.breed(child.tag);
+        //     leftTimeForBreeding = coolTimeBreeding;
+        // }
     }
 }
