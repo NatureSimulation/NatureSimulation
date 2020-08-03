@@ -667,6 +667,7 @@ GameObject:
   - component: {fileID: 4095373761283285663}
   - component: {fileID: 3233574356109322903}
   - component: {fileID: 3057971505709651096}
+  - component: {fileID: 3280278884240271917}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Bird
@@ -681,7 +682,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3733083608000069085}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 6.3, y: 5.54, z: 0.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -747,7 +748,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3733083608000069085}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3484742790bb49038334b334d4a07e9, type: 3}
   m_Name: 
@@ -774,6 +775,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   healthbar: {fileID: 6127913871612251113}
+--- !u!114 &3280278884240271917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733083608000069085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bdb330e0613a12409af9387dffd3be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 0
+  damageSpeed: 1
+  recoverSpeed: 300
+  currentState: 0
+  sight: 10
+  childPrefab: {fileID: 3733083608000069085}
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  preys:
+  - Squirrel
+  predators: []
 --- !u!1 &3733107571885768481
 GameObject:
   m_ObjectHideFlags: 0
