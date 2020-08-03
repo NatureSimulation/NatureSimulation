@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: -1024073142168088920}
   - component: {fileID: 5814194738171883281}
   m_Layer: 0
-  m_Name: Rabbit 1
+  m_Name: Rabbit
   m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -792,6 +792,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSpeed: 0.3
   recoverSpeed: 1000
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  childPrefab: {fileID: 1588090451174212}
   sight: 20
 --- !u!114 &5814194738171883281
 MonoBehaviour:

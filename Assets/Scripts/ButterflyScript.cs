@@ -9,6 +9,10 @@ public class ButterflyScript : MonoBehaviour
     private Rigidbody rb;
     private Health health;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     public float sight = 10f;
     private float wanderTime;
 
@@ -34,6 +38,7 @@ public class ButterflyScript : MonoBehaviour
         animator.speed = 3;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = ButterflyState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -77,6 +82,19 @@ public class ButterflyScript : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
                 target = grassColliders[0].gameObject;
             }
+
+        /* Search friend */
+        if (currentState == ButterflyState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = ButterflyState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -113,6 +131,9 @@ public class ButterflyScript : MonoBehaviour
 
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
+
+            if (target.tag == this.tag)
+                tryBreeding();
         }
 
         if (health != null)
@@ -123,5 +144,23 @@ public class ButterflyScript : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 }

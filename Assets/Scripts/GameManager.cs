@@ -102,12 +102,12 @@ public class GameManager : MonoBehaviour
 
     /* Map */
     public GameObject plane;
-    private float planeMinX;
-    private float planeMinZ;
-    private float planeMaxX;
-    private float planeMaxZ;
-    private float planeMaxY;
-    private float planeOffset = 5;
+    public float planeMinX;
+    public float planeMinZ;
+    public float planeMaxX;
+    public float planeMaxZ;
+    public float planeMaxY;
+    public float planeOffset = 5;
 
     public GameObject panel;
 
@@ -488,6 +488,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void breed(string tag) {
+        if (tag == "Rabbit") {
+            rabbitCount += 1;
+            setRabbitProgress(true);
+        } else if (tag == "Eagle") {
+            eagleCount += 1;
+            setEagleProgress(true);
+        } else if (tag == "Deer") {
+            deerCount += 1;
+            setDeerProgress(true);
+        } else if (tag == "Squirrel") {
+            squirrelCount += 1;
+            setSquirrelProgress(true);
+        } else if (tag == "Tiger") {
+            tigerCount += 1;
+            setTigerProgress(true);
+        } else if (tag == "Iguana") {
+            iguanaCount += 1;
+            setIguanaProgress(true);
+        } else if (tag == "Bird") {
+            birdCount += 1;
+            setBirdProgress(true);
+        } else if (tag == "Frog") {
+            frogCount += 1;
+            setFrogProgress(true);
+        } else if (tag == "Butterfly") {
+            butterflyCount += 1;
+            setButterflyProgress(true);
+        }
+    }
+
     public void delete(GameObject item, string tag) {
         if (tag == "Grass") {
             grassCount -= 1;
@@ -520,7 +551,6 @@ public class GameManager : MonoBehaviour
             butterflyCount -= 1;
             setButterflyProgress(false);
         }
-
         Destroy(item);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,10 @@ public class FrogScript : MonoBehaviour {
     private Health health;
     public float damageSpeed;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     public float sight = 10f;
     private float wanderTime;
 
@@ -34,6 +37,7 @@ public class FrogScript : MonoBehaviour {
         animator.speed = 3;
         wanderTime = UnityEngine.Random.Range(1.0f, 2.0f);
         currentState = FrogState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -79,6 +83,19 @@ public class FrogScript : MonoBehaviour {
             target = preyColliders[0].gameObject;
         }
 
+        /* Search friend */
+        if (currentState == FrogState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = FrogState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
+
     }
 
     void FixedUpdate() {
@@ -111,6 +128,8 @@ public class FrogScript : MonoBehaviour {
             Vector3 chaseVec = new Vector3(diff.x, 0, diff.z);
             Debug.DrawLine(transform.position, transform.position + chaseVec, Color.white);
             transform.rotation = Quaternion.LookRotation(chaseVec, Vector3.up);
+
+            tryBreeding();
         }
 
         if (health != null)
@@ -121,5 +140,23 @@ public class FrogScript : MonoBehaviour {
         yield return new WaitForSeconds(time);
 
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 }

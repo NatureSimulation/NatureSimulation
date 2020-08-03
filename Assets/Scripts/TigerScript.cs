@@ -10,6 +10,10 @@ public class TigerScript : MonoBehaviour
     public float sight = 20.0f;
     public float damageSpeed;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     private Animator animator;
     private Health health;
     private float wanderTime;
@@ -29,6 +33,7 @@ public class TigerScript : MonoBehaviour
         health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = TigerState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void Update()
@@ -57,13 +62,26 @@ public class TigerScript : MonoBehaviour
 
         /* Search prey */
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight)
-                .Where(coll => coll.tag == "Rabbit" || coll.tag == "Deer").ToArray();
+            .Where(coll => coll.tag == "Rabbit" || coll.tag == "Deer").ToArray();
         if (colliders.Length > 0) {
             currentState = TigerState.Targeting;
             transform.rotation = Quaternion.LookRotation(
                 colliders[0].transform.position - transform.position);
             target = colliders[0].gameObject;
         }
+
+        /* Search friend */
+        if (currentState == TigerState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = TigerState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -89,8 +107,12 @@ public class TigerScript : MonoBehaviour
             Vector3 diff = target.transform.position - transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             transform.Translate(transform.forward * walkSpeed * 2 * Time.deltaTime, Space.World);
+            if (target.tag != this.tag) {
+                tryDamageTarget();
+            } else {
+                tryBreeding();
+            }
 
-            tryDamageTarget();
         }
         if (health != null)
             health.TakeDamage(damageSpeed);
@@ -103,21 +125,38 @@ public class TigerScript : MonoBehaviour
             transform.LookAt(target.transform);
             currentState = TigerState.Attacking;
             animator.SetTrigger("attack");
-            StartCoroutine(stopAttack(0.5f));
+            StartCoroutine(stopAttack(0.5f, target));
         }
     }
 
-    IEnumerator stopAttack(float length) {
+    IEnumerator stopAttack(float length, GameObject target) {
         yield return new WaitForSeconds(length);
         if (target != null) {
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            currentState = TigerState.Wandering;
         }
-        currentState = TigerState.Wandering;
+    }
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag != "Terrain") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }

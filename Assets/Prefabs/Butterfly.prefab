@@ -317,6 +317,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recoverSpeed: 1000
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  childPrefab: {fileID: 6544061036624831497}
   sight: 20
   speed: 3
   damageSpeed: 0.3

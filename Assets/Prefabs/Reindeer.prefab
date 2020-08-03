@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 7446761899428828658}
   - component: {fileID: 1463976647679089886}
   m_Layer: 0
-  m_Name: Reindeer_1
+  m_Name: Reindeer
   m_TagString: Deer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1038,6 +1038,9 @@ MonoBehaviour:
   walkspeed: 5
   damageSpeed: 0.3
   recoverSpeed: 1000
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  childPrefab: {fileID: 6219636104399483927}
   sight: 20
 --- !u!1 &6606836473534761651
 GameObject:

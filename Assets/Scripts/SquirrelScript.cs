@@ -12,6 +12,10 @@ public class SquirrelScript : MonoBehaviour {
     public float speed = 3f;
     public float damageSpeed;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     public float sight = 10f;
 
     private GameObject target;
@@ -33,6 +37,7 @@ public class SquirrelScript : MonoBehaviour {
         animator.speed = 3;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = SquirrelState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -76,6 +81,19 @@ public class SquirrelScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(grassColliders[0].transform.position - transform.position, Vector3.up);
             target = grassColliders[0].gameObject;
         }
+
+        /* Search friend */
+        if (currentState == SquirrelState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = SquirrelState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -99,6 +117,8 @@ public class SquirrelScript : MonoBehaviour {
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
+
+            tryBreeding();
         }
         if (health != null)
             health.TakeDamage(damageSpeed);
@@ -108,5 +128,23 @@ public class SquirrelScript : MonoBehaviour {
         yield return new WaitForSeconds(time);
 
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 }

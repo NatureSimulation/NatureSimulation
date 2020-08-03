@@ -1655,6 +1655,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1032551483747090, guid: ef140beec582a5a46a6362fcfc31784d, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4209018105610702, guid: ef140beec582a5a46a6362fcfc31784d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8768,6 +8772,12 @@ MonoBehaviour:
   frogMax: 70
   frogProgress: {fileID: 643612112}
   plane: {fileID: 1664459182}
+  planeMinX: 0
+  planeMinZ: 0
+  planeMaxX: 0
+  planeMaxZ: 0
+  planeMaxY: 0
+  planeOffset: 5
   panel: {fileID: 791445314}
 --- !u!4 &1640929324
 Transform:

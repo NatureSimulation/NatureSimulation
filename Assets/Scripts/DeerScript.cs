@@ -9,6 +9,10 @@ public class DeerScript : MonoBehaviour
     public float walkspeed = 5;
     public float damageSpeed;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     public float sight = 10f;
     private Health health;
     private float wanderTime;
@@ -28,6 +32,7 @@ public class DeerScript : MonoBehaviour
         health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = DeerState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -71,6 +76,19 @@ public class DeerScript : MonoBehaviour
                 grassColliders[0].transform.position - transform.position, Vector3.up);
             target = grassColliders[0].gameObject;
         }
+
+        /* Search friend */
+        if (currentState == DeerState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = DeerState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -93,9 +111,30 @@ public class DeerScript : MonoBehaviour
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime);
+
+            if (target.tag == this.tag)
+                tryBreeding();
         }
 
         if (health != null)
             health.TakeDamage(damageSpeed);
+    }
+
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 }

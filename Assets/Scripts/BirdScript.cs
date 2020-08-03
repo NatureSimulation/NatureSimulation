@@ -12,6 +12,10 @@ public class BirdScript : MonoBehaviour
     private GameObject target;
     public float damageSpeed;
     public float recoverSpeed;
+    public float minBreedDistance;
+    public float coolTimeBreeding;
+    private float leftTimeForBreeding;
+    public GameObject childPrefab;
     private enum BirdState {
         Dead,
         Targeting,
@@ -24,6 +28,7 @@ public class BirdScript : MonoBehaviour
         health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = BirdState.Wandering;
+        leftTimeForBreeding = coolTimeBreeding;
     }
 
     void OnCollisionEnter(Collision other) {
@@ -64,6 +69,19 @@ public class BirdScript : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(colliders[0].transform.position - transform.position, Vector3.up);
             target = colliders[0].gameObject;
         }
+
+        /* Search friend */
+        if (currentState == BirdState.Wandering && leftTimeForBreeding < 0) {
+            Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
+                .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
+            if (friendColliders.Length > 0) {
+                currentState = BirdState.Targeting;
+                transform.rotation = Quaternion.LookRotation(
+                    friendColliders[0].transform.position - transform.position);
+                target = friendColliders[0].gameObject;
+            }
+        }
+        leftTimeForBreeding -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -101,6 +119,9 @@ public class BirdScript : MonoBehaviour
 
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime);
+
+            if (target.tag == this.tag)
+                tryBreeding();
         }
 
         if (health != null)
@@ -110,5 +131,23 @@ public class BirdScript : MonoBehaviour
     IEnumerator Dissolve(float time) {
         yield return new WaitForSeconds(time);
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+
+    void tryBreeding() {
+        float distance = (target.transform.position - transform.position).magnitude;
+        if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+            float x = this.transform.position.x + Random.Range(-20, 20);
+            float z = this.transform.position.z + Random.Range(-20, 20);
+            float y;
+            try {
+                y = GameManager.instance.getHeight(x, z);
+            } catch (System.Exception) {
+                return;
+            }
+
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameManager.instance.breed(child.tag);
+            leftTimeForBreeding = coolTimeBreeding;
+        }
     }
 }

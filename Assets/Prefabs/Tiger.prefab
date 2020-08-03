@@ -6663,6 +6663,7 @@ GameObject:
   - component: {fileID: 578468672542392821}
   - component: {fileID: 5045366694575362858}
   - component: {fileID: 1595872711}
+  - component: {fileID: -1656664234766570646}
   m_Layer: 0
   m_Name: Tiger
   m_TagString: Tiger
@@ -6739,6 +6740,9 @@ MonoBehaviour:
   sight: 20
   damageSpeed: 1
   recoverSpeed: 300
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  childPrefab: {fileID: 4738995793068480728}
 --- !u!114 &5045366694575362858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6767,6 +6771,18 @@ CapsuleCollider:
   m_Height: 1.5033205
   m_Direction: 2
   m_Center: {x: -0.025401434, y: 0.33028874, z: 0.0067957244}
+--- !u!114 &-1656664234766570646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4738995793068480728}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4798d409941e4831b8aa589990a4ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4738995793068480730
 GameObject:
   m_ObjectHideFlags: 0
