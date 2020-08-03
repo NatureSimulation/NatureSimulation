@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EagelScripts : MonoBehaviour
+public class EagleScript : MonoBehaviour
 {
     private Animator animator;
     public float walkspeed = 5;

@@ -1216,18 +1216,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6368709116697677957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f7ed51799e84e7392adaf5330e7c3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 42343cac2f697d44db4ea0ee10276a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
-  damageSpeed: 2
-  recoverSpeed: 300
-  minBreedDistance: 5
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 6368709116697677957}
-  sight: 20
+  damageSpeed: 0
+  recoverSpeed: 0
+  minBreedDistance: 0
+  coolTimeBreeding: 0
+  childPrefab: {fileID: 0}
+  sight: 10
   target: {fileID: 0}
-  minAttackDistance: 2.4
+  minAttackDistance: 0
+  currentState: 0
 --- !u!114 &2843803128164805385
 MonoBehaviour:
   m_ObjectHideFlags: 0
