@@ -206,6 +206,8 @@ public abstract class Animal : MonoBehaviour {
     }
 
     protected void TryAttacking() {
+        if (target == null)
+            return;
         if (!preys.Contains(target.gameObject.tag))
             return;
 
@@ -219,6 +221,8 @@ public abstract class Animal : MonoBehaviour {
     }
 
     protected void TryBreeding() {
+        if (target == null)
+            return;
         if (target.tag != this.tag)
             return;
         float distance = (target.transform.position - transform.position).magnitude;
@@ -233,6 +237,7 @@ public abstract class Animal : MonoBehaviour {
             }
 
             GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            child.GetComponent<Health>().currentHealth = Health.maxHealth;
             GameManager.instance.breed(child.tag);
             leftTimeForBreeding = coolTimeBreeding;
         }
