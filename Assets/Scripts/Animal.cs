@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Animal : MonoBehaviour {
     protected Animator animator;
-    protected Rigidbody rb;
+    public CharacterController player;
     protected Health health;
     public float speed;
     public float wanderSpeed;
@@ -23,6 +23,7 @@ public abstract class Animal : MonoBehaviour {
     public float sight = 10f;
     protected float wanderTime;
     public GameObject childPrefab;
+    public float minAttackDistance;
     public float minBreedDistance;
     public float coolTimeBreeding;
     private float leftTimeForBreeding;
@@ -37,7 +38,9 @@ public abstract class Animal : MonoBehaviour {
     public abstract void UpdateSpeed(float speed);
 
     public virtual void Start() {
-        rb = GetComponent<Rigidbody>();
+        // try {
+        //     player.GetComponent<CharacterController>();
+        // } catch (MissingComponentException e) {}
         try {
             animator = GetComponent<Animator>();
         } catch (MissingComponentException e) {}
@@ -196,12 +199,20 @@ public abstract class Animal : MonoBehaviour {
         GameManager.instance.delete(this.gameObject, this.tag);
     }
     void OnCollisionEnter(Collision other) {
-        if (preys.Contains(other.gameObject.tag)) {
-            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
-            UpdateSpeed(wanderSpeed);
-        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
+    void tryAttacking() {
+        if (preys.Contains(target.gameObject.tag))
+            return;
+
+        float targetDistance = (target.transform.position - transform.position).magnitude;
+        if (targetDistance < minAttackDistance) {
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            GameManager.instance.delete(target.gameObject, target.gameObject.tag);
+            UpdateSpeed(wanderSpeed);
         }
     }
 
