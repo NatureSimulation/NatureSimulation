@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class TigerScript : MonoBehaviour
 {
-    public float walkSpeed = 5f;
+    public CharacterController player;
+    private float gravity = 30;
+    public float walkspeed = 5f;
     public float minAttackDistance;
     public float sight = 20.0f;
     public float damageSpeed;
@@ -29,6 +31,7 @@ public class TigerScript : MonoBehaviour
 
     void Start()
     {
+        player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
@@ -87,14 +90,13 @@ public class TigerScript : MonoBehaviour
     void FixedUpdate() {
         if (currentState == TigerState.Wandering) {
             if (wanderTime > 0) {
-                animator.SetFloat("moving", walkSpeed);
+                animator.SetFloat("moving", walkspeed);
                 wanderTime -= Time.deltaTime;
             } else {
                 wanderTime = Random.Range(1.0f, 2.0f);
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
             }
 
-            transform.Translate(transform.forward * walkSpeed * Time.deltaTime, Space.World);
             Debug.DrawLine(transform.position, transform.position + transform.forward, Color.white);
         } else if (currentState == TigerState.Targeting) {
             if (target == null) {
@@ -102,18 +104,26 @@ public class TigerScript : MonoBehaviour
                 return;
             }
 
-            animator.SetFloat("moving", walkSpeed * 2);
+            animator.SetFloat("moving", walkspeed * 2);
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
             Vector3 diff = target.transform.position - transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
-            transform.Translate(transform.forward * walkSpeed * 2 * Time.deltaTime, Space.World);
             if (target.tag != this.tag) {
                 tryDamageTarget();
             } else {
                 tryBreeding();
             }
-
         }
+
+        /* Forward */
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * walkspeed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * walkspeed * Time.deltaTime);
+        }
+
         if (health != null)
             health.TakeDamage(damageSpeed);
     }

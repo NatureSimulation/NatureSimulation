@@ -1224,7 +1224,7 @@ MonoBehaviour:
   recoverSpeed: 300
   minBreedDistance: 5
   coolTimeBreeding: 10
-  childPrefab: {fileID: 0}
+  childPrefab: {fileID: 6368709116697677957}
   sight: 10
   target: {fileID: 0}
   minAttackDistance: 0

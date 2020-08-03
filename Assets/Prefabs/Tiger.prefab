@@ -6659,10 +6659,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4738995793068639416}
   - component: {fileID: 4738995793061194620}
-  - component: {fileID: 1760604369966087471}
   - component: {fileID: 578468672542392821}
   - component: {fileID: 5045366694575362858}
   - component: {fileID: 1595872711}
+  - component: {fileID: 454438205538551166}
   m_Layer: 0
   m_Name: Tiger
   m_TagString: Tiger
@@ -6706,22 +6706,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &1760604369966087471
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4738995793068480728}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!114 &578468672542392821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6734,7 +6718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c168937932d74332b31597dc197bbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
+  player: {fileID: 454438205538551166}
+  walkspeed: 5
   minAttackDistance: 8
   sight: 20
   damageSpeed: 1.5
@@ -6771,6 +6756,24 @@ CapsuleCollider:
   m_Height: 1.5033205
   m_Direction: 2
   m_Center: {x: -0.025401434, y: 0.33028874, z: 0.0067957244}
+--- !u!143 &454438205538551166
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4738995793068480728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &4738995793068480730
 GameObject:
   m_ObjectHideFlags: 0

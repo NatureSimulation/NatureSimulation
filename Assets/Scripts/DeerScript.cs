@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class DeerScript : MonoBehaviour
 {
-    private Rigidbody rb;
+    public CharacterController player;
+    private float gravity = 30;
     public float walkspeed = 5;
     public float wanderingSpeed = 5;
     public float escapingSpeed = 20;
@@ -34,7 +35,7 @@ public class DeerScript : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        player.GetComponent<CharacterController>();
         health = GetComponent<Health>();
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = DeerState.Wandering;
@@ -119,14 +120,12 @@ public class DeerScript : MonoBehaviour
     void FixedUpdate() {
         if (currentState == DeerState.Wandering) {
             if (wanderTime > 0) {
-                transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
                 wanderTime -= Time.deltaTime;
             } else {
                 wanderTime = Random.Range(1.0f, 2.0f);
                 transform.Rotate(0, Random.Range(-120, 120), 0, Space.World);
+                return;
             }
-
-
         } else if (currentState == DeerState.Targeting) {
             if (target == null) {
                 currentState = DeerState.Wandering;
@@ -135,7 +134,6 @@ public class DeerScript : MonoBehaviour
 
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-            transform.Translate(transform.forward * walkspeed * Time.deltaTime);
             if (target.tag == this.tag)
                 tryBreeding();
         } else if (currentState == DeerState.Escaping) {
@@ -147,7 +145,15 @@ public class DeerScript : MonoBehaviour
 
             Vector3 diff = transform.position - predator.transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
-            transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
+        }
+
+        /* Forward */
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * walkspeed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * walkspeed * Time.deltaTime);
         }
 
 

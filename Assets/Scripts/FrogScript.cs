@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class FrogScript : MonoBehaviour {
     private Animator animator;
-    private Rigidbody rb;
+    public CharacterController player;
+    private float gravity = 30;
     private Health health;
     public float damageSpeed;
     public float recoverSpeed;
@@ -35,7 +36,7 @@ public class FrogScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody>();
+        player.GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
         animator.speed = 3f;
@@ -128,9 +129,6 @@ public class FrogScript : MonoBehaviour {
                 transform.Rotate(0, UnityEngine.Random.Range(-120, 120), 0, Space.World);
             }
 
-            animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
-
         } else if (currentState == FrogState.Targeting) {
             if (target == null) {
                 currentState = FrogState.Wandering;
@@ -143,8 +141,6 @@ public class FrogScript : MonoBehaviour {
                 return;
             }
 
-            animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
             Vector3 diff = target.transform.position - transform.position;
             Vector3 chaseVec = new Vector3(diff.x, 0, diff.z);
             Debug.DrawLine(transform.position, transform.position + chaseVec, Color.white);
@@ -157,10 +153,16 @@ public class FrogScript : MonoBehaviour {
                 return;
             }
 
-            animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
             Vector3 diff = transform.position - predator.transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
+        }
+
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * speed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * speed * Time.deltaTime);
         }
 
         if (health != null)

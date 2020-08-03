@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SquirrelScript : MonoBehaviour {
     private Animator animator;
-    private Rigidbody rb;
+    public CharacterController player;
+    public float gravity = 30;
     private Health health;
     private float wanderTime;
 
@@ -34,7 +35,7 @@ public class SquirrelScript : MonoBehaviour {
     private GameObject predator;
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody>();
+        player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
         animator.speed = 3f;
@@ -132,7 +133,6 @@ public class SquirrelScript : MonoBehaviour {
             }
 
             animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
 
         } else if (currentState == SquirrelState.Targeting) {
             if (target == null) {
@@ -141,7 +141,6 @@ public class SquirrelScript : MonoBehaviour {
             }
 
             animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             tryBreeding();
         } else if (currentState == SquirrelState.Escaping) {
@@ -153,10 +152,19 @@ public class SquirrelScript : MonoBehaviour {
             }
 
             animator.SetTrigger("move");
-            transform.position += (transform.forward * speed * Time.deltaTime);
             Vector3 diff = transform.position - predator.transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
+
+        /* Forward */
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * speed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * speed * Time.deltaTime);
+        }
+
         if (health != null)
             health.TakeDamage(damageSpeed);
     }
