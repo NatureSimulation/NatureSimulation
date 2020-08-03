@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 
 public class Tiger : Animal {
-    public float minAttackDistance;
     public override void Start() {
         base.Start();
     }
@@ -65,7 +64,13 @@ public class Tiger : Animal {
 
     public override void UpdatePosition() {
         animator.SetFloat("moving", speed);
-        transform.position += (transform.forward * speed * Time.deltaTime);
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * speed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * speed * Time.deltaTime);
+        }
     }
 
     public override void UpdateSpeed(float speed) {

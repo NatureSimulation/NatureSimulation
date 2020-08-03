@@ -954,9 +954,9 @@ GameObject:
   - component: {fileID: 2888449066056077195}
   - component: {fileID: 8196560849495591246}
   - component: {fileID: 7446761899428828658}
-  - component: {fileID: 1463976647679089886}
   - component: {fileID: 7607578903995970648}
   - component: {fileID: 1631419054037216437}
+  - component: {fileID: 8930837471636513501}
   m_Layer: 0
   m_Name: Reindeer
   m_TagString: Deer
@@ -1008,31 +1008,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   healthbar: {fileID: 3114729697978835115}
---- !u!114 &1463976647679089886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6219636104399483927}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0deeddc93d2d24c808a1234465402483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1631419054037216437}
-  walkspeed: 5
-  wanderingSpeed: 5
-  escapingSpeed: 20
-  damageSpeed: 0.3
-  recoverSpeed: 1000
-  minBreedDistance: 7
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 6219636104399483927}
-  sight: 20
-  currentState: 0
-  predators:
-  - Tiger
 --- !u!136 &7607578903995970648
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1065,6 +1040,34 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &8930837471636513501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6219636104399483927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa269026e22b7547afe6be0d92be868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 20
+  damageSpeed: 0.3
+  recoverSpeed: 1000
+  currentState: 0
+  sight: 10
+  childPrefab: {fileID: 6219636104399483927}
+  minAttackDistance: 5
+  minBreedDistance: 7
+  coolTimeBreeding: 10
+  preys:
+  - Grass
+  predators:
+  - Tiger
 --- !u!1 &6606836473534761651
 GameObject:
   m_ObjectHideFlags: 0

@@ -6663,6 +6663,7 @@ GameObject:
   - component: {fileID: 5045366694575362858}
   - component: {fileID: 1595872711}
   - component: {fileID: 454438205538551166}
+  - component: {fileID: 1806548493}
   m_Layer: 0
   m_Name: Tiger
   m_TagString: Tiger
@@ -6774,6 +6775,34 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &1806548493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4738995793068480728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d9beb3c404be9459e2acbcaedda21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 0
+  damageSpeed: 1.5
+  recoverSpeed: 300
+  currentState: 0
+  sight: 10
+  childPrefab: {fileID: 4738995793068480728}
+  minAttackDistance: 8
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  preys:
+  - Rabbit
+  - Deer
+  predators: []
 --- !u!1 &4738995793068480730
 GameObject:
   m_ObjectHideFlags: 0

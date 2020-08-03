@@ -26,7 +26,13 @@ public class Deer : Animal {
     }
 
     public override void UpdatePosition() {
-        transform.position += (transform.forward * speed * Time.deltaTime);
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * speed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * speed * Time.deltaTime);
+        }
     }
 
     public override void UpdateSpeed(float speed) {

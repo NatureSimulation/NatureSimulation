@@ -27,6 +27,7 @@ public abstract class Animal : MonoBehaviour {
     public float minBreedDistance;
     public float coolTimeBreeding;
     private float leftTimeForBreeding;
+    protected float gravity = 30f;
 
     public string[] preys;
     public string[] predators;
@@ -205,7 +206,7 @@ public abstract class Animal : MonoBehaviour {
     }
 
     void TryAttacking() {
-        if (preys.Contains(target.gameObject.tag))
+        if (!preys.Contains(target.gameObject.tag))
             return;
 
         float targetDistance = (target.transform.position - transform.position).magnitude;

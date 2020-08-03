@@ -17,7 +17,7 @@ public class Squirrel : Animal {
         wanderSpeed = 3f;
         escapeSpeed = 10f;
         predators = new string[]{ "Bird", "Iguana" };
-        preys = new string[]{ "Grass" };
+        preys = new string[]{ "Butterfly", "Grass" };
     }
 
     public override void RotateOnTargeting(GameObject obj) {
@@ -27,7 +27,13 @@ public class Squirrel : Animal {
 
     public override void UpdatePosition() {
         animator.SetTrigger("move");
-        transform.position += (transform.forward * speed * Time.deltaTime);
+        if (!player.isGrounded) {
+            Vector3 moveDirection = transform.forward;
+            moveDirection.y -= gravity * Time.deltaTime;
+            player.Move(moveDirection * speed * Time.deltaTime);
+        } else {
+            player.Move(transform.forward * speed * Time.deltaTime);
+        }
     }
 
     public override void UpdateSpeed(float speed) {
