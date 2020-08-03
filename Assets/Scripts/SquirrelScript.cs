@@ -41,7 +41,7 @@ public class SquirrelScript : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Grass") {
+        if (other.gameObject.tag == "Grass" || other.gameObject.tag == "Butterfly") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
         }
@@ -59,7 +59,7 @@ public class SquirrelScript : MonoBehaviour {
 
         /* Search wall */
         Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
-            .Where(coll => coll.tag == "Wall").ToArray();
+            .Where(coll => coll.tag == "Wall" || coll.tag == "Butterfly").ToArray();
         if (wallColliders.Length > 0) {
             Quaternion rotation;
             if (wallColliders[0].name == "NorthWall") {
