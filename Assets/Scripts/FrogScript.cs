@@ -157,6 +157,7 @@ public class FrogScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
 
+        animator.SetTrigger("move");
         if (!player.isGrounded) {
             Vector3 moveDirection = transform.forward;
             moveDirection.y -= gravity * Time.deltaTime;
