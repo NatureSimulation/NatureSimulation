@@ -356,13 +356,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             Time.timeScale = 1;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
             Time.timeScale = 2;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) {
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
             Time.timeScale = 3;
         }
         /* Create grass */
