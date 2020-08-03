@@ -30,6 +30,13 @@ public class IguanaScript : MonoBehaviour
     public IguanaState currentState;
     public static string[] predators = {"Eagle"};
     private GameObject predator;
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
     void Start()
     {
         health = GetComponent<Health>();

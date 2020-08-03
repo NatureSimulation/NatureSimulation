@@ -49,6 +49,8 @@ public class SquirrelScript : MonoBehaviour {
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
             animator.speed = wanderSpeed;
             speed = wanderSpeed;
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 

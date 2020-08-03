@@ -36,6 +36,8 @@ public class BirdScript : MonoBehaviour
         if (other.gameObject.tag == "Squirrel") {
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             GameManager.instance.delete(other.gameObject, other.gameObject.tag);
+        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
     void Update()
