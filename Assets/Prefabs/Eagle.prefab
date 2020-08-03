@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
-  damageSpeed: 1
+  damageSpeed: 2
   recoverSpeed: 300
   minBreedDistance: 5
   coolTimeBreeding: 10

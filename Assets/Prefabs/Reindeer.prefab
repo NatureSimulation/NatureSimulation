@@ -1038,7 +1038,7 @@ MonoBehaviour:
   walkspeed: 5
   damageSpeed: 0.3
   recoverSpeed: 1000
-  minBreedDistance: 5
+  minBreedDistance: 7
   coolTimeBreeding: 10
   childPrefab: {fileID: 6219636104399483927}
   sight: 20

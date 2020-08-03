@@ -7,6 +7,7 @@ public class RabbitScript : MonoBehaviour {
     private Animator animator;
     private Rigidbody rb;
     private Health health;
+    public float speed;
     public float damageSpeed;
     public float recoverSpeed;
     public float minBreedDistance;
@@ -32,7 +33,7 @@ public class RabbitScript : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
-        animator.speed = 3;
+        animator.speed = speed;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = RabbitState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;

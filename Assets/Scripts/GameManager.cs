@@ -520,6 +520,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void delete(GameObject item, string tag) {
+        if (item == null)
+            return;
         if (tag == "Grass") {
             grassCount -= 1;
             setGrassProgress(false);
