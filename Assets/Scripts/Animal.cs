@@ -38,9 +38,9 @@ public abstract class Animal : MonoBehaviour {
     public abstract void UpdateSpeed(float speed);
 
     public virtual void Start() {
-        // try {
-        //     player.GetComponent<CharacterController>();
-        // } catch (MissingComponentException e) {}
+        try {
+            player = GetComponent<CharacterController>();
+        } catch (MissingComponentException e) {}
         try {
             animator = GetComponent<Animator>();
         } catch (MissingComponentException e) {}
@@ -173,8 +173,8 @@ public abstract class Animal : MonoBehaviour {
 
         UpdatePosition();
         RotateOnTargeting();
-        if (target.tag == this.tag)
-            TryBreeding();
+        TryAttacking();
+        TryBreeding();
     }
 
     public void RotateOnTargeting() {
@@ -204,7 +204,7 @@ public abstract class Animal : MonoBehaviour {
         }
     }
 
-    void tryAttacking() {
+    void TryAttacking() {
         if (preys.Contains(target.gameObject.tag))
             return;
 
@@ -217,6 +217,8 @@ public abstract class Animal : MonoBehaviour {
     }
 
     protected void TryBreeding() {
+        if (target.tag != this.tag)
+            return;
         float distance = (target.transform.position - transform.position).magnitude;
         if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
             float x = this.transform.position.x + Random.Range(-20, 20);
