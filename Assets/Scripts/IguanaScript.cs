@@ -146,7 +146,6 @@ public class IguanaScript : MonoBehaviour
 
             animator.SetFloat("Forward", wanderSpeed * 2);
             animator.speed = wanderSpeed * 2;
-            tryDamageTarget();
         } else if (currentState == IguanaState.Escaping) {
             if (predator == null) {
                 currentState = IguanaState.Wandering;

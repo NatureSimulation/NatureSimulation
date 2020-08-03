@@ -164,9 +164,7 @@ public class EagleScript : MonoBehaviour
     IEnumerator stopAttack(float length)
 	{
 		yield return new WaitForSeconds(length);
-        if (target == null) {
-            currentState = EagleState.Wandering;
-        } else {
+        if (target != null) {
             GameManager.instance.delete(target, target.tag);
             health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
             currentState = EagleState.Wandering;

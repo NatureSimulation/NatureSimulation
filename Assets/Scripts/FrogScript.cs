@@ -22,6 +22,7 @@ public class FrogScript : MonoBehaviour {
     public float escapeSpeed = 20f;
 
     private GameObject target;
+    public float minAttackDistance = 10;
 
     public enum FrogState {
         Dead,
@@ -46,10 +47,7 @@ public class FrogScript : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Butterfly") {
-            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
-        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
@@ -135,16 +133,11 @@ public class FrogScript : MonoBehaviour {
                 return;
             }
 
-            if ((target.transform.position - transform.position).magnitude < 10) {
-                animator.SetTrigger("tongue");
-                GameManager.instance.delete(target, target.tag);
-                return;
-            }
-
             Vector3 diff = target.transform.position - transform.position;
             Vector3 chaseVec = new Vector3(diff.x, 0, diff.z);
             Debug.DrawLine(transform.position, transform.position + chaseVec, Color.white);
             transform.rotation = Quaternion.LookRotation(chaseVec, Vector3.up);
+            tryAttacking();
             tryBreeding();
         } else if (currentState == FrogState.Escaping) {
             if (predator == null) {
@@ -176,6 +169,16 @@ public class FrogScript : MonoBehaviour {
         GameManager.instance.delete(this.gameObject, this.tag);
     }
 
+    void tryAttacking() {
+        if (target.tag != "Butterfly")
+            return;
+        if ((target.transform.position - transform.position).magnitude < minAttackDistance) {
+            animator.SetTrigger("tongue");
+            GameManager.instance.delete(target, target.tag);
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            return;
+        }
+    }
     void tryBreeding() {
         if (target.tag != this.tag)
             return;
