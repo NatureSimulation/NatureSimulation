@@ -41,7 +41,6 @@ public class IguanaScript : MonoBehaviour
     {
         health = GetComponent<Health>();
         wanderSpeed = 1f;
-        escapeSpeed = 5f;
         walkspeed = wanderSpeed;
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = IguanaState.Wandering;

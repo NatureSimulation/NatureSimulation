@@ -22,6 +22,7 @@ public class DeerScript : MonoBehaviour
     private float wanderTime;
 
     private GameObject target;
+    public float minAttackDistance = 5;
     public enum DeerState {
         Dead,
         Escaping,
@@ -43,10 +44,7 @@ public class DeerScript : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Grass") {
-            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
-        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
 
@@ -134,8 +132,9 @@ public class DeerScript : MonoBehaviour
 
             Debug.DrawLine(transform.position, target.transform.position, Color.white);
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-            if (target.tag == this.tag)
-                tryBreeding();
+
+            tryBreeding();
+            tryAttacking();
         } else if (currentState == DeerState.Escaping) {
             if (predator == null) {
                 currentState = DeerState.Wandering;
@@ -159,6 +158,17 @@ public class DeerScript : MonoBehaviour
 
         if (health != null)
             health.TakeDamage(damageSpeed);
+    }
+
+    void tryAttacking() {
+        if (target.gameObject.tag != "Grass")
+            return;
+
+        float targetDistance = (target.transform.position - transform.position).magnitude;
+        if (targetDistance < minAttackDistance) {
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            GameManager.instance.delete(target.gameObject, target.gameObject.tag);
+        }
     }
 
     void tryBreeding() {

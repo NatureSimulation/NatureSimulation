@@ -1348,8 +1348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
-  wanderSpeed: 0
-  escapeSpeed: 0
+  wanderSpeed: 5
+  escapeSpeed: 5
   sight: 20
   damageSpeed: 1
   recoverSpeed: 300

@@ -322,7 +322,13 @@ MonoBehaviour:
   childPrefab: {fileID: 6544061036624831497}
   sight: 20
   speed: 3
+  wanderSpeed: 3
+  escapeSpeed: 10
   damageSpeed: 0.3
+  currentState: 0
+  predators:
+  - Frog
+  - Squirrel
 --- !u!1001 &6545044662922089165
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class RabbitScript : MonoBehaviour {
     private float wanderTime;
 
     private GameObject target;
+    public float minAttackDistance = 5;
 
     public enum RabbitState {
         Dead,
@@ -45,10 +46,7 @@ public class RabbitScript : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Grass") {
-            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
-        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
@@ -139,6 +137,7 @@ public class RabbitScript : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             animator.SetTrigger("moving");
             tryBreeding();
+            tryAttacking();
         } else if (currentState == RabbitState.Escaping) {
             if (predator == null) {
                 currentState = RabbitState.Wandering;
@@ -159,6 +158,17 @@ public class RabbitScript : MonoBehaviour {
         yield return new WaitForSeconds(time);
 
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+
+    void tryAttacking() {
+        if (target.gameObject.tag == "Grass")
+            return;
+        float targetDistance = (target.transform.position - transform.position).magnitude;
+
+        if (targetDistance < minAttackDistance) {
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            GameManager.instance.delete(target.gameObject, target.gameObject.tag);
+        }
     }
 
     void tryBreeding() {

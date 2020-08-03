@@ -1227,7 +1227,7 @@ MonoBehaviour:
   childPrefab: {fileID: 6368709116697677957}
   sight: 10
   target: {fileID: 0}
-  minAttackDistance: 0
+  minAttackDistance: 10
   currentState: 0
 --- !u!114 &2843803128164805385
 MonoBehaviour:

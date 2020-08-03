@@ -31,7 +31,7 @@ public class ButterflyScript : MonoBehaviour
     }
 
     public ButterflyState currentState;
-    public string[] predators = {"Frog"};
+    public string[] predators = {"Frog", "Squirrel"};
     private GameObject predator;
 
     // Start is called before the first frame update

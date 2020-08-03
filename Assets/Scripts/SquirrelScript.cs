@@ -22,6 +22,7 @@ public class SquirrelScript : MonoBehaviour {
     public float sight = 10f;
 
     private GameObject target;
+    public float minAttackDistance = 5;
 
     public enum SquirrelState {
         Dead,
@@ -45,12 +46,7 @@ public class SquirrelScript : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Grass" || other.gameObject.tag == "Butterfly") {
-            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
-            GameManager.instance.delete(other.gameObject, other.gameObject.tag);
-            animator.speed = wanderSpeed;
-            speed = wanderSpeed;
-        } else if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
+        if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
@@ -83,10 +79,10 @@ public class SquirrelScript : MonoBehaviour {
         }
 
         /* Search prey */
-        Collider[] preyColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => coll.tag == "Butterfly" || coll.tag == "Grass").ToArray();
+        Collider[] preyColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Butterfly" || coll.tag == "Grass").ToArray();
         if (preyColliders.Length > 0) {
             currentState = SquirrelState.Targeting;
-            speed += 1f;
             transform.rotation = Quaternion.LookRotation(preyColliders[0].transform.position - transform.position, Vector3.up);
             target = preyColliders[0].gameObject;
         }
@@ -143,6 +139,7 @@ public class SquirrelScript : MonoBehaviour {
             animator.SetTrigger("move");
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
             tryBreeding();
+            tryAttacking();
         } else if (currentState == SquirrelState.Escaping) {
             if (predator == null) {
                 currentState = SquirrelState.Wandering;
@@ -173,6 +170,17 @@ public class SquirrelScript : MonoBehaviour {
         yield return new WaitForSeconds(time);
 
         GameManager.instance.delete(this.gameObject, this.tag);
+    }
+    void tryAttacking() {
+        if (target.gameObject.tag != "Grass" && target.gameObject.tag != "Butterfly")
+            return;
+        float targetDistance = (target.transform.position - transform.position).magnitude;
+        if (targetDistance < minAttackDistance) {
+            health.currentHealth += Mathf.Min(recoverSpeed, Health.maxHealth - health.currentHealth);
+            GameManager.instance.delete(target.gameObject, target.gameObject.tag);
+            animator.speed = wanderSpeed;
+            speed = wanderSpeed;
+        }
     }
 
     void tryBreeding() {

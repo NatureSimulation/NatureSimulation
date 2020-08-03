@@ -1480,7 +1480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745488152287196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 60, y: 5, z: -60}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4736687049708454}
@@ -1544,6 +1544,7 @@ MonoBehaviour:
   coolTimeBreeding: 5
   childPrefab: {fileID: 1745488152287196}
   sight: 20
+  minAttackDistance: 5
   currentState: 0
 --- !u!114 &449449582
 MonoBehaviour:

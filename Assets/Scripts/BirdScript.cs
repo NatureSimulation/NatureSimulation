@@ -9,7 +9,7 @@ public class BirdScript : MonoBehaviour
     public float sight = 10f;
     private Health health;
     private float wanderTime;
-    private GameObject target;
+    public GameObject target;
     public float damageSpeed;
     public float recoverSpeed;
     public float minBreedDistance;
@@ -84,6 +84,7 @@ public class BirdScript : MonoBehaviour
                 target = friendColliders[0].gameObject;
             }
         }
+
         leftTimeForBreeding -= Time.deltaTime;
     }
 
@@ -113,7 +114,7 @@ public class BirdScript : MonoBehaviour
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
 
-            transform.Translate(transform.forward * walkspeed * Time.deltaTime);
+            transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
         } else if (currentState == BirdState.Targeting) {
             if (target == null) {
                 currentState = BirdState.Wandering;
@@ -121,11 +122,13 @@ public class BirdScript : MonoBehaviour
             }
 
             transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
-            transform.Translate(transform.forward * walkspeed * Time.deltaTime);
+            transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
 
             if (target.tag == this.tag)
                 tryBreeding();
         }
+
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 10);
 
         if (health != null)
             health.TakeDamage(damageSpeed);
