@@ -956,6 +956,7 @@ GameObject:
   - component: {fileID: 8196560849495591246}
   - component: {fileID: 7446761899428828658}
   - component: {fileID: 1463976647679089886}
+  - component: {fileID: 7607578903995970648}
   m_Layer: 0
   m_Name: Reindeer
   m_TagString: Deer
@@ -1003,9 +1004,9 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6219636104399483927}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 64b02a2d99eb8cd4ba904608cdbafb09, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 2}
   m_Center: {x: 0, y: 1.2, z: 0}
@@ -1036,12 +1037,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
+  wanderingSpeed: 5
+  escapingSpeed: 20
   damageSpeed: 0.3
   recoverSpeed: 1000
   minBreedDistance: 7
   coolTimeBreeding: 10
   childPrefab: {fileID: 6219636104399483927}
   sight: 20
+  currentState: 0
+  predators:
+  - Tiger
+--- !u!136 &7607578903995970648
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6219636104399483927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.94348115
+  m_Height: 2.43263
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.8900582, z: 0.0075416565}
 --- !u!1 &6606836473534761651
 GameObject:
   m_ObjectHideFlags: 0
