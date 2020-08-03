@@ -1220,10 +1220,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 5
-  damageSpeed: 0
-  recoverSpeed: 0
-  minBreedDistance: 0
-  coolTimeBreeding: 0
+  damageSpeed: 1
+  recoverSpeed: 300
+  minBreedDistance: 5
+  coolTimeBreeding: 10
   childPrefab: {fileID: 0}
   sight: 10
   target: {fileID: 0}

@@ -3892,13 +3892,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0be451587d93849accf1dba716d177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageSpeed: 1
+  damageSpeed: 0.7
   recoverSpeed: 1000
   minBreedDistance: 5
   coolTimeBreeding: 7
   childPrefab: {fileID: 1644373995442134}
   sight: 20
   speed: 3
+  wanderSpeed: 10
+  escapeSpeed: 20
+  currentState: 0
 --- !u!1 &1651717217587476
 GameObject:
   m_ObjectHideFlags: 0

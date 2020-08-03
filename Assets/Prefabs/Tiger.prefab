@@ -6737,11 +6737,12 @@ MonoBehaviour:
   walkSpeed: 5
   minAttackDistance: 8
   sight: 20
-  damageSpeed: 2
+  damageSpeed: 1.5
   recoverSpeed: 300
   minBreedDistance: 5
   coolTimeBreeding: 10
   childPrefab: {fileID: 4738995793068480728}
+  currentState: 0
 --- !u!114 &5045366694575362858
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject grass;
     private float grassTimer;
     private int grassCount;
+    public float grassCoolTime;
     public int grassMax;
     public GameObject grassProgress;
     private Text grassProgressText;
@@ -199,7 +200,7 @@ public class GameManager : MonoBehaviour
         planeMaxY = bounds.max.y;
 
         /* Create squirrel */
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < squirrelInitNum; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);
             float y;
@@ -367,7 +368,7 @@ public class GameManager : MonoBehaviour
         }
         /* Create grass */
         grassTimer += Time.deltaTime;
-        if (grassTimer > 3) {
+        if (grassTimer > grassCoolTime) {
             grassTimer = 0;
             float x = Random.Range(planeMinX, planeMaxX);
             float z = Random.Range(planeMinZ, planeMaxZ);

@@ -754,11 +754,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkspeed: 5
   sight: 20
-  damageSpeed: 2
+  damageSpeed: 1
   recoverSpeed: 300
   minBreedDistance: 5
   coolTimeBreeding: 10
   childPrefab: {fileID: 3733083608000069085}
+  currentState: 0
 --- !u!114 &3057971505709651096
 MonoBehaviour:
   m_ObjectHideFlags: 0
