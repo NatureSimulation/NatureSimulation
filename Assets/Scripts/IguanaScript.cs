@@ -101,7 +101,9 @@ public class IguanaScript : MonoBehaviour
             Collider closest = predatorColliders.Aggregate(
                 (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
             );
-            transform.rotation = Quaternion.LookRotation(transform.position - closest.transform.position, Vector3.up);
+
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
         } else if (currentState == IguanaState.Escaping) {
             animator.SetFloat("Forward", wanderSpeed);

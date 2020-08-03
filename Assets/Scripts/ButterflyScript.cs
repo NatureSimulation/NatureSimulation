@@ -108,7 +108,8 @@ public class ButterflyScript : MonoBehaviour
             Collider closest = predatorColliders.Aggregate(
                 (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
             );
-            transform.rotation = Quaternion.LookRotation(transform.position - closest.transform.position, Vector3.up);
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
         } else if (currentState == ButterflyState.Escaping) {
             currentState = ButterflyState.Wandering;
@@ -159,8 +160,9 @@ public class ButterflyScript : MonoBehaviour
                 return;
             }
 
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             transform.position += (transform.forward * speed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(transform.position - predator.transform.position, Vector3.up);
         }
 
         if (health != null)

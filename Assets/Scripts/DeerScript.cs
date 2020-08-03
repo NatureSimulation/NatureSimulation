@@ -78,8 +78,8 @@ public class DeerScript : MonoBehaviour
 
         if (grassColliders.Length > 0) {
             currentState = DeerState.Targeting;
-            transform.rotation = Quaternion.LookRotation(
-                grassColliders[0].transform.position - transform.position, Vector3.up);
+            Vector3 diff = grassColliders[0].transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             target = grassColliders[0].gameObject;
         }
 
@@ -104,7 +104,8 @@ public class DeerScript : MonoBehaviour
             Collider closest = predatorColliders.Aggregate(
                 (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
             );
-            transform.rotation = Quaternion.LookRotation(transform.position - closest.transform.position, Vector3.up);
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
         } else if (currentState == DeerState.Escaping) {
             currentState = DeerState.Wandering;
@@ -141,7 +142,8 @@ public class DeerScript : MonoBehaviour
                 return;
             }
 
-            transform.rotation = Quaternion.LookRotation(transform.position - predator.transform.position, Vector3.up);
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             transform.Translate(transform.forward * walkspeed * Time.deltaTime, Space.World);
         }
 

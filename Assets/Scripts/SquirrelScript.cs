@@ -97,7 +97,8 @@ public class SquirrelScript : MonoBehaviour {
             Collider closest = predatorColliders.Aggregate(
                 (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
             );
-            transform.rotation = Quaternion.LookRotation(transform.position - closest.transform.position, Vector3.up);
+            Vector3 diff = transform.position - closest.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
         } else if (currentState == SquirrelState.Escaping) {
             currentState = SquirrelState.Wandering;
@@ -151,7 +152,8 @@ public class SquirrelScript : MonoBehaviour {
 
             animator.SetTrigger("move");
             transform.position += (transform.forward * speed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(transform.position - predator.transform.position, Vector3.up);
+            Vector3 diff = transform.position - predator.transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
         }
         if (health != null)
             health.TakeDamage(damageSpeed);
