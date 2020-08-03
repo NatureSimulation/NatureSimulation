@@ -702,9 +702,9 @@ GameObject:
   - component: {fileID: 4677745771901032}
   - component: {fileID: 95674028643950644}
   - component: {fileID: 8500438095725802306}
-  - component: {fileID: -1024073142168088920}
   - component: {fileID: 5814194738171883281}
   - component: {fileID: 8447824891753733994}
+  - component: {fileID: 7193234037665269593}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -762,29 +762,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6403347, y: 0.7, z: 1}
   m_Center: {x: 0.01767182, y: 0.35, z: 0.1}
---- !u!114 &-1024073142168088920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588090451174212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f14671820971c2b4c9b9c1cb0322a6a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  wanderSpeed: 3
-  escapeSpeed: 10
-  damageSpeed: 0.3
-  recoverSpeed: 1000
-  minBreedDistance: 3
-  coolTimeBreeding: 7
-  childPrefab: {fileID: 1588090451174212}
-  sight: 20
-  minAttackDistance: 5
-  currentState: 0
 --- !u!114 &5814194738171883281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,6 +794,36 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!114 &7193234037665269593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588090451174212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58bcd337e863184399bbdbc2471d70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 4
+  wanderSpeed: 3
+  escapeSpeed: 10
+  damageSpeed: 0.3
+  recoverSpeed: 1000
+  currentState: 0
+  sight: 20
+  childPrefab: {fileID: 1588090451174212}
+  minAttackDistance: 5
+  minBreedDistance: 3
+  coolTimeBreeding: 7
+  preys:
+  - Grass
+  predators:
+  - Tiger
+  - Iguana
+  - Eagle
 --- !u!1 &1593323770353162
 GameObject:
   m_ObjectHideFlags: 0

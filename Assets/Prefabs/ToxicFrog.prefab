@@ -3789,8 +3789,8 @@ GameObject:
   - component: {fileID: 95172607052263456}
   - component: {fileID: 2024591697}
   - component: {fileID: 2024591699}
-  - component: {fileID: 2024591700}
   - component: {fileID: 408719845043386215}
+  - component: {fileID: 5658126391426998963}
   m_Layer: 0
   m_Name: ToxicFrog
   m_TagString: Frog
@@ -3864,29 +3864,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   healthbar: {fileID: 1452755571}
---- !u!114 &2024591700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644373995442134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc0be451587d93849accf1dba716d177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 408719845043386215}
-  damageSpeed: 0.7
-  recoverSpeed: 1000
-  minBreedDistance: 5
-  coolTimeBreeding: 7
-  childPrefab: {fileID: 1644373995442134}
-  sight: 20
-  speed: 3
-  wanderSpeed: 10
-  escapeSpeed: 20
-  currentState: 0
 --- !u!143 &408719845043386215
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3905,6 +3882,35 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &5658126391426998963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644373995442134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5642336d3fad75147b7b14ab18f9ae4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 10
+  damageSpeed: 0.7
+  recoverSpeed: 1000
+  currentState: 0
+  sight: 10
+  childPrefab: {fileID: 1644373995442134}
+  minAttackDistance: 10
+  minBreedDistance: 5
+  coolTimeBreeding: 7
+  preys:
+  - Butterfly
+  predators:
+  - Iguana
+  - Eagle
 --- !u!1 &1651717217587476
 GameObject:
   m_ObjectHideFlags: 0

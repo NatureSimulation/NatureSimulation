@@ -1278,6 +1278,7 @@ GameObject:
   - component: {fileID: 7646483576038062528}
   - component: {fileID: 7535132183826235791}
   - component: {fileID: 649777526256427366}
+  - component: {fileID: -260366053730599876}
   m_Layer: 0
   m_Name: Iguana
   m_TagString: Iguana
@@ -1342,7 +1343,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141256}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 586460d9f717e4756aad01d4825ebbdd, type: 3}
   m_Name: 
@@ -1390,6 +1391,36 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &-260366053730599876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c4675566d02aa4abec16fe68429dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 5
+  damageSpeed: 1
+  recoverSpeed: 300
+  currentState: 0
+  sight: 20
+  childPrefab: {fileID: 141256}
+  minAttackDistance: 10
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  preys:
+  - Rabbit
+  - Squirrel
+  - Frog
+  predators:
+  - Eagle
 --- !u!1 &142006
 GameObject:
   m_ObjectHideFlags: 0

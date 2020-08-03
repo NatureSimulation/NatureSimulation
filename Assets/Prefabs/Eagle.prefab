@@ -1152,8 +1152,8 @@ GameObject:
   - component: {fileID: 2858204961615130494}
   - component: {fileID: 9062233371238420217}
   - component: {fileID: 7832397112440572122}
-  - component: {fileID: 3998819338869564368}
   - component: {fileID: 2843803128164805385}
+  - component: {fileID: 5397077377196884938}
   m_Layer: 0
   m_Name: Eagle
   m_TagString: Eagle
@@ -1168,7 +1168,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6368709116697677957}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.00000028088027}
   m_LocalPosition: {x: 60, y: 10, z: -60}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
@@ -1176,7 +1176,7 @@ Transform:
   - {fileID: 4989655648530780420}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 179.99998, z: 0}
 --- !u!54 &9062233371238420217
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1207,28 +1207,6 @@ CapsuleCollider:
   m_Height: 1.9882355
   m_Direction: 1
   m_Center: {x: 0.027517319, y: 2, z: 5.3261432e-17}
---- !u!114 &3998819338869564368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6368709116697677957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42343cac2f697d44db4ea0ee10276a7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkspeed: 5
-  damageSpeed: 1
-  recoverSpeed: 300
-  minBreedDistance: 5
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 6368709116697677957}
-  sight: 10
-  target: {fileID: 0}
-  minAttackDistance: 10
-  currentState: 0
 --- !u!114 &2843803128164805385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1243,6 +1221,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   healthbar: {fileID: 4989655649007129859}
+--- !u!114 &5397077377196884938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368709116697677957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1e327335ed1134ba2e1ab40ad924bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 5
+  wanderSpeed: 5
+  escapeSpeed: 0
+  damageSpeed: 1
+  recoverSpeed: 300
+  currentState: 0
+  sight: 20
+  childPrefab: {fileID: 6368709116697677957}
+  minAttackDistance: 10
+  minBreedDistance: 5
+  coolTimeBreeding: 10
+  preys:
+  - Frog
+  - Rabbit
+  - Iguana
+  predators: []
 --- !u!1 &6477105710696632911
 GameObject:
   m_ObjectHideFlags: 0
