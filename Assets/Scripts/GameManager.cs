@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +9,31 @@ public class GameManager : MonoBehaviour
     /* External variables */
     /* For singleton pattern */
     public static GameManager instance;
+
+    public enum ButtonState {
+        None,
+        Grass,
+        Bird,
+        Butterfly,
+        Deer,
+        Eagle,
+        Frog,
+        Iguana,
+        Rabbit,
+        Squirrel,
+        Tiger
+    }
+    public Button grassButton;
+    public Button birdButton;
+    public Button butterflyButton;
+    public Button deerButton;
+    public Button eagleButton;
+    public Button frogButton;
+    public Button iguanaButton;
+    public Button rabbitButton;
+    public Button squirrelButton;
+    public Button tigerButton;
+    public ButtonState currentButtonState;
 
     /* Grass */
     public GameObject grass;
@@ -111,6 +137,7 @@ public class GameManager : MonoBehaviour
     public float planeOffset = 5;
 
     public GameObject panel;
+    public GameObject animalPanel;
 
     void Awake() {
         instance = this;
@@ -118,6 +145,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        currentButtonState = ButtonState.None;
+        grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
+        birdButton.onClick.AddListener(() => { currentButtonState = ButtonState.Bird; birdButton.GetComponent<Image>().color = Color.white; });
+        butterflyButton.onClick.AddListener(() => { currentButtonState = ButtonState.Butterfly; butterflyButton.GetComponent<Image>().color = Color.white; });
+        deerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Deer; deerButton.GetComponent<Image>().color = Color.white; });
+        eagleButton.onClick.AddListener(() => { currentButtonState = ButtonState.Eagle; eagleButton.GetComponent<Image>().color = Color.white; });
+        frogButton.onClick.AddListener(() => { currentButtonState = ButtonState.Frog; frogButton.GetComponent<Image>().color = Color.white; });
+        iguanaButton.onClick.AddListener(() => { currentButtonState = ButtonState.Iguana; iguanaButton.GetComponent<Image>().color = Color.white; });
+        rabbitButton.onClick.AddListener(() => { currentButtonState = ButtonState.Rabbit; rabbitButton.GetComponent<Image>().color = Color.white; });
+        squirrelButton.onClick.AddListener(() => { currentButtonState = ButtonState.Squirrel; squirrelButton.GetComponent<Image>().color = Color.white; });
+        tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
+
         /* Init grass */
         grassTimer = 0;
         grassCount = 0;
@@ -198,149 +237,149 @@ public class GameManager : MonoBehaviour
         planeMaxZ = bounds.max.z - planeOffset;
         planeMaxY = bounds.max.y;
 
-        /* Create squirrel */
-        for (int i = 0; i < squirrelInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create squirrel */
+        // for (int i = 0; i < squirrelInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            squirrelCount += 1;
-            setSquirrelProgress(true);
-            Instantiate (squirrel, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     squirrelCount += 1;
+        //     setSquirrelProgress(true);
+        //     Instantiate (squirrel, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create rabbit */
-        for (int i = 0; i < rabbitInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create rabbit */
+        // for (int i = 0; i < rabbitInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            rabbitCount += 1;
-            setRabbitProgress(true);
-            Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     rabbitCount += 1;
+        //     setRabbitProgress(true);
+        //     Instantiate(rabbit, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create eagle */
-        for (int i = 0; i < eagleInitNum; ++i) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z) + 10f;
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create eagle */
+        // for (int i = 0; i < eagleInitNum; ++i) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z) + 10f;
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            eagleCount += 1;
-            setEagleProgress(true);
-            Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     eagleCount += 1;
+        //     setEagleProgress(true);
+        //     Instantiate (eagle, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create deer */
-        for (int i = 0; i < deerInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create deer */
+        // for (int i = 0; i < deerInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            deerCount += 1;
-            setDeerProgress(true);
-            Instantiate(deer, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     deerCount += 1;
+        //     setDeerProgress(true);
+        //     Instantiate(deer, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create butterfly */
-        for (int i = 0; i < butterflyInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create butterfly */
+        // for (int i = 0; i < butterflyInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            butterflyCount += 1;
-            setButterflyProgress(true);
-            Instantiate(butterfly, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     butterflyCount += 1;
+        //     setButterflyProgress(true);
+        //     Instantiate(butterfly, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create tiger */
-        for (int i = 0; i < tigerInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create tiger */
+        // for (int i = 0; i < tigerInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            tigerCount += 1;
-            setTigerProgress(true);
-            Instantiate(tiger, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     tigerCount += 1;
+        //     setTigerProgress(true);
+        //     Instantiate(tiger, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create iguana */
-        for (int i = 0; i < iguanaInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create iguana */
+        // for (int i = 0; i < iguanaInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            iguanaCount += 1;
-            setIguanaProgress(true);
-            Instantiate(iguana, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     iguanaCount += 1;
+        //     setIguanaProgress(true);
+        //     Instantiate(iguana, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create bird */
-        for (int i = 0; i < birdInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create bird */
+        // for (int i = 0; i < birdInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            birdCount += 1;
-            setBirdProgress(true);
-            Instantiate(bird, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     birdCount += 1;
+        //     setBirdProgress(true);
+        //     Instantiate(bird, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
-        /* Create frog */
-        for (int i = 0; i < frogInitNum; i++) {
-            float x = Random.Range(planeMinX, planeMaxX);
-            float z = Random.Range(planeMinZ, planeMaxZ);
-            float y;
-            try {
-                y = getHeight(x, z);
-            } catch (System.Exception) {
-                continue;
-            }
+        // /* Create frog */
+        // for (int i = 0; i < frogInitNum; i++) {
+        //     float x = Random.Range(planeMinX, planeMaxX);
+        //     float z = Random.Range(planeMinZ, planeMaxZ);
+        //     float y;
+        //     try {
+        //         y = getHeight(x, z);
+        //     } catch (System.Exception) {
+        //         continue;
+        //     }
 
-            frogCount += 1;
-            setFrogProgress(true);
-            Instantiate(frog, new Vector3(x, y, z), Quaternion.identity);
-        }
+        //     frogCount += 1;
+        //     setFrogProgress(true);
+        //     Instantiate(frog, new Vector3(x, y, z), Quaternion.identity);
+        // }
 
     }
 
@@ -351,8 +390,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P)) {
             if (panel.activeSelf) {
                 panel.SetActive(false);
+                animalPanel.SetActive(true);
             } else {
                 panel.SetActive(true);
+                animalPanel.SetActive(false);
             }
         }
 
@@ -385,6 +426,52 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha0)) {
             CameraManager.instance.finishSubCamera();
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit)) {
+                Debug.Log(hit.point);
+                switch (currentButtonState) {
+                    case ButtonState.Bird:
+                        Instantiate(bird, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Butterfly:
+                        Instantiate(bird, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Deer:
+                        Instantiate(deer, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Eagle:
+                        Instantiate(eagle, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Frog:
+                        Instantiate(frog, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Grass:
+                        Instantiate(grass, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Iguana:
+                        Instantiate(iguana, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Rabbit:
+                        Instantiate(rabbit, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Squirrel:
+                        Instantiate(squirrel, hit.point, Quaternion.identity);
+                        break;
+                    case ButtonState.Tiger:
+                        Instantiate(tiger, hit.point, Quaternion.identity);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
     void FixedUpdate() {
