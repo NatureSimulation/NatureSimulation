@@ -77,16 +77,16 @@ public class Eagle : Animal {
     public override void AdjustHeight() {
         float planeY;
         try {
-            planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.y);
+            planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.z);
         } catch {
             planeY = 0;
         }
 
         Quaternion rotation;
         if (planeY + 10 > this.transform.position.y) {
-            rotation = Quaternion.Euler(new Vector3(-10, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+            rotation = Quaternion.Euler(new Vector3(-30, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         } else {
-            rotation = Quaternion.Euler(new Vector3(10, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+            rotation = Quaternion.Euler(new Vector3(30, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
     }
