@@ -442,7 +442,7 @@ public class GameManager : MonoBehaviour
                         Instantiate(bird, hit.point, Quaternion.identity);
                         break;
                     case ButtonState.Butterfly:
-                        Instantiate(bird, hit.point, Quaternion.identity);
+                        Instantiate(butterfly, hit.point, Quaternion.identity);
                         break;
                     case ButtonState.Deer:
                         Instantiate(deer, hit.point, Quaternion.identity);
