@@ -78,4 +78,10 @@ public class Tiger : Animal {
         animator.SetFloat("moving", speed);
         this.speed = speed;
     }
+
+    public override void transmitInfection(GameObject target) {
+        if (target == null)
+            return;
+        target.GetComponent<Tiger>().UpdateInfection(true);
+    }
 }

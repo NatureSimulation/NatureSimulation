@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         Iguana,
         Rabbit,
         Squirrel,
-        Tiger
+        Tiger,
+        Infection
     }
     public Button grassButton;
     public Button birdButton;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public Button rabbitButton;
     public Button squirrelButton;
     public Button tigerButton;
+    public Button infectionButton;
     public ButtonState currentButtonState;
 
     /* Grass */
@@ -139,6 +141,9 @@ public class GameManager : MonoBehaviour
     public GameObject panel;
     public GameObject animalPanel;
 
+    /* Debug */
+    public bool initCreate = true;
+
     void Awake() {
         instance = this;
     }
@@ -156,6 +161,7 @@ public class GameManager : MonoBehaviour
         rabbitButton.onClick.AddListener(() => { currentButtonState = ButtonState.Rabbit; rabbitButton.GetComponent<Image>().color = Color.white; });
         squirrelButton.onClick.AddListener(() => { currentButtonState = ButtonState.Squirrel; squirrelButton.GetComponent<Image>().color = Color.white; });
         tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
+        infectionButton.onClick.AddListener(() => { currentButtonState = ButtonState.Infection; infectionButton.GetComponent<Image>().color = Color.white; });
 
         /* Init grass */
         grassTimer = 0;
@@ -236,7 +242,8 @@ public class GameManager : MonoBehaviour
         planeMaxX = bounds.max.x - planeOffset;
         planeMaxZ = bounds.max.z - planeOffset;
         planeMaxY = bounds.max.y;
-
+        if (!initCreate)
+            return;
         /* Create squirrel */
         for (int i = 0; i < squirrelInitNum; i++) {
             float x = Random.Range(planeMinX, planeMaxX);
@@ -424,7 +431,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha9)) {
             Time.timeScale = 9;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             CameraManager.instance.finishSubCamera();
         }
 

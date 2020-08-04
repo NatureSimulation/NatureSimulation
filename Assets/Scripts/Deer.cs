@@ -38,4 +38,10 @@ public class Deer : Animal {
     public override void UpdateSpeed(float speed) {
         this.speed = speed;
     }
+
+    public override void transmitInfection(GameObject target) {
+        if (target == null)
+            return;
+        target.GetComponent<Deer>().UpdateInfection(true);
+    }
 }

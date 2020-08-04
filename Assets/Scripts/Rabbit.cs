@@ -41,4 +41,10 @@ public class Rabbit : Animal {
     public override void UpdateSpeed(float speed) {
         animator.speed = speed;
     }
+
+    public override void transmitInfection(GameObject target) {
+        if (target == null)
+            return;
+        target.GetComponent<Rabbit>().UpdateInfection(true);
+    }
 }

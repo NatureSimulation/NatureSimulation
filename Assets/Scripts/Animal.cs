@@ -35,6 +35,7 @@ public abstract class Animal : MonoBehaviour {
     public string[] predators;
     protected GameObject target;
     protected GameObject predator;
+    protected bool isInfection = false;
 
     public abstract void RotateOnTargeting(GameObject obj);
     public abstract void UpdatePosition();
@@ -51,6 +52,7 @@ public abstract class Animal : MonoBehaviour {
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = AnimalState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;
+        UpdateInfection(isInfection);
     }
 
     public virtual void Update() {
@@ -85,7 +87,11 @@ public abstract class Animal : MonoBehaviour {
         }
 
         if (health != null)
-            health.TakeDamage(damageSpeed);
+            if (isInfection)
+                health.TakeDamage(damageSpeed * 2);
+            else {
+                health.TakeDamage(damageSpeed);
+            }
     }
 
     public virtual void CheckHealth() {
@@ -241,6 +247,10 @@ public abstract class Animal : MonoBehaviour {
             return;
         float distance = (target.transform.position - transform.position).magnitude;
         if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
+            /* Transmit infection to partner */
+            if (isInfection)
+                transmitInfection(target);
+
             float x = this.transform.position.x + Random.Range(-20, 20);
             float z = this.transform.position.z + Random.Range(-20, 20);
             float y;
@@ -254,9 +264,15 @@ public abstract class Animal : MonoBehaviour {
             currentState = AnimalState.Wandering;
             GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
             child.GetComponent<Health>().currentHealth = Health.maxHealth * 0.5f;
+
+            /* Inherit infection */
+            if (isInfection)
+                transmitInfection(child);
             GameManager.instance.breed(child.tag);
         }
     }
+
+    public virtual void transmitInfection(GameObject target) {}
 
     protected void CheckClick() {
         if (Input.GetMouseButtonDown(0)) {
@@ -264,8 +280,22 @@ public abstract class Animal : MonoBehaviour {
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
             if ((transform.position - hit.point).magnitude < 5) {
-                CameraManager.instance.startSubCamera(this.gameObject);
+                if (GameManager.instance.currentButtonState == GameManager.ButtonState.Infection) {
+                    UpdateInfection(true);
+                } else {
+                    CameraManager.instance.startSubCamera(this.gameObject);
+                }
             }
+        }
+    }
+
+    protected void UpdateInfection(bool turnOn) {
+        if (turnOn) {
+            isInfection = true;
+            GetComponent<ParticleSystem>().Play();
+        } else {
+            isInfection = false;
+            GetComponent<ParticleSystem>().Stop();
         }
     }
 }

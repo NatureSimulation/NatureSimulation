@@ -83,4 +83,10 @@ public class Iguana : Animal {
         animator.SetFloat("Forward", speed);
         animator.speed = speed;
     }
+
+    public override void transmitInfection(GameObject target) {
+        if (target == null)
+            return;
+        target.GetComponent<Iguana>().UpdateInfection(true);
+    }
 }

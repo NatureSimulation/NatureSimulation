@@ -15,7 +15,6 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0) {
             currentHealth = 0f;
         }
-
         healthbar.sizeDelta = new Vector2(currentHealth * 0.1f, healthbar.sizeDelta.y);
 
         return currentHealth == 0;
