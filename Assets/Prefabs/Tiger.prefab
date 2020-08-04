@@ -6768,7 +6768,7 @@ MonoBehaviour:
   speed: 15
   wanderSpeed: 15
   escapeSpeed: 0
-  damageSpeed: 0.5
+  damageSpeed: 0.8
   recoverSpeed: 400
   preyThreshold: 100
   breedThreshold: 300
@@ -6777,7 +6777,7 @@ MonoBehaviour:
   childPrefab: {fileID: 4738995793068480728}
   minAttackDistance: 8
   minBreedDistance: 7
-  coolTimeBreeding: 17
+  coolTimeBreeding: 15
   preys:
   - Rabbit
   - Deer

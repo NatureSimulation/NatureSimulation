@@ -320,7 +320,7 @@ MonoBehaviour:
   speed: 3
   wanderSpeed: 3
   escapeSpeed: 8
-  damageSpeed: 0.3
+  damageSpeed: 0.5
   recoverSpeed: 500
   preyThreshold: 100
   breedThreshold: 300

@@ -3897,8 +3897,8 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 13
   wanderSpeed: 13
-  escapeSpeed: 10
-  damageSpeed: 0.7
+  escapeSpeed: 13
+  damageSpeed: 0.6
   recoverSpeed: 500
   preyThreshold: 100
   breedThreshold: 300
@@ -3907,7 +3907,7 @@ MonoBehaviour:
   childPrefab: {fileID: 1644373995442134}
   minAttackDistance: 10
   minBreedDistance: 7
-  coolTimeBreeding: 3.6
+  coolTimeBreeding: 3.55
   preys:
   - Butterfly
   predators:

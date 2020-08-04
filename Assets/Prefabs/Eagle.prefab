@@ -1234,17 +1234,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 15
-  wanderSpeed: 15
+  speed: 17
+  wanderSpeed: 17
   escapeSpeed: 0
   damageSpeed: 0.55
   recoverSpeed: 300
   preyThreshold: 100
   breedThreshold: 300
   currentState: 0
-  sight: 20
+  sight: 30
   childPrefab: {fileID: 6368709116697677957}
-  minAttackDistance: 10
+  minAttackDistance: 17
   minBreedDistance: 7
   coolTimeBreeding: 15
   preys:
