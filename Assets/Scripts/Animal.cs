@@ -12,6 +12,8 @@ public abstract class Animal : MonoBehaviour {
     public float escapeSpeed;
     public float damageSpeed;
     public float recoverSpeed;
+    public float preyThreshold = 100f;
+    public float breedThreshold = 300f;
     public enum AnimalState {
         Dead,
         Escaping,
@@ -109,25 +111,34 @@ public abstract class Animal : MonoBehaviour {
     }
 
     public void SearchForPrey() {
+        if(health.currentHealth > preyThreshold)
+            return;
         Collider[] preyColliders = Physics.OverlapSphere(transform.position, sight)
                                            .Where(coll => preys.Contains(coll.tag))
                                            .ToArray();
 
             if (preyColliders.Length > 0) {
                 currentState = AnimalState.Targeting;
-                RotateOnTargeting(preyColliders[0].gameObject);
-                target = preyColliders[0].gameObject;
+                Collider closest = preyColliders.Aggregate(
+                    (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+                    );
+                RotateOnTargeting(closest.gameObject);
+                target = closest.gameObject;
             }
     }
 
     public void SearchForFriend() {
-        if (currentState == AnimalState.Wandering && leftTimeForBreeding < 0) {
+        if (currentState == AnimalState.Wandering && leftTimeForBreeding < 0
+            && health.currentHealth > breedThreshold) {
             Collider[] friendColliders = Physics.OverlapSphere(transform.position, sight)
                 .Where(coll => coll.tag == this.tag && coll.gameObject != this.gameObject).ToArray();
             if (friendColliders.Length > 0) {
                 currentState = AnimalState.Targeting;
-                RotateOnTargeting(friendColliders[0].gameObject);
-                target = friendColliders[0].gameObject;
+                Collider closest = friendColliders.Aggregate(
+                    (acc, cur) => (acc.transform.position - transform.position).magnitude < (cur.transform.position - transform.position).magnitude ? acc : cur
+                    );
+                RotateOnTargeting(closest.gameObject);
+                target = closest.gameObject;
             }
         }
         leftTimeForBreeding -= Time.deltaTime;
@@ -200,6 +211,7 @@ public abstract class Animal : MonoBehaviour {
         GameManager.instance.delete(this.gameObject, this.tag);
     }
     void OnCollisionEnter(Collision other) {
+        Debug.Log(other);
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
@@ -236,10 +248,11 @@ public abstract class Animal : MonoBehaviour {
                 return;
             }
 
-            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
-            child.GetComponent<Health>().currentHealth = Health.maxHealth;
-            GameManager.instance.breed(child.tag);
             leftTimeForBreeding = coolTimeBreeding;
+            currentState = AnimalState.Wandering;
+            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            child.GetComponent<Health>().currentHealth = Health.maxHealth * 0.5f;
+            GameManager.instance.breed(child.tag);
         }
     }
 }

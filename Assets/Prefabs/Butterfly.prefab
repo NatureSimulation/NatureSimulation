@@ -261,7 +261,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!54 &181322073
+--- !u!54 &-5167337585845952108
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,7 +275,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &181322072
 BoxCollider:
@@ -319,15 +319,17 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 3
   wanderSpeed: 3
-  escapeSpeed: 10
+  escapeSpeed: 8
   damageSpeed: 0.3
-  recoverSpeed: 1000
+  recoverSpeed: 500
+  preyThreshold: 100
+  breedThreshold: 300
   currentState: 0
   sight: 20
   childPrefab: {fileID: 6544061036624831497}
   minAttackDistance: 10
-  minBreedDistance: 5
-  coolTimeBreeding: 10
+  minBreedDistance: 7
+  coolTimeBreeding: 3.7
   preys:
   - Grass
   predators:
@@ -366,19 +368,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9425171
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.3341579
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_RootOrder
@@ -386,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 140.957
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
       propertyPath: m_LocalScale.x
@@ -400,11 +402,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4171562829587174, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 95951106970005182, guid: 18b8af6b3106d4940a5e534dc18c0344,
         type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 80404ea21e182d74f9d9234199b272a9, type: 2}
+    - target: {fileID: 95951106970005182, guid: 18b8af6b3106d4940a5e534dc18c0344,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18b8af6b3106d4940a5e534dc18c0344, type: 3}
 --- !u!1 &6544061036624831497 stripped
