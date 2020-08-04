@@ -7882,7 +7882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &569430150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33782,6 +33782,7 @@ MonoBehaviour:
   - {fileID: 1839466983}
   - {fileID: 1839182236}
   - {fileID: 767403099}
+  lightningOn: 0
   grassButton: {fileID: 914744495}
   birdButton: {fileID: 1853065714}
   butterflyButton: {fileID: 169375429}
