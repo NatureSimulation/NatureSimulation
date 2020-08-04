@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     /* For singleton pattern */
     public static GameManager instance;
 
+    public ParticleSystem[] lightnings;
+
     public enum ButtonState {
         None,
         Grass,
@@ -150,6 +152,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        foreach (var lightning in lightnings) {
+            lightning.Stop();
+        }
+
         currentButtonState = ButtonState.None;
         grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
         birdButton.onClick.AddListener(() => { currentButtonState = ButtonState.Bird; birdButton.GetComponent<Image>().color = Color.white; });
@@ -435,6 +441,10 @@ public class GameManager : MonoBehaviour
             CameraManager.instance.finishSubCamera();
         }
 
+        if (Input.GetKeyDown(KeyCode.L)) {
+            StartCoroutine(FlashLightning());
+        }
+
         if (Input.GetMouseButtonDown(0)) {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
@@ -671,5 +681,15 @@ public class GameManager : MonoBehaviour
             setButterflyProgress(false);
         }
         Destroy(item);
+    }
+
+    IEnumerator FlashLightning() {
+        foreach (var lightning in lightnings) {
+            lightning.Play();
+        }
+        yield return new WaitForSeconds(10);
+        foreach (var lightning in lightnings) {
+            lightning.Stop();
+        }
     }
 }
