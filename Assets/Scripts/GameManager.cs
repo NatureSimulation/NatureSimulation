@@ -366,6 +366,26 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3)) {
             Time.timeScale = 3;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            Time.timeScale = 4;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            Time.timeScale = 5;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) {
+            Time.timeScale = 6;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) {
+            Time.timeScale = 7;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) {
+            Time.timeScale = 8;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9)) {
+            Time.timeScale = 9;
+        }
+    }
+    void FixedUpdate() {
         /* Create grass */
         grassTimer += Time.deltaTime;
         if (grassTimer > grassCoolTime) {
@@ -379,7 +399,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("grass generated error");
                 return;
             }
-            Debug.Log("grass generated");
+            // Debug.Log("grass generated");
 
             grassCount += 1;
             setGrassProgress(true);

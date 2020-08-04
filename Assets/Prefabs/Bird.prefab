@@ -724,7 +724,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &4095373761283285663
 CapsuleCollider:
@@ -767,17 +767,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
-  wanderSpeed: 5
+  speed: 15
+  wanderSpeed: 15
   escapeSpeed: 0
-  damageSpeed: 1
+  damageSpeed: 0.5
   recoverSpeed: 300
+  preyThreshold: 100
+  breedThreshold: 300
   currentState: 0
-  sight: 10
+  sight: 30
   childPrefab: {fileID: 3733083608000069085}
-  minAttackDistance: 5
-  minBreedDistance: 5
-  coolTimeBreeding: 10
+  minAttackDistance: 10
+  minBreedDistance: 7
+  coolTimeBreeding: 15
   preys:
   - Squirrel
   predators: []

@@ -1275,7 +1275,6 @@ GameObject:
   - component: {fileID: 476318}
   - component: {fileID: 9540064}
   - component: {fileID: 13662094}
-  - component: {fileID: 7646483576038062528}
   - component: {fileID: 7535132183826235791}
   - component: {fileID: 649777526256427366}
   - component: {fileID: -260366053730599876}
@@ -1336,29 +1335,6 @@ CapsuleCollider:
   m_Height: 0.6
   m_Direction: 2
   m_Center: {x: 0, y: 0.05, z: -0.11}
---- !u!114 &7646483576038062528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141256}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 586460d9f717e4756aad01d4825ebbdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkspeed: 5
-  wanderSpeed: 5
-  escapeSpeed: 5
-  sight: 20
-  damageSpeed: 1
-  recoverSpeed: 300
-  minBreedDistance: 5
-  coolTimeBreeding: 10
-  childPrefab: {fileID: 141256}
-  minAttackDistance: 10
-  currentState: 0
 --- !u!114 &7535132183826235791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,17 +1380,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
-  wanderSpeed: 5
-  escapeSpeed: 5
-  damageSpeed: 1
+  speed: 15
+  wanderSpeed: 15
+  escapeSpeed: 15
+  damageSpeed: 0.4
   recoverSpeed: 300
+  preyThreshold: 100
+  breedThreshold: 300
   currentState: 0
   sight: 20
   childPrefab: {fileID: 141256}
   minAttackDistance: 10
-  minBreedDistance: 5
-  coolTimeBreeding: 10
+  minBreedDistance: 7
+  coolTimeBreeding: 15
   preys:
   - Rabbit
   - Squirrel

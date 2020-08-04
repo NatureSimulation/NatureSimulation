@@ -329,7 +329,7 @@ MonoBehaviour:
   childPrefab: {fileID: 6544061036624831497}
   minAttackDistance: 10
   minBreedDistance: 7
-  coolTimeBreeding: 3.7
+  coolTimeBreeding: 5
   preys:
   - Grass
   predators:

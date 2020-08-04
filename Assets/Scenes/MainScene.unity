@@ -8732,45 +8732,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grass: {fileID: 1943996455298776, guid: b2199aadf1bb8c4449f3edfc84a39f78, type: 3}
-  grassCoolTime: 2
-  grassMax: 1000
+  grassCoolTime: 0.1
+  grassMax: 500
   grassProgress: {fileID: 838622829}
   squirrel: {fileID: 1745488152287196, guid: 4a7d6cee9f1328e468c9f485779e2c20, type: 3}
   squirrelInitNum: 20
-  squirrelMax: 70
+  squirrelMax: 150
   squirrelProgress: {fileID: 1361177638}
   rabbit: {fileID: 1588090451174212, guid: c737dd230724d61469e1c672cf47ed9e, type: 3}
   rabbitInitNum: 20
-  rabbitMax: 70
+  rabbitMax: 150
   rabbitProgress: {fileID: 417041171}
   eagle: {fileID: 6368709116697677957, guid: f1685c8de0a264e9b9acad3080b329c2, type: 3}
   eagleInitNum: 10
-  eagleMax: 30
+  eagleMax: 70
   eagleProgress: {fileID: 891069176}
   deer: {fileID: 6219636104399483927, guid: 56947fbb1b45b431fbd531a63cd512f8, type: 3}
   deerInitNum: 20
-  deerMax: 70
+  deerMax: 150
   deerProgress: {fileID: 226271592}
   butterfly: {fileID: 6544061036624831497, guid: bb6ffb6845fb34341918e59323ff7e8f,
     type: 3}
   butterflyInitNum: 20
-  butterflyMax: 70
+  butterflyMax: 150
   butterflyProgress: {fileID: 370814711}
   tiger: {fileID: 4738995793068480728, guid: c89cbd3ddb6314718a7e6e361279c9a9, type: 3}
   tigerInitNum: 10
-  tigerMax: 30
+  tigerMax: 70
   tigerProgress: {fileID: 1490335349}
   iguana: {fileID: 141256, guid: b4806bcfd71324778b360c0299195b34, type: 3}
   iguanaInitNum: 10
-  iguanaMax: 30
+  iguanaMax: 70
   iguanaProgress: {fileID: 997837479}
   bird: {fileID: 3733083608000069085, guid: 18eeceab3e02944349a1da9c25c1b207, type: 3}
   birdInitNum: 10
-  birdMax: 30
+  birdMax: 70
   birdProgress: {fileID: 1307697584}
   frog: {fileID: 1644373995442134, guid: 0187bdd962557471faee34c9b592135c, type: 3}
   frogInitNum: 20
-  frogMax: 70
+  frogMax: 150
   frogProgress: {fileID: 643612112}
   plane: {fileID: 1664459182}
   planeMinX: 0

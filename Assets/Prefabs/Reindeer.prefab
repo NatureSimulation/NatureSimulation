@@ -1053,17 +1053,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
-  wanderSpeed: 5
-  escapeSpeed: 20
-  damageSpeed: 0.3
-  recoverSpeed: 1000
+  speed: 7
+  wanderSpeed: 7
+  escapeSpeed: 10
+  damageSpeed: 0.8
+  recoverSpeed: 500
+  preyThreshold: 100
+  breedThreshold: 300
   currentState: 0
-  sight: 10
+  sight: 20
   childPrefab: {fileID: 6219636104399483927}
-  minAttackDistance: 5
-  minBreedDistance: 7
-  coolTimeBreeding: 10
+  minAttackDistance: 7
+  minBreedDistance: 8
+  coolTimeBreeding: 6
   preys:
   - Grass
   predators:
