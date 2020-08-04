@@ -476,11 +476,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -6763,6 +6763,7 @@ GameObject:
   - component: {fileID: 1257269099}
   - component: {fileID: 1257269095}
   - component: {fileID: 1257269098}
+  - component: {fileID: 1257269101}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -9777,8 +9778,6 @@ MonoBehaviour:
   planeOffset: 5
   panel: {fileID: 791445314}
   animalPanel: {fileID: 1724851865}
-  mainCamera: {fileID: 0}
-  subCamera: {fileID: 0}
 --- !u!4 &1640929324
 Transform:
   m_ObjectHideFlags: 0
