@@ -112,11 +112,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject panel;
 
-    /* Camera */
-    public GameObject mainCamera;
-    public GameObject subCamera;
-
-
     void Awake() {
         instance = this;
     }
@@ -389,8 +384,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 9;
         }
         if (Input.GetKeyDown(KeyCode.Alpha0)) {
-            mainCamera.SetActive(true);
-            subCamera.SetActive(false);
+            CameraManager.instance.finishSubCamera();
         }
     }
     void FixedUpdate() {

@@ -70,6 +70,9 @@ public abstract class Animal : MonoBehaviour {
 
         /* Search predator */
         SearchForPredator();
+
+        /* ClickListener */
+        CheckClick();
     }
 
     public virtual void FixedUpdate() {
@@ -255,7 +258,14 @@ public abstract class Animal : MonoBehaviour {
         }
     }
 
-    public void OnClickExit() {
-        Debug.Log("Button");
+    protected void CheckClick() {
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+            if ((transform.position - hit.point).magnitude < 5) {
+                CameraManager.instance.startSubCamera(this.gameObject);
+            }
+        }
     }
 }
