@@ -211,7 +211,6 @@ public abstract class Animal : MonoBehaviour {
         GameManager.instance.delete(this.gameObject, this.tag);
     }
     void OnCollisionEnter(Collision other) {
-        Debug.Log(other);
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
@@ -254,5 +253,9 @@ public abstract class Animal : MonoBehaviour {
             child.GetComponent<Health>().currentHealth = Health.maxHealth * 0.5f;
             GameManager.instance.breed(child.tag);
         }
+    }
+
+    public void OnClickExit() {
+        Debug.Log("Button");
     }
 }

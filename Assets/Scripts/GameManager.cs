@@ -112,6 +112,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject panel;
 
+    /* Camera */
+    public GameObject mainCamera;
+    public GameObject subCamera;
+
 
     void Awake() {
         instance = this;
@@ -383,6 +387,10 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha9)) {
             Time.timeScale = 9;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0)) {
+            mainCamera.SetActive(true);
+            subCamera.SetActive(false);
         }
     }
     void FixedUpdate() {
