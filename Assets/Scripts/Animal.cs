@@ -98,6 +98,8 @@ public abstract class Animal : MonoBehaviour {
         if (health.currentHealth <= 0) {
             currentState = AnimalState.Dead;
             StartCoroutine(Dissolve(0.5f));
+        } else if (GameManager.instance.lightningOn && Random.Range(0.0f, 1.0f) <= 0.5f) {
+            GameManager.instance.delete(this.gameObject, this.tag);
         }
     }
 
@@ -219,10 +221,15 @@ public abstract class Animal : MonoBehaviour {
 
         GameManager.instance.delete(this.gameObject, this.tag);
     }
+
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
+    }
+
+    void OnParticleCollision(GameObject other) {
+        GameManager.instance.delete(this.gameObject, this.tag);
     }
 
     protected void TryAttacking() {

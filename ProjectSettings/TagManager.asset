@@ -17,6 +17,7 @@ TagManager:
   - Frog
   - Guts
   - Wall
+  - Lightning
   layers:
   - Default
   - TransparentFX
