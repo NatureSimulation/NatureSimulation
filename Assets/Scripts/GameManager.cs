@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public ParticleSystem[] lightnings;
+    public bool lightningOn;
 
     public enum ButtonState {
         None,
@@ -687,9 +688,12 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Play();
         }
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(4);
+        lightningOn = true;
+        yield return new WaitForSeconds(4);
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
+        lightningOn = false;
     }
 }
