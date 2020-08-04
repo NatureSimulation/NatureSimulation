@@ -22,6 +22,7 @@ public class SubCamera : MonoBehaviour
     {
         if (player == null) {
             CameraManager.instance.finishSubCamera();
+            return;
         }
         this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 5, player.transform.position.z);
         Quaternion direction = Quaternion.Euler(new Vector3(0, player.transform.eulerAngles.y, player.transform.eulerAngles.z));
