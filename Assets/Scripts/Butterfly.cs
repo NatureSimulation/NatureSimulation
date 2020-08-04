@@ -35,9 +35,9 @@ public class Butterfly : Animal {
 
         Quaternion rotation;
         if (planeY + 3 > this.transform.position.y) {
-            rotation = Quaternion.Euler(new Vector3(-3, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+            rotation = Quaternion.Euler(new Vector3(-10, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         } else {
-            rotation = Quaternion.Euler(new Vector3(3, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+            rotation = Quaternion.Euler(new Vector3(10, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.0f);
     }
