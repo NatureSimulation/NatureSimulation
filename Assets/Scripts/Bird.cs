@@ -22,7 +22,7 @@ public class Bird : Animal {
     public override void AdjustHeight() {
         float planeY;
         try {
-            planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.y);
+            planeY = GameManager.instance.getHeight(this.transform.position.x, this.transform.position.z);
         } catch {
             planeY = 0;
         }
