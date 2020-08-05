@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     public Button tigerButton;
     public Button infectionButton;
     public ButtonState currentButtonState;
+    public bool createButton = true;
 
     /* Grass */
     public GameObject grass;
@@ -162,19 +164,21 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
+        if (createButton) {
+            currentButtonState = ButtonState.None;
+            grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
+            birdButton.onClick.AddListener(() => { currentButtonState = ButtonState.Bird; birdButton.GetComponent<Image>().color = Color.white; });
+            butterflyButton.onClick.AddListener(() => { currentButtonState = ButtonState.Butterfly; butterflyButton.GetComponent<Image>().color = Color.white; });
+            deerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Deer; deerButton.GetComponent<Image>().color = Color.white; });
+            eagleButton.onClick.AddListener(() => { currentButtonState = ButtonState.Eagle; eagleButton.GetComponent<Image>().color = Color.white; });
+            frogButton.onClick.AddListener(() => { currentButtonState = ButtonState.Frog; frogButton.GetComponent<Image>().color = Color.white; });
+            iguanaButton.onClick.AddListener(() => { currentButtonState = ButtonState.Iguana; iguanaButton.GetComponent<Image>().color = Color.white; });
+            rabbitButton.onClick.AddListener(() => { currentButtonState = ButtonState.Rabbit; rabbitButton.GetComponent<Image>().color = Color.white; });
+            squirrelButton.onClick.AddListener(() => { currentButtonState = ButtonState.Squirrel; squirrelButton.GetComponent<Image>().color = Color.white; });
+            tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
+            infectionButton.onClick.AddListener(() => { currentButtonState = ButtonState.Infection; infectionButton.GetComponent<Image>().color = Color.white; });
+        }
 
-        currentButtonState = ButtonState.None;
-        grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
-        birdButton.onClick.AddListener(() => { currentButtonState = ButtonState.Bird; birdButton.GetComponent<Image>().color = Color.white; });
-        butterflyButton.onClick.AddListener(() => { currentButtonState = ButtonState.Butterfly; butterflyButton.GetComponent<Image>().color = Color.white; });
-        deerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Deer; deerButton.GetComponent<Image>().color = Color.white; });
-        eagleButton.onClick.AddListener(() => { currentButtonState = ButtonState.Eagle; eagleButton.GetComponent<Image>().color = Color.white; });
-        frogButton.onClick.AddListener(() => { currentButtonState = ButtonState.Frog; frogButton.GetComponent<Image>().color = Color.white; });
-        iguanaButton.onClick.AddListener(() => { currentButtonState = ButtonState.Iguana; iguanaButton.GetComponent<Image>().color = Color.white; });
-        rabbitButton.onClick.AddListener(() => { currentButtonState = ButtonState.Rabbit; rabbitButton.GetComponent<Image>().color = Color.white; });
-        squirrelButton.onClick.AddListener(() => { currentButtonState = ButtonState.Squirrel; squirrelButton.GetComponent<Image>().color = Color.white; });
-        tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
-        infectionButton.onClick.AddListener(() => { currentButtonState = ButtonState.Infection; infectionButton.GetComponent<Image>().color = Color.white; });
 
         /* Init grass */
         grassTimer = 0;
@@ -458,7 +462,11 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 9;
         }
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            CameraManager.instance.finishSubCamera();
+            if (SceneManager.GetActiveScene().name == "HuntScene") {
+                Cursor.lockState = CursorLockMode.None;
+            } else {
+                CameraManager.instance.finishSubCamera();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.L)) {
