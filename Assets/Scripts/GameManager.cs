@@ -731,7 +731,6 @@ public class GameManager : MonoBehaviour
 
         if (aliveCount == 0) {
             timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            timerText.transform.localScale += new Vector3(2, 2, 0);
             Time.timeScale = 0;
         }
     }
