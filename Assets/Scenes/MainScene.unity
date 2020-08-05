@@ -33990,6 +33990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb5e8dd3a7dc4b6bb66b22fceefcf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grassPrefab: {fileID: 1943996455298776, guid: b2199aadf1bb8c4449f3edfc84a39f78,
+    type: 3}
   birdPrefab: {fileID: 3733083608000069085, guid: 18eeceab3e02944349a1da9c25c1b207,
     type: 3}
   butterflyPrefab: {fileID: 6544061036624831497, guid: bb6ffb6845fb34341918e59323ff7e8f,

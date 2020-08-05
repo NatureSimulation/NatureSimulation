@@ -529,7 +529,7 @@ public class GameManager : MonoBehaviour
 
             grassCount += 1;
             setGrassProgress(true);
-            Instantiate (grass, new Vector3(x, y, z), Quaternion.identity);
+            ObjectPool.GetObject("Grass");
         }
     }
 

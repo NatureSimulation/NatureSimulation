@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
+    public GameObject grassPrefab;
     public GameObject birdPrefab;
     public GameObject butterflyPrefab;
     public GameObject eaglePrefab;
@@ -15,6 +16,7 @@ public class ObjectPool : MonoBehaviour
     public GameObject tigerPrefab;
     public GameObject frogPrefab;
 
+    Queue<GameObject> grassQueue = new Queue<GameObject>();
     Queue<GameObject> birdQueue = new Queue<GameObject>();
     Queue<GameObject> butterflyQueue = new Queue<GameObject>();
     Queue<GameObject> eagleQueue = new Queue<GameObject>();
@@ -48,6 +50,7 @@ public class ObjectPool : MonoBehaviour
             deerQueue.Enqueue(CreateNewObject("Deer"));
             squirrelQueue.Enqueue(CreateNewObject("Squirrel"));
             frogQueue.Enqueue(CreateNewObject("Frog"));
+            grassQueue.Enqueue(CreateNewObject("Grass"));
         }
         for (int i = 0; i < initCount; ++i) {
             birdQueue.Enqueue(CreateNewObject("Bird"));
@@ -79,6 +82,8 @@ public class ObjectPool : MonoBehaviour
             obj = Instantiate(tigerPrefab);
         } else if (tag == "Frog") {
             obj = Instantiate(frogPrefab);
+        } else if (tag == "Grass") {
+            obj = Instantiate(grassPrefab);
         } else {
             Debug.Assert(false, "Invalid tag: " + tag);
             return null;
@@ -109,6 +114,8 @@ public class ObjectPool : MonoBehaviour
             obj = (instance.tigerQueue.Count > 0) ? instance.tigerQueue.Dequeue() : instance.CreateNewObject(tag);
         } else if (tag == "Frog") {
             obj = (instance.frogQueue.Count > 0) ? instance.frogQueue.Dequeue() : instance.CreateNewObject(tag);
+        } else if (tag == "Grass") {
+            obj = (instance.grassQueue.Count > 0) ? instance.grassQueue.Dequeue() : instance.CreateNewObject(tag);
         } else {
             Debug.Assert(false, "Invalid tag: " + tag);
             return null;
@@ -140,6 +147,8 @@ public class ObjectPool : MonoBehaviour
             instance.tigerQueue.Enqueue(obj);
         } else if (tag == "Frog") {
             instance.frogQueue.Enqueue(obj);
+        } else if (tag == "Grass") {
+            instance.grassQueue.Enqueue(obj);
         } else {
             Debug.Assert(false, "Invalid tag: " + tag);
         }
