@@ -728,6 +728,12 @@ public class GameManager : MonoBehaviour
                 aliveCount -= 1;
         }
         Destroy(item);
+
+        if (aliveCount == 0) {
+            timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+            timerText.transform.localScale += new Vector3(2, 2, 0);
+            Time.timeScale = 0;
+        }
     }
 
     IEnumerator FlashLightning() {
@@ -745,6 +751,6 @@ public class GameManager : MonoBehaviour
 
     void UpdateAndDisplayTime() {
         gameTimer += Time.deltaTime;
-        timerText.text = ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString();
+        timerText.text = ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
     }
 }
