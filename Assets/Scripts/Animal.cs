@@ -165,6 +165,7 @@ public abstract class Animal : MonoBehaviour {
     }
 
     public void SearchForPredator() {
+        leftTimeForEscaping -= Time.deltaTime;
         /* Check existing escaping */
         if (currentState == AnimalState.Escaping && predator != null) {
             float distance = (transform.position - predator.transform.position).magnitude;
@@ -188,6 +189,7 @@ public abstract class Animal : MonoBehaviour {
             Vector3 diff = transform.position - closest.transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
+            leftTimeForEscaping = coolTimeEscaping;
         }
     }
 

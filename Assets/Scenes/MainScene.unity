@@ -33946,7 +33946,7 @@ MonoBehaviour:
   planeOffset: 5
   panel: {fileID: 791445314}
   animalPanel: {fileID: 1724851865}
-  initCreate: 0
+  initCreate: 1
 --- !u!4 &1640929324
 Transform:
   m_ObjectHideFlags: 0
