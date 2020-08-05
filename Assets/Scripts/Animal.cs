@@ -81,6 +81,9 @@ public abstract class Animal : MonoBehaviour {
 
         /* ClickListener */
         CheckClick();
+
+        /*  high level debugging ㅎㅎ */
+        UpdateInfection(isInfection);
     }
 
     public virtual void FixedUpdate() {
@@ -110,9 +113,7 @@ public abstract class Animal : MonoBehaviour {
 
     public void LightningTrial() {
         if (!attemptSuicide && GameManager.instance.lightningOn) {
-            Debug.Log(lightningDeathProbability);
             if (Random.Range(0.0f, 1.0f) < lightningDeathProbability) {
-                Debug.Log("Attempt");
                 GameManager.instance.delete(this.gameObject, this.tag);
             }
             attemptSuicide = true;
@@ -261,10 +262,6 @@ public abstract class Animal : MonoBehaviour {
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
-    }
-
-    void OnParticleCollision(GameObject other) {
-        GameManager.instance.delete(this.gameObject, this.tag);
     }
 
     protected void TryAttacking() {
