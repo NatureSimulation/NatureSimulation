@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public ParticleSystem[] lightnings;
     public bool lightningOn;
+    public bool intermittentLightning;
 
     public TextMeshProUGUI timerText;
     private float gameTimer;
@@ -417,6 +418,9 @@ public class GameManager : MonoBehaviour
             tigerInitNum,
             frogInitNum
         }.Aggregate(0, (acc, cur) => acc + (cur > 0 ? 1 : 0));
+
+        if (intermittentLightning)
+            StartCoroutine(IntermittentLightning());
     }
 
     // Update is called once per frame
@@ -754,6 +758,13 @@ public class GameManager : MonoBehaviour
             lightning.Stop();
         }
         lightningOn = false;
+    }
+
+    IEnumerator IntermittentLightning() {
+        while (true) {
+            yield return new WaitForSeconds(15);
+            StartCoroutine(FlashLightning());
+        }
     }
 
     void UpdateAndDisplayTime() {
