@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     public ParticleSystem[] lightnings;
     public bool lightningOn;
+
+    public TextMeshProUGUI timerText;
+    private float gameTimer;
+    private int aliveCount;
 
     public enum ButtonState {
         None,
@@ -395,11 +401,24 @@ public class GameManager : MonoBehaviour
             Instantiate(frog, new Vector3(x, y, z), Quaternion.identity);
         }
 
+        gameTimer = 0f;
+        aliveCount = new int[]{
+            birdInitNum,
+            butterflyInitNum,
+            eagleInitNum,
+            iguanaInitNum,
+            rabbitInitNum,
+            deerInitNum,
+            squirrelInitNum,
+            tigerInitNum,
+            frogInitNum
+        }.Aggregate(0, (acc, cur) => acc + cur > 0 ? 1 : 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateAndDisplayTime();
         /* Pause */
         if (Input.GetKeyDown(KeyCode.P)) {
             if (panel.activeSelf) {
@@ -656,32 +675,65 @@ public class GameManager : MonoBehaviour
         } else if (tag == "Rabbit") {
             rabbitCount -= 1;
             setRabbitProgress(false);
+
+            if (rabbitCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Eagle") {
             eagleCount -= 1;
             setEagleProgress(false);
+
+            if (eagleCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Deer") {
             deerCount -= 1;
             setDeerProgress(false);
+
+            if (deerCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Squirrel") {
             squirrelCount -= 1;
             setSquirrelProgress(false);
+
+            if (squirrelCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Tiger") {
             tigerCount -= 1;
             setTigerProgress(false);
+
+            if (tigerCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Iguana") {
             iguanaCount -= 1;
             setIguanaProgress(false);
+
+            if (iguanaCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Bird") {
             birdCount -= 1;
             setBirdProgress(false);
+
+            if (birdCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Frog") {
             frogCount -= 1;
             setFrogProgress(false);
+
+            if (frogCount == 0)
+                aliveCount -= 1;
         } else if (tag == "Butterfly") {
             butterflyCount -= 1;
             setButterflyProgress(false);
+
+            if (butterflyCount == 0)
+                aliveCount -= 1;
         }
         Destroy(item);
+
+        if (aliveCount == 0) {
+            timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+            timerText.transform.localScale += new Vector3(2, 2, 0);
+            Time.timeScale = 0;
+        }
     }
 
     IEnumerator FlashLightning() {
@@ -695,5 +747,10 @@ public class GameManager : MonoBehaviour
             lightning.Stop();
         }
         lightningOn = false;
+    }
+
+    void UpdateAndDisplayTime() {
+        gameTimer += Time.deltaTime;
+        timerText.text = ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
     }
 }
