@@ -473,7 +473,7 @@ public class GameManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit)) {
-                Debug.Log(hit.point);
+                // Debug.Log(hit.point);
                 switch (currentButtonState) {
                     case ButtonState.Bird:
                         Instantiate(bird, hit.point, Quaternion.identity);
@@ -727,7 +727,7 @@ public class GameManager : MonoBehaviour
             if (butterflyCount == 0)
                 aliveCount -= 1;
         }
-        Destroy(item);
+        ObjectPool.ReturnObject(item, item.tag);
 
         if (aliveCount == 0) {
             timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);

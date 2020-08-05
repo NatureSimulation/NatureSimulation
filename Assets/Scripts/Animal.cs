@@ -28,7 +28,9 @@ public abstract class Animal : MonoBehaviour {
     public float minAttackDistance;
     public float minBreedDistance;
     public float coolTimeBreeding;
+    public float coolTimeEscaping = 1f;
     private float leftTimeForBreeding;
+    private float leftTimeForEscaping;
     protected float gravity = 30f;
 
     public string[] preys;
@@ -52,6 +54,7 @@ public abstract class Animal : MonoBehaviour {
         wanderTime = Random.Range(1.0f, 2.0f);
         currentState = AnimalState.Wandering;
         leftTimeForBreeding = coolTimeBreeding;
+        leftTimeForEscaping = coolTimeEscaping;
         UpdateInfection(isInfection);
     }
 
@@ -104,15 +107,21 @@ public abstract class Animal : MonoBehaviour {
     }
 
     public virtual void SearchForWall() {
-        Collider[] wallColliders = Physics.OverlapSphere(transform.position, sight)
-            .Where(coll => coll.tag == "Wall").ToArray();
-        if (wallColliders.Length > 0) {
+        // For optimization
+        if (transform.position.magnitude < 80)
+            return;
+        IEnumerable wallColliders = Physics.OverlapSphere(transform.position, sight)
+            .Where(coll => coll.tag == "Wall");
+        IEnumerator it = wallColliders.GetEnumerator();
+
+        if (it.MoveNext()) {
             Quaternion rotation;
-            if (wallColliders[0].name == "NorthWall") {
+            Collider wall = (Collider)it.Current;
+            if (wall.name == "NorthWall") {
                 rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
-            } else if (wallColliders[0].name == "SouthWall") {
+            } else if (wall.name == "SouthWall") {
                 rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
-            } else if (wallColliders[0].name == "EastWall") {
+            } else if (wall.name == "EastWall") {
                 rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
             } else {
                 rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
@@ -156,6 +165,18 @@ public abstract class Animal : MonoBehaviour {
     }
 
     public void SearchForPredator() {
+        /* Check existing escaping */
+        if (currentState == AnimalState.Escaping && predator != null) {
+            float distance = (transform.position - predator.transform.position).magnitude;
+            if (distance > sight * 2) {
+                currentState = AnimalState.Wandering;
+                UpdateSpeed(wanderSpeed);
+            }
+            return;
+        }
+        if (currentState != AnimalState.Wandering || leftTimeForEscaping > 0)
+            return;
+
         Collider[] predatorColliders = Physics.OverlapSphere(transform.position, sight).Where(coll => predators.Contains(coll.tag)).ToArray();
         if (predatorColliders.Length > 0) {
             currentState = AnimalState.Escaping;
@@ -167,9 +188,6 @@ public abstract class Animal : MonoBehaviour {
             Vector3 diff = transform.position - closest.transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
             predator = closest.gameObject;
-        } else if (currentState == AnimalState.Escaping) {
-            currentState = AnimalState.Wandering;
-            UpdateSpeed(wanderSpeed);
         }
     }
 
@@ -269,7 +287,9 @@ public abstract class Animal : MonoBehaviour {
 
             leftTimeForBreeding = coolTimeBreeding;
             currentState = AnimalState.Wandering;
-            GameObject child = Instantiate(childPrefab, new Vector3(x, y, z), Quaternion.identity);
+            GameObject child = ObjectPool.GetObject(this.tag);
+            child.transform.position = new Vector3(x, y, z);
+            child.transform.rotation = Quaternion.identity;
             child.GetComponent<Health>().currentHealth = Health.maxHealth * 0.5f;
 
             /* Inherit infection */

@@ -31,8 +31,8 @@ public class CameraManager : MonoBehaviour
     }
 
     public void finishSubCamera() {
-        SubCamera.instance.finish();
         if (!mainCamera.activeSelf) {
+            SubCamera.instance.finish();
             mainCamera.SetActive(true);
             subCamera.SetActive(false);
         }
