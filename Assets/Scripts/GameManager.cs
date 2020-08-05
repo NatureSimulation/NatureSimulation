@@ -412,7 +412,7 @@ public class GameManager : MonoBehaviour
             squirrelInitNum,
             tigerInitNum,
             frogInitNum
-        }.Aggregate(0, (acc, cur) => acc + cur > 0 ? 1 : 0);
+        }.Aggregate(0, (acc, cur) => acc + (cur > 0 ? 1 : 0));
     }
 
     // Update is called once per frame
