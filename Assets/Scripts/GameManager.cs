@@ -749,7 +749,7 @@ public class GameManager : MonoBehaviour
     }
 
     void UpdateAndDisplayTime() {
-        gameTimer += Time.deltaTime;
+        gameTimer += Time.deltaTime * Time.timeScale;
         timerText.text = ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
     }
 }
