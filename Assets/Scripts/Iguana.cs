@@ -70,6 +70,7 @@ public class Iguana : Animal {
             animator.SetTrigger("Death");
             StartCoroutine(StopDead(0.5f));
         }
+        LightningTrial();
     }
 
     public override void RotateOnTargeting(GameObject obj) {

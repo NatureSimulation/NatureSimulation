@@ -27,6 +27,7 @@ public class Rabbit : Animal {
             animator.SetBool("dead", true);
             StartCoroutine(Dissolve(1.0f));
         }
+        LightningTrial();
     }
 
     public override void RotateOnTargeting(GameObject obj) {

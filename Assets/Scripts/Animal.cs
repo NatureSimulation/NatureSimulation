@@ -39,6 +39,9 @@ public abstract class Animal : MonoBehaviour {
     protected GameObject predator;
     protected bool isInfection = false;
 
+    private float lightningDeathProbability = 0.5f;
+    private bool attemptSuicide = false;
+
     public abstract void RotateOnTargeting(GameObject obj);
     public abstract void UpdatePosition();
     public abstract void UpdateSpeed(float speed);
@@ -101,8 +104,20 @@ public abstract class Animal : MonoBehaviour {
         if (health.currentHealth <= 0) {
             currentState = AnimalState.Dead;
             StartCoroutine(Dissolve(0.5f));
-        } else if (GameManager.instance.lightningOn && Random.Range(0.0f, 1.0f) <= 0.5f) {
-            GameManager.instance.delete(this.gameObject, this.tag);
+        }
+        LightningTrial();
+    }
+
+    public void LightningTrial() {
+        if (!attemptSuicide && GameManager.instance.lightningOn) {
+            Debug.Log(lightningDeathProbability);
+            if (Random.Range(0.0f, 1.0f) < lightningDeathProbability) {
+                Debug.Log("Attempt");
+                GameManager.instance.delete(this.gameObject, this.tag);
+            }
+            attemptSuicide = true;
+        } else if (attemptSuicide && !GameManager.instance.lightningOn) {
+            attemptSuicide = false;
         }
     }
 
