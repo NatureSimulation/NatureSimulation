@@ -454,7 +454,7 @@ public class GameManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit)) {
-                Debug.Log(hit.point);
+                // Debug.Log(hit.point);
                 switch (currentButtonState) {
                     case ButtonState.Bird:
                         Instantiate(bird, hit.point, Quaternion.identity);
@@ -681,7 +681,7 @@ public class GameManager : MonoBehaviour
             butterflyCount -= 1;
             setButterflyProgress(false);
         }
-        Destroy(item);
+        ObjectPool.ReturnObject(item, item.tag);
     }
 
     IEnumerator FlashLightning() {
