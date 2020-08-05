@@ -5042,7 +5042,7 @@ MonoBehaviour:
   speed: 3
   wanderSpeed: 3
   escapeSpeed: 8
-  damageSpeed: 0.5
+  damageSpeed: 1
   recoverSpeed: 500
   preyThreshold: 100
   breedThreshold: 300
@@ -5051,7 +5051,8 @@ MonoBehaviour:
   childPrefab: {fileID: 6544061036624831497}
   minAttackDistance: 10
   minBreedDistance: 7
-  coolTimeBreeding: 5
+  coolTimeBreeding: 10
+  coolTimeEscaping: 1
   preys:
   - Grass
   predators:

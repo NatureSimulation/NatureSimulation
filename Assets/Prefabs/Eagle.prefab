@@ -1239,8 +1239,8 @@ MonoBehaviour:
   speed: 17
   wanderSpeed: 17
   escapeSpeed: 0
-  damageSpeed: 0.55
-  recoverSpeed: 300
+  damageSpeed: 1
+  recoverSpeed: 150
   preyThreshold: 100
   breedThreshold: 300
   currentState: 0
@@ -1248,7 +1248,7 @@ MonoBehaviour:
   childPrefab: {fileID: 6368709116697677957}
   minAttackDistance: 17
   minBreedDistance: 7
-  coolTimeBreeding: 15
+  coolTimeBreeding: 20
   coolTimeEscaping: 1
   preys:
   - Frog
