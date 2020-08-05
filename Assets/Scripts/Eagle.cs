@@ -29,6 +29,7 @@ public class Eagle : Animal {
             animator.SetTrigger("isDead");
             StartCoroutine(StopDead(0.5f));
         }
+        LightningTrial();
     }
     IEnumerator StopDead(float length) {
         yield return new WaitForSeconds(length);

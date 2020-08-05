@@ -412,7 +412,7 @@ public class GameManager : MonoBehaviour
             squirrelInitNum,
             tigerInitNum,
             frogInitNum
-        }.Aggregate(0, (acc, cur) => acc + cur > 0 ? 1 : 0);
+        }.Aggregate(0, (acc, cur) => acc + (cur > 0 ? 1 : 0));
     }
 
     // Update is called once per frame
@@ -731,7 +731,6 @@ public class GameManager : MonoBehaviour
 
         if (aliveCount == 0) {
             timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            timerText.transform.localScale += new Vector3(2, 2, 0);
             Time.timeScale = 0;
         }
     }
@@ -740,9 +739,9 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Play();
         }
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         lightningOn = true;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
