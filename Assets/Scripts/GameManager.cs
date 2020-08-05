@@ -740,9 +740,9 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Play();
         }
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         lightningOn = true;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
