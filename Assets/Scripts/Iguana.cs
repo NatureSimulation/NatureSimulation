@@ -77,11 +77,12 @@ public class Iguana : Animal {
         transform.rotation = Quaternion.LookRotation(new Vector3(diff.x, 0, diff.z), Vector3.up);
     }
 
-    public override void UpdatePosition() {}
+    public override void UpdatePosition() {
+        animator.SetFloat("Forward", speed);
+    }
 
     public override void UpdateSpeed(float speed) {
-        animator.SetFloat("Forward", speed);
-        animator.speed = speed;
+        this.speed = speed;
     }
 
     public override void transmitInfection(GameObject target) {

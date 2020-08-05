@@ -32,7 +32,7 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         instance = this;
-        Initialize(100);
+        Initialize(1);
     }
 
     // Update is called once per frame
@@ -53,6 +53,7 @@ public class ObjectPool : MonoBehaviour
             birdQueue.Enqueue(CreateNewObject("Bird"));
             eagleQueue.Enqueue(CreateNewObject("Eagle"));
             iguanaQueue.Enqueue(CreateNewObject("Iguana"));
+            tigerQueue.Enqueue(CreateNewObject("Tiger"));
         }
 
 
