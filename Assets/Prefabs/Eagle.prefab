@@ -1172,7 +1172,7 @@ Transform:
   m_GameObject: {fileID: 6368709116697677957}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.00000028088027}
   m_LocalPosition: {x: 60, y: 10, z: -60}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 1833955534167102602}
   - {fileID: 4989655648530780420}
@@ -1249,6 +1249,7 @@ MonoBehaviour:
   minAttackDistance: 17
   minBreedDistance: 7
   coolTimeBreeding: 15
+  coolTimeEscaping: 1
   preys:
   - Frog
   - Rabbit
