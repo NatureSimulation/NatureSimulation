@@ -33896,6 +33896,7 @@ MonoBehaviour:
   tigerButton: {fileID: 687021440}
   infectionButton: {fileID: 2065066139}
   currentButtonState: 0
+  createButton: 1
   grass: {fileID: 1943996455298776, guid: b2199aadf1bb8c4449f3edfc84a39f78, type: 3}
   grassCoolTime: 0.1
   grassMax: 500

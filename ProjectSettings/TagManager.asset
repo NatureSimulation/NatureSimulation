@@ -18,6 +18,7 @@ TagManager:
   - Guts
   - Wall
   - Lightning
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public Button tigerButton;
     public Button infectionButton;
     public ButtonState currentButtonState;
-    public bool createButton = true;
+    public bool isHuntMode = false;
 
     /* Grass */
     public GameObject grass;
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
-        if (createButton) {
+        if (!isHuntMode) {
             currentButtonState = ButtonState.None;
             grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
             birdButton.onClick.AddListener(() => { currentButtonState = ButtonState.Bird; birdButton.GetComponent<Image>().color = Color.white; });
@@ -473,9 +473,11 @@ public class GameManager : MonoBehaviour
             StartCoroutine(FlashLightning());
         }
 
-        if (Input.GetMouseButtonDown(0)) {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
+        if (!isHuntMode) {
+            if (Input.GetMouseButtonDown(0)) {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+            }
 
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

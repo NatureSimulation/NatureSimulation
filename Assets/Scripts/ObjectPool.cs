@@ -34,7 +34,7 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         instance = this;
-        Initialize(1);
+        Initialize(100);
     }
 
     // Update is called once per frame

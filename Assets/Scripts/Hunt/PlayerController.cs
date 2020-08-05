@@ -6,7 +6,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float movementSpeed = 5f;
-    public float mouseSensitivity = 3f;
+    public float mouseSensitivity = 10f;
     public float upDownRange= 90;
     public float jumpSpeed = 5;
     public float downSpeed = -5;
@@ -18,8 +18,14 @@ public class PlayerController : MonoBehaviour {
     private float rotLeftRight = 0;
     private float rotUpDown;
     private float verticalRotation = 0f;
-
     private float verticalVelocity = 0f;
+    private GunController PlayerGunCtrl;
+
+    private enum State {
+        Move,
+        Fire
+    }
+    private State currentState = State.Move;
 
 
     private CharacterController cc;
@@ -27,26 +33,44 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         cc = GetComponent<CharacterController> ();
-        Cursor.lockState = CursorLockMode.Locked;
-
+        // Cursor.lockState = CursorLockMode.Locked;
+        PlayerGunCtrl = GetComponent<GunController> ();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Cursor.lockState == CursorLockMode.None)
-            return;
-        FPMove ();
-        FPRotate ();
+        if (Input.GetKeyDown(KeyCode.F)) {
+            if (currentState == State.Move) {
+                Cursor.lockState = CursorLockMode.None;
+                currentState = State.Fire;
+            } else {
+                Cursor.lockState = CursorLockMode.Locked;
+                currentState = State.Move;
+            }
+        }
+
+        if (currentState == State.Fire) {
+            HuntCameraManager.instance.StartSubCamera();
+            Shoot();
+            FPRotate();
+        } else if (currentState == State.Move) {
+            // if (Cursor.lockState == CursorLockMode.None) {
+            //     if (Input.GetMouseButton (0))
+            //         Cursor.lockState = CursorLockMode.Locked;
+            //     return;
+            // }
+            HuntCameraManager.instance.FinishSubCamera();
+            FPMove ();
+            FPRotate ();
+        }
     }
 
 
-    //Player의 x축, z축 움직임을 담당
     void FPMove()
     {
         forwardSpeed = Input.GetAxisRaw ("Vertical") * movementSpeed;
         sideSpeed = Input.GetAxisRaw ("Horizontal") * movementSpeed;
 
-        //막아 놓은 점프 기능
         //if (cc.isGrounded && Input.GetButtonDown ("Jump"))
             //verticalVelocity = jumpSpeed;
         if (!cc.isGrounded)
@@ -56,24 +80,27 @@ public class PlayerController : MonoBehaviour {
 
         speed = new Vector3 (sideSpeed, verticalVelocity, forwardSpeed);
         speed = transform.rotation * speed;
-        // speed = Quaternion.Euler(transform.forward) * speed;
-        // speed = transform.TransformDirection(Vector3.forward) * forwardSpeed +
-            // transform.TransformDirection(Vector3.right) * sideSpeed + new Vector3 (0, verticalVelocity, 0);
-
 
         cc.Move (speed * Time.deltaTime);
     }
 
-    //Player의 회전을 담당
     void FPRotate()
     {
-        //좌우 회전
         rotLeftRight = Input.GetAxis ("Mouse X") * mouseSensitivity;
         transform.rotation *= Quaternion.Euler(0f, rotLeftRight, 0f);
 
-        //상하 회전
         verticalRotation -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
         verticalRotation = Mathf.Clamp (verticalRotation, -upDownRange, upDownRange);
         Camera.main.transform.localRotation = Quaternion.Euler (verticalRotation, 0f, 0f);
+    }
+
+    void Shoot() {
+        if (Input.GetMouseButton (0)) {
+            PlayerGunCtrl.Shoot ();
+        }
+        if (Input.GetKey (KeyCode.R)
+            && PlayerGunCtrl.newGun.BulletNow != PlayerGunCtrl.newGun.BulletMax) {
+            PlayerGunCtrl.Reload ();
+        }
     }
 }
