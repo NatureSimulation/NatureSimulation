@@ -772,8 +772,8 @@ MonoBehaviour:
   speed: 15
   wanderSpeed: 15
   escapeSpeed: 0
-  damageSpeed: 0.5
-  recoverSpeed: 300
+  damageSpeed: 1
+  recoverSpeed: 200
   preyThreshold: 100
   breedThreshold: 300
   currentState: 0
@@ -781,7 +781,7 @@ MonoBehaviour:
   childPrefab: {fileID: 3733083608000069085}
   minAttackDistance: 10
   minBreedDistance: 7
-  coolTimeBreeding: 15
+  coolTimeBreeding: 24
   coolTimeEscaping: 1
   preys:
   - Squirrel
