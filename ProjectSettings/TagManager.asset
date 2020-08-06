@@ -19,6 +19,7 @@ TagManager:
   - Wall
   - Lightning
   - Bullet
+  - Menu
   layers:
   - Default
   - TransparentFX

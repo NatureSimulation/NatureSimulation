@@ -1236,6 +1236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  health: {fileID: 2843803128164805385}
   speed: 17
   wanderSpeed: 17
   escapeSpeed: 0
