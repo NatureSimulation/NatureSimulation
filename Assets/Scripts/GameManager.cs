@@ -477,46 +477,49 @@ public class GameManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
-            }
-
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit)) {
-                // Debug.Log(hit.point);
-                switch (currentButtonState) {
-                    case ButtonState.Bird:
-                        Instantiate(bird, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Butterfly:
-                        Instantiate(butterfly, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Deer:
-                        Instantiate(deer, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Eagle:
-                        Instantiate(eagle, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Frog:
-                        Instantiate(frog, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Grass:
-                        Instantiate(grass, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Iguana:
-                        Instantiate(iguana, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Rabbit:
-                        Instantiate(rabbit, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Squirrel:
-                        Instantiate(squirrel, hit.point, Quaternion.identity);
-                        break;
-                    case ButtonState.Tiger:
-                        Instantiate(tiger, hit.point, Quaternion.identity);
-                        break;
-                    default:
-                        break;
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit)) {
+                    // Debug.Log(hit.point);
+                    GameObject obj = null;
+                    switch (currentButtonState) {
+                        case ButtonState.Bird:
+                            obj = ObjectPool.GetObject("Bird");
+                            break;
+                        case ButtonState.Butterfly:
+                            obj = ObjectPool.GetObject("Butterfly");
+                            break;
+                        case ButtonState.Deer:
+                            obj = ObjectPool.GetObject("Deer");
+                            break;
+                        case ButtonState.Eagle:
+                            obj = ObjectPool.GetObject("Eagle");
+                            break;
+                        case ButtonState.Frog:
+                            obj = ObjectPool.GetObject("Frog");
+                            break;
+                        case ButtonState.Grass:
+                            obj = ObjectPool.GetObject("Grass");
+                            break;
+                        case ButtonState.Iguana:
+                            obj = ObjectPool.GetObject("Iguana");
+                            break;
+                        case ButtonState.Rabbit:
+                            obj = ObjectPool.GetObject("Rabbit");
+                            break;
+                        case ButtonState.Squirrel:
+                            obj = ObjectPool.GetObject("Squirrel");
+                            break;
+                        case ButtonState.Tiger:
+                            obj = ObjectPool.GetObject("Tiger");
+                            break;
+                        default:
+                            break;
+                    }
+                    if (obj != null) {
+                        obj.transform.position = hit.point;
+                        obj.transform.rotation = Quaternion.identity;
+                    }
                 }
             }
         }
@@ -739,10 +742,10 @@ public class GameManager : MonoBehaviour
         }
         ObjectPool.ReturnObject(item, item.tag);
 
-        if (aliveCount == 0) {
-            timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            Time.timeScale = 0;
-        }
+        // if (aliveCount == 0) {
+        //     timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+        //     Time.timeScale = 0;
+        // }
     }
 
     IEnumerator FlashLightning() {

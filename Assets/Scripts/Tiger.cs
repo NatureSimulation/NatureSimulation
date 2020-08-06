@@ -44,11 +44,11 @@ public class Tiger : Animal {
             transform.LookAt(target.transform);
             currentState = AnimalState.Attacking;
             animator.SetTrigger("attack");
-            StartCoroutine(StopAttack(0.5f, target));
+            StartCoroutine(StopAttack(0.5f));
         }
     }
 
-    IEnumerator StopAttack(float length, GameObject target) {
+    IEnumerator StopAttack(float length) {
         yield return new WaitForSeconds(length);
         if (target != null) {
             GameManager.instance.delete(target, target.tag);
