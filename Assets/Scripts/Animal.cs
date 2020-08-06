@@ -266,7 +266,7 @@ public abstract class Animal : MonoBehaviour {
         if (other.collider.tag == "Bullet") {
             GameManager.instance.delete(transform.gameObject, transform.tag);
             GameManager.instance.HuntCount += 1;
-            GameManager.instance.HuntCountText.text = "Kills: " + GameManager.instance.HuntCount;
+            GameManager.instance.HuntCountText.text = "Kills:\t" + GameManager.instance.HuntCount;
             return;
         }
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {

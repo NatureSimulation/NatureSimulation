@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
             tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
             infectionButton.onClick.AddListener(() => { currentButtonState = ButtonState.Infection; infectionButton.GetComponent<Image>().color = Color.white; });
         } else {
-            HuntCountText.text = "Kills: 0";
+            HuntCountText.text = "Kills:\t0";
         }
 
 
@@ -799,7 +799,7 @@ public class GameManager : MonoBehaviour
             HuntOverlayPanel.SetActive(false);
             GameOverPanel.SetActive(true);
 
-            GameOverKills.text = "Kills:\t\t" + HuntCount;
+            GameOverKills.text = "Kills:\t" + HuntCount;
             GameOverTime.text = "Time:\t" + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
             Time.timeScale = 0;
         }
@@ -827,6 +827,6 @@ public class GameManager : MonoBehaviour
 
     void UpdateAndDisplayTime() {
         gameTimer += Time.deltaTime * Time.timeScale;
-        timerText.text = ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
+        timerText.text = "Time:\t" + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
     }
 }
