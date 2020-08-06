@@ -519,6 +519,7 @@ public class GameManager : MonoBehaviour
                     if (obj != null) {
                         obj.transform.position = hit.point;
                         obj.transform.rotation = Quaternion.identity;
+                        breed(obj.tag);
                     }
                 }
             }

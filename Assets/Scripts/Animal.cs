@@ -49,6 +49,10 @@ public abstract class Animal : MonoBehaviour {
     public virtual void Start() {
         try {
             player = GetComponent<CharacterController>();
+            player.enabled = false;
+            transform.position = transform.position;
+            transform.rotation = Quaternion.identity;
+            player.enabled = true;
         } catch (MissingComponentException e) {}
         try {
             animator = GetComponent<Animator>();
