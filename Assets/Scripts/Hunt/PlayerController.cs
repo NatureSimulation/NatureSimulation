@@ -6,6 +6,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float movementSpeed = 5f;
+    public float boostSpeed = 15f;
+    private float currentSpeed;
     public float mouseSensitivity = 10f;
     public float upDownRange= 90;
     public float jumpSpeed = 5;
@@ -46,8 +48,11 @@ public class PlayerController : MonoBehaviour {
 
     void FPMove()
     {
-        forwardSpeed = Input.GetAxisRaw ("Vertical") * movementSpeed;
-        sideSpeed = Input.GetAxisRaw ("Horizontal") * movementSpeed;
+        currentSpeed = movementSpeed;
+        if (Input.GetKey(KeyCode.LeftShift))
+            currentSpeed = boostSpeed;
+        forwardSpeed = Input.GetAxisRaw ("Vertical") * currentSpeed;
+        sideSpeed = Input.GetAxisRaw ("Horizontal") * currentSpeed;
 
         //if (cc.isGrounded && Input.GetButtonDown ("Jump"))
             //verticalVelocity = jumpSpeed;
