@@ -259,6 +259,11 @@ public abstract class Animal : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
+        Debug.Log(other.gameObject.tag);
+        if (other.collider.tag == "Bullet") {
+            GameManager.instance.delete(transform.gameObject, transform.tag);
+            return;
+        }
         if (other.gameObject.tag != "Terrain" && other.gameObject.tag != "Wall") {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
@@ -316,6 +321,9 @@ public abstract class Animal : MonoBehaviour {
     public virtual void transmitInfection(GameObject target) {}
 
     protected void CheckClick() {
+        if (GameManager.instance.isHuntMode)
+            return;
+
         if (Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
