@@ -21,48 +21,26 @@ public class PlayerController : MonoBehaviour {
     private float verticalVelocity = 0f;
     private GunController PlayerGunCtrl;
 
-    private enum State {
-        Move,
-        Fire
-    }
-    private State currentState = State.Move;
-
-
     private CharacterController cc;
 
     // Use this for initialization
     void Start () {
         cc = GetComponent<CharacterController> ();
-        // Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
         PlayerGunCtrl = GetComponent<GunController> ();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.F)) {
-            if (currentState == State.Move) {
-                Cursor.lockState = CursorLockMode.None;
-                currentState = State.Fire;
-            } else {
+        if (Cursor.lockState == CursorLockMode.None) {
+            if (Input.GetMouseButton (0)) {
                 Cursor.lockState = CursorLockMode.Locked;
-                currentState = State.Move;
             }
+            return;
         }
-
-        if (currentState == State.Fire) {
-            HuntCameraManager.instance.StartSubCamera();
-            Shoot();
-            FPRotate();
-        } else if (currentState == State.Move) {
-            // if (Cursor.lockState == CursorLockMode.None) {
-            //     if (Input.GetMouseButton (0))
-            //         Cursor.lockState = CursorLockMode.Locked;
-            //     return;
-            // }
-            HuntCameraManager.instance.FinishSubCamera();
-            FPMove ();
-            FPRotate ();
-        }
+        FPMove ();
+        FPRotate ();
+        Shoot();
     }
 
 

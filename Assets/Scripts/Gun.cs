@@ -26,11 +26,9 @@ public class Gun : MonoBehaviour {
                 GameObject newBullet = Instantiate (Bullet, Camera.main.transform.position, transform.rotation) as GameObject;
                 Vector3 goalPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 goalPos += Camera.main.transform.forward * 10f;
-                // newBullet.transform.rotation = Quaternion.LookRotation(goalPos);
                 newBullet.transform.rotation = Quaternion.LookRotation(goalPos - Camera.main.transform.position, Vector3.up);
                 Debug.DrawLine(Camera.main.transform.position, goalPos);
 
-                // newBullet.transform.position = Vector3.Lerp(transform.position, goalPos, Time.deltaTime);
                 newBullet.GetComponent<Bullet> ().SetSpeed (muzzleVelocity);
                 BulletNow -= 1;
             }
