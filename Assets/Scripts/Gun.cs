@@ -30,6 +30,7 @@ public class Gun : MonoBehaviour {
                 Debug.DrawLine(Camera.main.transform.position, goalPos);
 
                 newBullet.GetComponent<Bullet> ().SetSpeed (muzzleVelocity);
+                Object.Destroy(newBullet, 2.0f);
                 BulletNow -= 1;
             }
 
