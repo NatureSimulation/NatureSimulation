@@ -20,7 +20,7 @@ public class SubCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null) {
+        if (player == null || !player.activeSelf) {
             CameraManager.instance.finishSubCamera();
             return;
         }
