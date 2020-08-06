@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour
     /* For singleton pattern */
     public static GameManager instance;
 
+    public TextMeshProUGUI HuntCountText;
+    public int HuntCount = 0;
+    private int extinctCount = 0;
+    public TextMeshProUGUI GameOverKills;
+    public TextMeshProUGUI GameOverTime;
+    public GameObject HuntOverlayPanel;
+    public GameObject GameOverPanel;
+
     public ParticleSystem[] lightnings;
     public bool lightningOn;
     public bool intermittentLightning;
@@ -166,6 +174,7 @@ public class GameManager : MonoBehaviour
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
+
         if (!isHuntMode) {
             currentButtonState = ButtonState.None;
             grassButton.onClick.AddListener(() => { currentButtonState = ButtonState.Grass; grassButton.GetComponent<Image>().color = Color.white; });
@@ -179,6 +188,8 @@ public class GameManager : MonoBehaviour
             squirrelButton.onClick.AddListener(() => { currentButtonState = ButtonState.Squirrel; squirrelButton.GetComponent<Image>().color = Color.white; });
             tigerButton.onClick.AddListener(() => { currentButtonState = ButtonState.Tiger; tigerButton.GetComponent<Image>().color = Color.white; });
             infectionButton.onClick.AddListener(() => { currentButtonState = ButtonState.Infection; infectionButton.GetComponent<Image>().color = Color.white; });
+        } else {
+            HuntCountText.text = "Kills: 0";
         }
 
 
@@ -701,63 +712,97 @@ public class GameManager : MonoBehaviour
             rabbitCount -= 1;
             setRabbitProgress(false);
 
-            if (rabbitCount == 0)
+            if (rabbitCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Eagle") {
             eagleCount -= 1;
             setEagleProgress(false);
 
-            if (eagleCount == 0)
+            if (eagleCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Deer") {
             deerCount -= 1;
             setDeerProgress(false);
 
-            if (deerCount == 0)
+            if (deerCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Squirrel") {
             squirrelCount -= 1;
             setSquirrelProgress(false);
 
-            if (squirrelCount == 0)
+            if (squirrelCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Tiger") {
             tigerCount -= 1;
             setTigerProgress(false);
 
-            if (tigerCount == 0)
+            if (tigerCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Iguana") {
             iguanaCount -= 1;
             setIguanaProgress(false);
 
-            if (iguanaCount == 0)
+            if (iguanaCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Bird") {
             birdCount -= 1;
             setBirdProgress(false);
 
-            if (birdCount == 0)
+            if (birdCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Frog") {
             frogCount -= 1;
             setFrogProgress(false);
 
-            if (frogCount == 0)
+            if (frogCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         } else if (tag == "Butterfly") {
             butterflyCount -= 1;
             setButterflyProgress(false);
 
-            if (butterflyCount == 0)
+            if (butterflyCount == 0) {
+                extinctCount += 1;
+                Debug.Log(extinctCount);
                 aliveCount -= 1;
+            }
         }
         ObjectPool.ReturnObject(item, item.tag);
 
-        // if (aliveCount == 0) {
-        //     timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-        //     Time.timeScale = 0;
-        // }
+        if (!isHuntMode && aliveCount == 0) {
+            timerText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+            Time.timeScale = 0;
+        } else if (isHuntMode && extinctCount == 3) {
+            HuntOverlayPanel.SetActive(false);
+            GameOverPanel.SetActive(true);
+
+            GameOverKills.text = "Kills:\t\t" + HuntCount;
+            GameOverTime.text = "Time:\t" + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
+            Time.timeScale = 0;
+        }
     }
 
     IEnumerator FlashLightning() {
