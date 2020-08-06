@@ -4818,6 +4818,10 @@ PrefabInstance:
       propertyPath: reloadSfx
       value: 
       objectReference: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
+    - target: {fileID: 664685732, guid: 14c19e537fa950648b8e98166493f5ff, type: 3}
+      propertyPath: muzzleVelocity
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14c19e537fa950648b8e98166493f5ff, type: 3}
 --- !u!4 &815765306 stripped
