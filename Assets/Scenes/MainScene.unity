@@ -7811,7 +7811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: -69, y: -100}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &523319632
@@ -18983,7 +18983,7 @@ RectTransform:
   m_GameObject: {fileID: 791445314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 872621224}
   - {fileID: 838622830}
@@ -19002,7 +19002,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1167, y: 674}
+  m_SizeDelta: {x: 1117.9626, y: 680.677}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791445316
 MonoBehaviour:
@@ -34306,6 +34306,7 @@ MonoBehaviour:
   planeMaxY: 0
   planeOffset: 5
   panel: {fileID: 791445314}
+  menu: {fileID: 0}
   animalPanel: {fileID: 1724851865}
   initCreate: 1
 --- !u!4 &1640929324
