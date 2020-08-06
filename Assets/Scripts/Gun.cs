@@ -22,14 +22,15 @@ public class Gun : MonoBehaviour {
     public void Shoot() {
         if (BulletNow > 0) {
             if (ReloadValue == false && Time.time > nextShotTime) {
-                nextShotTime = Time.time + BetweenShots/1000;
+                nextShotTime = Time.time + BetweenShots / 1000;
                 GameObject newBullet = Instantiate (Bullet, Camera.main.transform.position, transform.rotation) as GameObject;
                 Vector3 goalPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 goalPos += Camera.main.transform.forward * 10f;
-                newBullet.transform.rotation = Quaternion.LookRotation(goalPos);
+                newBullet.transform.rotation = Quaternion.LookRotation(goalPos - Camera.main.transform.position, Vector3.up);
+                Debug.DrawLine(Camera.main.transform.position, goalPos);
 
-                // newBullet.transform.position = Vector3.Lerp(transform.position, goalPos, Time.deltaTime);
                 newBullet.GetComponent<Bullet> ().SetSpeed (muzzleVelocity);
+                Object.Destroy(newBullet, 2.0f);
                 BulletNow -= 1;
             }
 
