@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         foreach (var lightning in lightnings) {
             lightning.Stop();
         }
@@ -193,77 +194,7 @@ public class GameManager : MonoBehaviour
             HuntCountText.text = "Kills:\t0";
         }
 
-
-        /* Init grass */
-        grassTimer = 0;
-        grassCount = 0;
-        grassProgressText = grassProgress.transform.GetChild(1).GetComponent<Text>();
-        grassProgressImage = grassProgress.transform.GetChild(0).GetComponent<Image>();
-        grassProgressText.text = "Grass: " + "0";
-        grassProgressImage.fillAmount = 0f;
-
-        /* Init squirrel */
-        squirrelCount = 0;
-        squirrelProgressText = squirrelProgress.transform.GetChild(1).GetComponent<Text>();
-        squirrelProgressImage = squirrelProgress.transform.GetChild(0).GetComponent<Image>();
-        squirrelProgressText.text = "Squirrel: " + "0";
-        squirrelProgressImage.fillAmount = 0f;
-
-        /* Init rabbit */
-        rabbitCount = 0;
-        rabbitProgressText = rabbitProgress.transform.GetChild(1).GetComponent<Text>();
-        rabbitProgressImage = rabbitProgress.transform.GetChild(0).GetComponent<Image>();
-        rabbitProgressText.text = "Rabbit: " + "0";
-        rabbitProgressImage.fillAmount = 0f;
-
-        /* Init eagle */
-        eagleCount = 0;
-        eagleProgressText = eagleProgress.transform.GetChild(1).GetComponent<Text>();
-        eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
-        eagleProgressText.text = "Eagle: " + "0";
-        eagleProgressImage.fillAmount = 0f;
-
-        /* Init deer */
-        deerCount = 0;
-        deerProgressText = deerProgress.transform.GetChild(1).GetComponent<Text>();
-        deerProgressImage = deerProgress.transform.GetChild(0).GetComponent<Image>();
-        deerProgressText.text = "Deer: " + "0";
-        deerProgressImage.fillAmount = 0f;
-
-        /* Init butterfly */
-        butterflyCount = 0;
-        butterflyProgressText = butterflyProgress.transform.GetChild(1).GetComponent<Text>();
-        butterflyProgressImage = butterflyProgress.transform.GetChild(0).GetComponent<Image>();
-        butterflyProgressText.text = "Butterfly: " + "0";
-        butterflyProgressImage.fillAmount = 0f;
-
-        /* Init tiger */
-        tigerCount = 0;
-        tigerProgressText = tigerProgress.transform.GetChild(1).GetComponent<Text>();
-        tigerProgressImage = tigerProgress.transform.GetChild(0).GetComponent<Image>();
-        tigerProgressText.text = "Tiger: " + "0";
-        tigerProgressImage.fillAmount = 0f;
-
-        /* Init iguana */
-        iguanaCount = 0;
-        iguanaProgressText = iguanaProgress.transform.GetChild(1).GetComponent<Text>();
-        iguanaProgressImage = iguanaProgress.transform.GetChild(0).GetComponent<Image>();
-        iguanaProgressText.text = "Iguana: " + "0";
-        iguanaProgressImage.fillAmount = 0f;
-
-        /* Init bird */
-        birdCount = 0;
-        birdProgressText = birdProgress.transform.GetChild(1).GetComponent<Text>();
-        birdProgressImage = birdProgress.transform.GetChild(0).GetComponent<Image>();
-        birdProgressText.text = "Bird: " + "0";
-        birdProgressImage.fillAmount = 0f;
-
-        /* Init frog */
-        frogCount = 0;
-        frogProgressText = frogProgress.transform.GetChild(1).GetComponent<Text>();
-        frogProgressImage = frogProgress.transform.GetChild(0).GetComponent<Image>();
-        frogProgressText.text = "Frog: " + "0";
-        frogProgressImage.fillAmount = 0f;
+        InitAnimals();
 
         /* Init map setting */
         Mesh mesh = plane.GetComponent<MeshFilter>().mesh;
@@ -434,6 +365,79 @@ public class GameManager : MonoBehaviour
 
         if (intermittentLightning)
             StartCoroutine(IntermittentLightning());
+    }
+
+    void InitAnimals() {
+                /* Init grass */
+        grassTimer = 0;
+        grassCount = 0;
+        grassProgressText = grassProgress.transform.GetChild(1).GetComponent<Text>();
+        grassProgressImage = grassProgress.transform.GetChild(0).GetComponent<Image>();
+        grassProgressText.text = "Grass: " + "0";
+        grassProgressImage.fillAmount = 0f;
+
+        /* Init squirrel */
+        squirrelCount = 0;
+        squirrelProgressText = squirrelProgress.transform.GetChild(1).GetComponent<Text>();
+        squirrelProgressImage = squirrelProgress.transform.GetChild(0).GetComponent<Image>();
+        squirrelProgressText.text = "Squirrel: " + "0";
+        squirrelProgressImage.fillAmount = 0f;
+
+        /* Init rabbit */
+        rabbitCount = 0;
+        rabbitProgressText = rabbitProgress.transform.GetChild(1).GetComponent<Text>();
+        rabbitProgressImage = rabbitProgress.transform.GetChild(0).GetComponent<Image>();
+        rabbitProgressText.text = "Rabbit: " + "0";
+        rabbitProgressImage.fillAmount = 0f;
+
+        /* Init eagle */
+        eagleCount = 0;
+        eagleProgressText = eagleProgress.transform.GetChild(1).GetComponent<Text>();
+        eagleProgressImage = eagleProgress.transform.GetChild(0).GetComponent<Image>();
+        eagleProgressText.text = "Eagle: " + "0";
+        eagleProgressImage.fillAmount = 0f;
+
+        /* Init deer */
+        deerCount = 0;
+        deerProgressText = deerProgress.transform.GetChild(1).GetComponent<Text>();
+        deerProgressImage = deerProgress.transform.GetChild(0).GetComponent<Image>();
+        deerProgressText.text = "Deer: " + "0";
+        deerProgressImage.fillAmount = 0f;
+
+        /* Init butterfly */
+        butterflyCount = 0;
+        butterflyProgressText = butterflyProgress.transform.GetChild(1).GetComponent<Text>();
+        butterflyProgressImage = butterflyProgress.transform.GetChild(0).GetComponent<Image>();
+        butterflyProgressText.text = "Butterfly: " + "0";
+        butterflyProgressImage.fillAmount = 0f;
+
+        /* Init tiger */
+        tigerCount = 0;
+        tigerProgressText = tigerProgress.transform.GetChild(1).GetComponent<Text>();
+        tigerProgressImage = tigerProgress.transform.GetChild(0).GetComponent<Image>();
+        tigerProgressText.text = "Tiger: " + "0";
+        tigerProgressImage.fillAmount = 0f;
+
+        /* Init iguana */
+        iguanaCount = 0;
+        iguanaProgressText = iguanaProgress.transform.GetChild(1).GetComponent<Text>();
+        iguanaProgressImage = iguanaProgress.transform.GetChild(0).GetComponent<Image>();
+        iguanaProgressText.text = "Iguana: " + "0";
+        iguanaProgressImage.fillAmount = 0f;
+
+        /* Init bird */
+        birdCount = 0;
+        birdProgressText = birdProgress.transform.GetChild(1).GetComponent<Text>();
+        birdProgressImage = birdProgress.transform.GetChild(0).GetComponent<Image>();
+        birdProgressText.text = "Bird: " + "0";
+        birdProgressImage.fillAmount = 0f;
+
+        /* Init frog */
+        frogCount = 0;
+        frogProgressText = frogProgress.transform.GetChild(1).GetComponent<Text>();
+        frogProgressImage = frogProgress.transform.GetChild(0).GetComponent<Image>();
+        frogProgressText.text = "Frog: " + "0";
+        frogProgressImage.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -832,4 +836,20 @@ public class GameManager : MonoBehaviour
         gameTimer += Time.deltaTime * Time.timeScale;
         timerText.text = "Time:\t" + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
     }
+
+    // public void ResetGame() {
+    //     gameTimer = 0f;
+    //     aliveCount = new int[]{
+    //         birdInitNum,
+    //         butterflyInitNum,
+    //         eagleInitNum,
+    //         iguanaInitNum,
+    //         rabbitInitNum,
+    //         deerInitNum,
+    //         squirrelInitNum,
+    //         tigerInitNum,
+    //         frogInitNum
+    //     }.Aggregate(0, (acc, cur) => acc + (cur > 0 ? 1 : 0));
+    //     InitAnimals();
+    // }
 }
