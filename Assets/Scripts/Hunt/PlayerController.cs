@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour {
     private float verticalRotation = 0f;
     private float verticalVelocity = 0f;
     private GunController PlayerGunCtrl;
+    public GameObject panel;
 
     private CharacterController cc;
 
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (Cursor.lockState == CursorLockMode.None) {
-            if (Input.GetMouseButton (0)) {
+            if (Input.GetMouseButton (0) && !panel.activeSelf) {
                 Cursor.lockState = CursorLockMode.Locked;
             }
             return;
