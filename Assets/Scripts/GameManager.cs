@@ -559,6 +559,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setGrassProgress(bool isIncrease) {
+        grassCount = (grassCount < 0) ? 0 : grassCount;
         grassProgressText.text = "Grass:" + grassCount.ToString();
         if (isIncrease) {
             grassProgressImage.fillAmount += 1.0f / grassMax;
@@ -569,6 +570,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setSquirrelProgress(bool isIncrease) {
+        squirrelCount = (squirrelCount < 0) ? 0 : squirrelCount;
         squirrelProgressText.text = "Squirrel: " + squirrelCount.ToString();
         if (isIncrease) {
             squirrelProgressImage.fillAmount += 1.0f / squirrelMax;
@@ -578,6 +580,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setRabbitProgress(bool isIncrease) {
+        rabbitCount = (rabbitCount < 0) ? 0 : rabbitCount;
         rabbitProgressText.text = "Rabbit: " + rabbitCount.ToString();
         if (isIncrease) {
             rabbitProgressImage.fillAmount += 1.0f / rabbitMax;
@@ -587,6 +590,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setButterflyProgress(bool isIncrease) {
+        butterflyCount = (butterflyCount < 0) ? 0 : butterflyCount;
         butterflyProgressText.text = "Butterfly: " + butterflyCount.ToString();
         if (isIncrease) {
             butterflyProgressImage.fillAmount += 1.0f / butterflyMax;
@@ -596,6 +600,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setEagleProgress(bool isIncrease) {
+        grassCount = (grassCount < 0) ? 0 : grassCount;
         eagleProgressText.text = "Eagle: " + eagleCount.ToString();
         if (isIncrease) {
             eagleProgressImage.fillAmount += 1.0f / eagleMax;
@@ -605,6 +610,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setDeerProgress(bool isIncrease) {
+        deerCount = (deerCount < 0) ? 0 : deerCount;
         deerProgressText.text = "Deer: " + deerCount.ToString();
         if (isIncrease) {
             deerProgressImage.fillAmount += 1.0f / deerMax;
@@ -614,6 +620,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setTigerProgress(bool isIncrease) {
+        tigerCount = (tigerCount < 0) ? 0 : tigerCount;
         tigerProgressText.text = "Tiger: " + tigerCount.ToString();
         if (isIncrease) {
             tigerProgressImage.fillAmount += 1.0f / tigerMax;
@@ -623,6 +630,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setIguanaProgress(bool isIncrease) {
+        iguanaCount = (iguanaCount < 0) ? 0 : iguanaCount;
         iguanaProgressText.text = "Iguana: " + iguanaCount.ToString();
         if (isIncrease) {
             iguanaProgressImage.fillAmount += 1.0f / iguanaMax;
@@ -632,6 +640,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setBirdProgress(bool isIncrease) {
+        birdCount = (birdCount < 0) ? 0 : birdCount;
         birdProgressText.text = "Bird: " + birdCount.ToString();
         if (isIncrease) {
             birdProgressImage.fillAmount += 1.0f / birdMax;
@@ -641,6 +650,7 @@ public class GameManager : MonoBehaviour
     }
 
     void setFrogProgress(bool isIncrease) {
+        frogCount = (frogCount < 0) ? 0 : frogCount;
         frogProgressText.text = "Frog: " + frogCount.ToString();
         if (isIncrease) {
             frogProgressImage.fillAmount += 1.0f / frogMax;
