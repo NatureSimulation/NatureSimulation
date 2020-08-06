@@ -429,13 +429,9 @@ public class GameManager : MonoBehaviour
         UpdateAndDisplayTime();
         /* Pause */
         if (Input.GetKeyDown(KeyCode.P)) {
-            if (panel.activeSelf) {
-                panel.SetActive(false);
-                animalPanel.SetActive(true);
-            } else {
-                panel.SetActive(true);
-                animalPanel.SetActive(false);
-            }
+            panel.SetActive(!panel.activeSelf);
+            if (!isHuntMode)
+                animalPanel.SetActive(!animalPanel.activeSelf);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {

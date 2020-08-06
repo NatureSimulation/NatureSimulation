@@ -259,7 +259,6 @@ public abstract class Animal : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        Debug.Log(other.gameObject.tag);
         if (other.collider.tag == "Bullet") {
             GameManager.instance.delete(transform.gameObject, transform.tag);
             return;
@@ -289,6 +288,10 @@ public abstract class Animal : MonoBehaviour {
             return;
         if (target.tag != this.tag)
             return;
+        if (GameManager.instance.isHuntMode) {
+            if (Random.Range(0f, 1f) < 0.99f)
+                return;
+        }
         float distance = (target.transform.position - transform.position).magnitude;
         if (target.tag == this.tag && distance < minBreedDistance && leftTimeForBreeding < 0) {
             /* Transmit infection to partner */
