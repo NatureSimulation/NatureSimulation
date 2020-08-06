@@ -5039,6 +5039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  health: {fileID: 181322075}
   speed: 3
   wanderSpeed: 3
   escapeSpeed: 8

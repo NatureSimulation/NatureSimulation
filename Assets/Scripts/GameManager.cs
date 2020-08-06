@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
     public float planeOffset = 5;
 
     public GameObject panel;
+    public GameObject menu;
     public GameObject animalPanel;
 
     /* Debug */
@@ -444,6 +445,8 @@ public class GameManager : MonoBehaviour
             panel.SetActive(!panel.activeSelf);
             if (!isHuntMode)
                 animalPanel.SetActive(!animalPanel.activeSelf);
+            if (isHuntMode)
+                menu.SetActive(!menu.activeSelf);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
