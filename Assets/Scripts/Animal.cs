@@ -293,7 +293,7 @@ public abstract class Animal : MonoBehaviour {
         if (target.tag != this.tag)
             return;
         if (GameManager.instance.isHuntMode) {
-            if (Random.Range(0f, 1f) < 0.99f)
+            if (Random.Range(0f, 1f) < 0.9f)
                 return;
         }
         float distance = (target.transform.position - transform.position).magnitude;

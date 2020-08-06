@@ -1382,19 +1382,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
-  wanderSpeed: 5
+  speed: 7
+  wanderSpeed: 7
   escapeSpeed: 15
   damageSpeed: 0.8
   recoverSpeed: 200
-  preyThreshold: 100
+  preyThreshold: 800
   breedThreshold: 300
   currentState: 0
   sight: 20
   childPrefab: {fileID: 141256}
-  minAttackDistance: 10
-  minBreedDistance: 7
-  coolTimeBreeding: 20
+  minAttackDistance: 12
+  minBreedDistance: 10
+  coolTimeBreeding: 15
   coolTimeEscaping: 1
   preys:
   - Rabbit

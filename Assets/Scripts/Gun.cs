@@ -19,6 +19,13 @@ public class Gun : MonoBehaviour {
     public GameObject Bullet;
     public Transform muzzle;
 
+    public AudioClip fireSfx;
+    public AudioClip reloadSfx;
+    private AudioSource audiosource = null;
+
+    public void Start() {
+        audiosource = GetComponent<AudioSource>();
+    }
     public void Shoot() {
         if (BulletNow > 0) {
             if (ReloadValue == false && Time.time > nextShotTime) {
@@ -32,6 +39,7 @@ public class Gun : MonoBehaviour {
                 newBullet.GetComponent<Bullet> ().SetSpeed (muzzleVelocity);
                 Object.Destroy(newBullet, 2.0f);
                 BulletNow -= 1;
+                audiosource.PlayOneShot(fireSfx, 0.4f);
             }
 
         } else {
@@ -44,5 +52,6 @@ public class Gun : MonoBehaviour {
     public void Reload() {
         nextReloadTime = Time.time + 2;
         ReloadValue = true;
+        audiosource.PlayOneShot(reloadSfx, 0.8f);
     }
 }

@@ -774,7 +774,7 @@ MonoBehaviour:
   escapeSpeed: 0
   damageSpeed: 1
   recoverSpeed: 200
-  preyThreshold: 1000
+  preyThreshold: 800
   breedThreshold: 300
   currentState: 0
   sight: 30
