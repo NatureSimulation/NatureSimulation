@@ -717,85 +717,69 @@ public class GameManager : MonoBehaviour
             setGrassProgress(false);
         } else if (tag == "Rabbit") {
             rabbitCount -= 1;
-            setRabbitProgress(false);
-
             if (rabbitCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setRabbitProgress(false);
+
         } else if (tag == "Eagle") {
             eagleCount -= 1;
-            setEagleProgress(false);
-
             if (eagleCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setEagleProgress(false);
         } else if (tag == "Deer") {
             deerCount -= 1;
-            setDeerProgress(false);
-
             if (deerCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setDeerProgress(false);
         } else if (tag == "Squirrel") {
             squirrelCount -= 1;
-            setSquirrelProgress(false);
-
             if (squirrelCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setSquirrelProgress(false);
         } else if (tag == "Tiger") {
             tigerCount -= 1;
-            setTigerProgress(false);
-
             if (tigerCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setTigerProgress(false);
         } else if (tag == "Iguana") {
             iguanaCount -= 1;
-            setIguanaProgress(false);
-
             if (iguanaCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setIguanaProgress(false);
         } else if (tag == "Bird") {
             birdCount -= 1;
-            setBirdProgress(false);
-
             if (birdCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setBirdProgress(false);
         } else if (tag == "Frog") {
             frogCount -= 1;
-            setFrogProgress(false);
-
             if (frogCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setFrogProgress(false);
         } else if (tag == "Butterfly") {
             butterflyCount -= 1;
-            setButterflyProgress(false);
-
             if (butterflyCount == 0) {
                 extinctCount += 1;
-                Debug.Log(extinctCount);
                 aliveCount -= 1;
             }
+            setButterflyProgress(false);
+
         }
         ObjectPool.ReturnObject(item, item.tag);
 
@@ -807,7 +791,7 @@ public class GameManager : MonoBehaviour
             GameOverPanel.SetActive(true);
 
             GameOverKills.text = "Kills:\t" + HuntCount;
-            GameOverTime.text = "Time:\t" + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
+            GameOverTime.text = "Time: " + ((float)Mathf.Round(gameTimer * 100f) / 100f).ToString() + "s";
             Time.timeScale = 0;
         }
     }
