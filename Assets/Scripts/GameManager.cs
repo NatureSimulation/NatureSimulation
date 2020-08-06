@@ -440,7 +440,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateAndDisplayTime();
         /* Pause */
-        if (Input.GetKeyDown(KeyCode.Z)) {
+        if (Input.GetKeyDown(KeyCode.F)) {
             panel.SetActive(!panel.activeSelf);
             if (!isHuntMode)
                 animalPanel.SetActive(!animalPanel.activeSelf);
