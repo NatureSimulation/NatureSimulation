@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Iguana : Animal {
     public override void Start() {
+        lightningDeathProbability = 0.3f;
         base.Start();
     }
 

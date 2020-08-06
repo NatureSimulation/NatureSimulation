@@ -4,7 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 public class Tiger : Animal {
+
     public override void Start() {
+        lightningDeathProbability = 0.3f;
         base.Start();
     }
 

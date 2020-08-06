@@ -33981,6 +33981,7 @@ MonoBehaviour:
   - {fileID: 767403099}
   lightningOn: 0
   intermittentLightning: 1
+  lightningCooltime: 60
   timerText: {fileID: 1250527019}
   grassButton: {fileID: 914744495}
   birdButton: {fileID: 1853065714}

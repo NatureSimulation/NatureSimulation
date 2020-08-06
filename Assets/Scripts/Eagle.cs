@@ -7,6 +7,7 @@ public class Eagle : Animal {
     private float speedOut = 1;
 
     public override void Start() {
+        lightningDeathProbability = 0.3f;
         base.Start();
         animator = GetComponentInChildren<Animator>();
     }

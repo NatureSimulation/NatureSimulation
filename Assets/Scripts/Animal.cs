@@ -39,7 +39,7 @@ public abstract class Animal : MonoBehaviour {
     protected GameObject predator;
     protected bool isInfection = false;
 
-    private float lightningDeathProbability = 0.5f;
+    protected float lightningDeathProbability = 0.5f;
     private bool attemptSuicide = false;
 
     public abstract void RotateOnTargeting(GameObject obj);
@@ -115,7 +115,7 @@ public abstract class Animal : MonoBehaviour {
         LightningTrial();
     }
 
-    public void LightningTrial() {
+    public virtual void LightningTrial() {
         if (!attemptSuicide && GameManager.instance.lightningOn) {
             if (Random.Range(0.0f, 1.0f) < lightningDeathProbability) {
                 GameManager.instance.delete(this.gameObject, this.tag);

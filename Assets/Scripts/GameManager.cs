@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public ParticleSystem[] lightnings;
     public bool lightningOn;
     public bool intermittentLightning;
+    public float lightningCooltime;
 
     public TextMeshProUGUI timerText;
     private float gameTimer;
@@ -774,7 +775,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator IntermittentLightning() {
         while (true) {
-            yield return new WaitForSeconds(15);
+            yield return new WaitForSeconds(lightningCooltime);
             StartCoroutine(FlashLightning());
         }
     }
