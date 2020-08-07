@@ -88,8 +88,9 @@ public abstract class Animal : MonoBehaviour {
         /* ClickListener */
         CheckClick();
 
-        /*  high level debugging ㅎㅎ */
-        UpdateInfection(isInfection);
+        /*  high high level debugging ㅎㅎ */
+        if (!isInfection)
+            UpdateInfection(isInfection);
     }
 
     public virtual void FixedUpdate() {
